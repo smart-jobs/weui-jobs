@@ -32,15 +32,27 @@ export default {
     sessionStorage.setItem('token', token);
   },
 
+  get corpInfo() {
+    const val = sessionStorage.getItem('corpInfo');
+    if (val) return JSON.parse(val);
+    return null;
+  },
+  set corpInfo(corpInfo) {
+    sessionStorage.setItem('corpInfo', JSON.stringify(corpInfo));
+  },
+  saveCorpInfo(corpInfo) {
+    sessionStorage.setItem('corpInfo', JSON.stringify(corpInfo));
+  },
+
   get unit() {
     const val = sessionStorage.getItem('unit');
-      if (val) return JSON.parse(val);
+    if (val) return JSON.parse(val);
     return null;
   },
   set unit(unitList) {
     sessionStorage.setItem('unit', JSON.stringify(unitList));
   },
-  saveUnit(unitList){
+  saveUnit(unitList) {
     sessionStorage.setItem('unit', JSON.stringify(unitList));
-  }
+  },
 };

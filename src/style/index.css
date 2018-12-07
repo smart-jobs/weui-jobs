@@ -1,0 +1,30 @@
+
+.mint-navbar {
+  width: 96%;
+  margin: 0 2%;
+  text-align: center;
+}
+.el-table .cell{
+  padding-left:0 !important;
+}
+.moreA{
+border-top:2px solid #f4f4f4;
+display:block; 
+color:#666; 
+border-bottom:2px solid #f4f4f4;
+font-size:14px;
+line-height:32px;
+height: 30px;
+width:96%;
+margin:20px 2%;
+}
+.txtOne{
+  font-size: 14px !important;
+  margin-bottom: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  float: left;
+  width: 48%;
+  margin-right: 2%;
+}

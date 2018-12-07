@@ -1,7 +1,9 @@
 <template lang="html">
   <div id="App">
-      <router-view/>
+    <!-- <el-container> -->
+      <router-view style="width:100%;"/>
       <footerbar></footerbar>
+    <!-- </el-container> -->
   </div>
 </template>
 
@@ -25,10 +27,13 @@ export default {
     this.loadUnit();
   },
   methods: {
+    //获取用户信息,获取分站列表
     ...mapActions(['getUser','loadUnit']),
   }
 };
 </script>
 
-<style lang="css" scoped>
+<style lang="less" scoped>
+@import '../../style/common.css';
+@import '../../style/jobFair.less';
 </style>
