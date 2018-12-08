@@ -77,8 +77,8 @@ export const actions = {
     const { userid } = user;
     const { fair_id } = payload;
     console.log(fair_id, userid);
-    const result = await this.$axios.$post(api.userApplyJobFair, {}, { fair_id: fair_id, userid: userid})
-    return result
+    const result = await this.$axios.$post(api.userApplyJobFair, {}, { fair_id: fair_id, userid: userid });
+    return result;
   },
   //企业申请加入招聘会
   async corpApply({ state }, payload) {

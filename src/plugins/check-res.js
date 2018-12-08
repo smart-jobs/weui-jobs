@@ -9,7 +9,6 @@ import { Message } from 'element-ui';
 
 const vm = new Vue({});
 const Plugin = {
-
   install(Vue, options) {
     // 4. 添加实例方法
     Vue.prototype.$checkRes = (res, okText, errText) => {
@@ -36,7 +35,6 @@ const Plugin = {
       return false;
     };
   },
-
 };
 
 Vue.use(Plugin);

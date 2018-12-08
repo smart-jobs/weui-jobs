@@ -12,23 +12,21 @@ export default {
   props: {
     titles: {
       type: Array,
-    }
+    },
   },
-  watch:{
-    active:{
+  watch: {
+    active: {
       handler(newValue) {
         this.$emit('input', newValue);
-      }
-    }
+      },
+    },
   },
   data() {
     return {
-      active:"tab0"
-    }
+      active: 'tab0',
+    };
   },
-  methods:{
-  }
-}
+};
 </script>
 
 <style lang='css' scoped>

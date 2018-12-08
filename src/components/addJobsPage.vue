@@ -1,7 +1,10 @@
 <template lang='html'>
   <div id="addJobsPage" >
-    <mt-button  type="primary" size='small' @click="popupVisible=true">
+    <mt-button v-if="uri.includes('/index.html')"  type="primary" size='small' @click="popupVisible=true">
        {{btnTitle}}
+    </mt-button>
+    <mt-button v-else style="position: absolute !important; left: 42% !important;" type="primary" @click="popupVisible=true">
+      {{btnTitle}}
     </mt-button>
 
     <mt-popup
@@ -11,6 +14,7 @@
         :style="selectStyle">
         <mt-header id="com" title="添加招聘职位">
           <mt-button   class="bgnone" slot="left" @click="popupVisible=false">返回</mt-button>
+          <mt-button v-if="forIndexAndDetail()"   class="bgnone" slot="right" @click="apply()">申请加入</mt-button>
         </mt-header>
         <mt-field label="职位名称" placeholder="请输入职位名称" v-model="jobs.name"></mt-field>
         <mt-field label="需求人数" placeholder="请输入需求人数" v-model="jobs.count"></mt-field>
@@ -19,78 +23,71 @@
         <mt-button type="primary" size="large" style="height:35px !important;line-height:35px !important;" @click.prevent="saveJobs()">保存职位</mt-button>
     
 
-      <div v-if="justForIndex()" >
-        <el-card class="box-card" v-for="(item,index) in jobsList" :key="index">
-            <ul style="text-align:left;" >
-                <li slot="header" class="clearfix">
-                    招聘职位:
-                    {{item.name}}
-                </li>
-                <li class="text item" >
-                    需求人数: 
-                    {{item.count}}
-                </li>
-                <li class="text item">
-                    职位要求:
-                    {{item.requirement}}
-                </li>
-            </ul>
-        </el-card>
-        <mt-button type="primary" size="large" style="height:35px !important;line-height:35px !important;" @click="apply()">申请加入</mt-button>
+      <div v-if="forIndexAndDetail()" >
+        <showJobsListCard :list="jobsList" :needBtn="true" :btnTitle="'删除'" :listTitle="listTitle"></showJobsListCard>
       </div>
     </mt-popup>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex';
 import Validator from 'async-validator';
+import showJobsListCard from './showJobsList-card.vue';
 export default {
   name: 'addJobsPage',
+  components: {
+    showJobsListCard,
+  },
   props: {
     fair_id: { type: String, default: '' },
-    btnTitle:{type:String,defualt:'添加'}
+    btnTitle: { type: String, defualt: '添加' },
   },
   data() {
     return {
-      popupVisible:false,
+      popupVisible: false,
       jobs: {},
-      jobsList:[],
-      uri:window.location.pathname,
+      jobsList: [],
+      uri: window.location.pathname,
+      listTitle: [{ name: '招聘职位' }, { count: '需求人数' }, { requirement: '职位要求' }],
       //职位验证
       jobsValidator: new Validator({
         name: { type: 'string', required: true, message: '职位名称不能为空' },
         count: { type: 'string', required: true, message: '招聘人数不能为空' },
         requirement: { type: 'string', required: true, message: '招聘需求不能为空' },
-      })
-    }
+      }),
+    };
   },
+  created() {},
   computed: {
     selectStyle: {
-     get(){
-       let style={'width':'80%','height':'40%'}
-       if(this.uri.includes("index")){
-         style={'width':'100%','height':'75%'}
-       }
-       return style
-     }
-    }
+      get() {
+        let style = { width: '80%', height: '40%' };
+        if (this.uri.includes('index') || this.uri.includes('jobfairDetail')) {
+          style = { width: '100%', height: '75%' };
+        }
+        return style;
+      },
+    },
   },
   methods: {
     //企业申请加入招聘会
     ...mapActions(['corpApply']),
+    //保存招聘职位的信息验证
     saveJobs() {
       this.jobsValidator.validate(this.jobs, (errors, fields) => {
         if (errors) {
           return this.handleErrors(errors, fields);
         }
         this.handleSuccess();
-      })
+      });
     },
+    //实际执行保存职位信息方法
     handleSuccess() {
       this.jobsList.push(this.jobs);
-      this.jobs={}
+      this.jobs = {};
     },
+    //招聘职位信息存在错误时的方法
     handleErrors(errors, fields) {
       this.$message.error(errors[0].message);
       this.errors = errors.reduce((p, c) => {
@@ -101,18 +98,23 @@ export default {
       // eslint-disable-next-line no-console
       console.debug(errors, fields);
     },
-    //判断是否是首页,控制显示用
-    justForIndex(){
-      if(this.uri==='/index.html') return true
+    //删除添加的职位信息
+    jobsDelte(index) {
+      this.jobsList.splice(index, 1);
+    },
+    //判断是否是首页和招聘会详情,控制显示用
+    forIndexAndDetail() {
+      if (this.uri === '/index.html' || this.uri === '/jobfairDetail.html') return true;
     },
     //企业申请加入招聘会
-    async apply(){
-      let result=await this.corpApply({fair_id:this.fair_id,jobs:this.jobsList})
-      this.$checkRes(result,()=>{
-      })
-    }
-  }
-}
+    async apply() {
+      let result = await this.corpApply({ fair_id: this.fair_id, jobs: this.jobsList });
+      this.$checkRes(result, () => {
+        this.popupVisible = false;
+      });
+    },
+  },
+};
 </script>
 
 <style lang='css' scoped>

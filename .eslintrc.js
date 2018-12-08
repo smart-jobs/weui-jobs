@@ -1,15 +1,33 @@
+// https://eslint.org/docs/user-guide/configuring
+
 module.exports = {
   root: true,
   env: {
-    node: true,
+    node: true
   },
-  extends: ['plugin:vue/essential', 'eslint:recommended'],
-  plugins: ['vue', 'prettier'],
+  extends: ["plugin:vue/essential", "@vue/prettier"],
+  plugins: ["vue"],
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    "max-len": [
+      "warn",
+      {
+        code: 250
+      }
+    ],
+    "no-unused-vars": "off",
+    "no-console": "off",
+    "prettier/prettier": [
+      "warn",
+      {
+        singleQuote: true,
+        trailingComma: "es5",
+        bracketSpacing: true,
+        jsxBracketSameLine: true,
+        printWidth: 160
+      }
+    ]
   },
   parserOptions: {
-    parser: 'babel-eslint',
-  },
+    parser: "babel-eslint"
+  }
 };

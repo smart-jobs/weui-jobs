@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 
-import _ from "lodash";
-import Axios from "axios";
-import { Util, Error } from "naf-core";
-import { Indicator } from "mint-ui";
-import util from "./user-util";
+import _ from 'lodash';
+import Axios from 'axios';
+import { Util, Error } from 'naf-core';
+import { Indicator } from 'mint-ui';
+import util from './user-util';
 
 const { trimData, isNullOrUndefined } = Util;
 const { ErrorCode } = Error;
@@ -13,14 +13,14 @@ const { ErrorCode } = Error;
 let currentRequests = 0;
 
 export default class AxiosWrapper {
-  constructor({ baseUrl = "", unwrap = true } = {}) {
+  constructor({ baseUrl = '', unwrap = true } = {}) {
     this.baseUrl = baseUrl;
     this.unwrap = unwrap;
   }
 
   // 替换uri中的参数变量
   static merge(uri, query = {}) {
-    if (!uri.includes(":")) {
+    if (!uri.includes(':')) {
       return uri;
     }
     const keys = [];
@@ -49,7 +49,7 @@ export default class AxiosWrapper {
   async $request(uri, data, query, options) {
     // TODO: 合并query和options
     if (_.isObject(query) && _.isObject(options)) {
-      options = { ...options, params: query, method: "get" };
+      options = { ...options, params: query, method: 'get' };
     } else if (_.isObject(query) && !query.params) {
       options = { params: query };
     } else if (_.isObject(query) && query.params) {
@@ -61,20 +61,20 @@ export default class AxiosWrapper {
 
     currentRequests += 1;
     Indicator.open({
-      spinnerType: "fading-circle"
+      spinnerType: 'fading-circle',
     });
 
     try {
       const axios = Axios.create({
-        baseURL: this.baseUrl
+        baseURL: this.baseUrl,
       });
       axios.defaults.headers.common.Authorization = util.token;
       let res = await axios.request({
-        method: isNullOrUndefined(data) ? "get" : "post",
+        method: isNullOrUndefined(data) ? 'get' : 'post',
         url,
         data,
-        responseType: "json",
-        ...options
+        responseType: 'json',
+        ...options,
       });
       res = res.data;
       const { errcode, errmsg, details } = res;
@@ -84,19 +84,19 @@ export default class AxiosWrapper {
       }
       // unwrap data
       if (this.unwrap) {
-        res = _.omit(res, ["errcode", "errmsg", "details"]);
+        res = _.omit(res, ['errcode', 'errmsg', 'details']);
         const keys = Object.keys(res);
-        if (keys.length === 1 && keys.includes("data")) {
+        if (keys.length === 1 && keys.includes('data')) {
           res = res.data;
         }
       }
       return res;
     } catch (err) {
-      let errmsg = "接口请求失败，请稍后重试";
+      let errmsg = '接口请求失败，请稍后重试';
       if (err.response) {
         const { status } = err.response;
-        if (status === 401) errmsg = "用户认证失败，请重新登录";
-        if (status === 403) errmsg = "当前用户不允许执行该操作";
+        if (status === 401) errmsg = '用户认证失败，请重新登录';
+        if (status === 403) errmsg = '当前用户不允许执行该操作';
       }
       console.error(
         `[AxiosWrapper] 接口请求失败: ${err.config && err.config.url} - 

@@ -21,41 +21,29 @@
 </template>
 
 <script>
-
 export default {
-
-  data() {
-    return {
-    }
-  },
   computed: {
     selected: {
-      get: function () {
-        let uri = window.location.pathname
+      get() {
+        let uri = window.location.pathname;
         return uri;
       },
 
-      set: function (value) {
-        this.turnTo(value)
-      }
-
+      set(value) {
+        this.turnTo(value);
+      },
     },
-
   },
   methods: {
-    turnTo: function (where) {
+    turnTo(where) {
       if (where === '/index.html') {
-        window.location.href = "/index.html"
+        window.location.href = '/index.html';
       } else if (where === '/my.html') {
-        window.location.href = "/my.html"
-      } else if (where === "account") {
+        window.location.href = '/my.html';
+      } else if (where === 'account') {
         location.href = '/weixin/ui/center/index.html';
-
       }
     },
-  }
-
-
-
-}
+  },
+};
 </script>
