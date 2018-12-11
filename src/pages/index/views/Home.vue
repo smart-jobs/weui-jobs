@@ -20,7 +20,7 @@
                   <span>
                     <calendar :time="scope.row.date"></calendar>
                     <!--所有3个列表的信息ul都没有加详情页的跳转(多页面的跳转)-->
-                    <ul @click="toDetail('jobfairDetail',scope.row._id)" style="float:left; width:53%; margin-right:2%;">
+                    <ul @click="toDetail('jobfairDetail',scope.row)" style="float:left; width:53%; margin-right:2%;">
                         <li class="tit">{{ scope.row.subject }} </li>
                         <li class="txt">举办地址：{{ scope.row.address }}</li>
                         <li class="txt mb0">举办日期：{{ scope.row.date }}</li>
@@ -58,7 +58,7 @@
               <template slot-scope="scope">
                 <span>
                   <calendar :time="scope.row.date"></calendar>
-                  <ul @click="toDetail('campusDetail',scope.row._id)" style="float:left; width:73%; margin-right:3%;">
+                  <ul @click="toDetail('campusDetail',scope.row)" style="float:left; width:73%; margin-right:3%;">
                     <li class="tit">{{ scope.row.subject }}</li>
                     <li class="txt">举办地址：{{ scope.row.address }}</li>
                     <li class="txt mb0">举办日期：{{ scope.row.date }}</li>
@@ -81,7 +81,7 @@
                 <el-table-column>
                 <template slot-scope="scope">
                   <span>
-                    <ul @click="toDetail('jobinfoDetail',scope.row._id)"  style="float:left; width:78%; margin-right:2%;">
+                    <ul @click="toDetail('jobinfoDetail',scope.row)"  style="float:left; width:78%; margin-right:2%;">
                       <li class="tit">{{ scope.row.title }}</li>
                       <li class="txtOne">需求人数：{{ scope.row.count }}</li>
                       <li class="txtOne">工作性质：{{scope.row.nature&&scope.row.nature.name }}</li>
@@ -91,7 +91,7 @@
                       <li style="font-size:12px; color:#888;"> </li>
                     </ul>
                     <span v-if='isDateOff(scope.row.expired)&&checkDisplay("user")'>
-                      <deliverResume :userid="user.userid" :corpid="scope.row.corpid" :origin="scope.row._id" :_tenant="scope.row._tenant" :type="'0'"></deliverResume>
+                      <deliverResume :corpid="scope.row.corpid" :origin="scope.row._id" :_tenant="scope.row._tenant" :type="'0'"></deliverResume>
                     </span>
                   </span>
                 </template>
@@ -137,10 +137,10 @@ export default {
       active: 'tab0',
     };
   },
-  created() {
-    this.getData();
+  async created() {
+    await this.getData();
     if (_.get(this.user, 'role') === 'corp') {
-      this.getCorpInfo();
+      await this.getCorpInfo();
     }
   },
   computed: {
@@ -198,9 +198,10 @@ export default {
       this.$checkRes(result, () => {});
     },
     //跳转详情页
-    toDetail(type, id) {
-      window.location.href = `/${type}.html?id=${id}`;
-      // window.location.href='/'+type+'.html?id='+id
+    toDetail(type, row) {
+      let url = `/${type}.html?id=${row._id}`;
+      if (type === 'jobinfoDetail') url += `&corpid=${row.corpid}`;
+      window.location.href = url;
     },
   },
 };

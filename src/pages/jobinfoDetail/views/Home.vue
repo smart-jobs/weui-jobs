@@ -4,9 +4,7 @@
             <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
         </mt-header>    
         <mt-cell :title="detail.title"  class="width" id="title"></mt-cell>
-        <mt-cell class="width" title="企业名称" style="text-align:left;" ><!--点击跳转企业详情@click.native.prevent="change(detail.corpid,detail._tenant)"-->
-              <span style="color:black;font-size: 14px; padding: 10px 0; line-height: 20px;"> {{detail.corpname}} </span>
-        </mt-cell>
+        <corpInfo :titleBtn="true" :corpName="detail.corpname" :corpid="detail.corpid" :_tenant="detail._tenant" :origin="detail._id" :type="'0'"></corpInfo>
         <mt-cell class="width"  title="薪资待遇" style="text-align:left;">
               <span style="color:black;font-size: 14px;"> {{{data:detail,searchItem:"salary.name"}|getName}} </span>
         </mt-cell>
@@ -32,7 +30,6 @@
               <span style="color:black;font-size: 14px;"> {{findUnit(detail.unit)}} </span>
         </mt-cell>
          <mt-cell>
-            <!--<mt-button style="position: absolute !important; left: 42% !important;" type="primary" v-if='isDateOff(detail.expired)&&checkDisplay("user")' @click="apply('user')">投简历</mt-button>-->
               <deliverResume v-if='isDateOff(detail.expired)&&checkDisplay("user")' :userid="user.userid" :corpid="detail.corpid" :origin="detail._id" :_tenant="detail._tenant" :type="'0'"></deliverResume>
         </mt-cell> 
         <mt-tab-container v-model="active">
@@ -47,6 +44,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import deliverResume from '@/components/deliverResume.vue';
+import corpInfo from '@/components/corpInfo.vue';
 import methodsUtil from '@/util/methods-util';
 import _ from 'lodash';
 export default {
@@ -56,19 +54,17 @@ export default {
   },
   components: {
     deliverResume,
+    corpInfo,
   },
   data() {
     return {
-      detail: {},
-      corpdetail: [],
       active: 'tab0',
-      navbar: ['招聘会详情', '参展企业'],
     };
   },
-  created() {
-    this.getData();
+  async created() {
+    await this.jobinfoDetail();
     if (_.get(this.user, 'role') === 'corp') {
-      this.getCorpInfo();
+      await this.getCorpInfo();
     }
   },
   computed: {
@@ -76,17 +72,11 @@ export default {
       unitList: state => state.publics.unitList,
       user: state => state.publics.user,
       corpInfo: state => state.publics.corpInfo,
+      detail: state => state.self.detail,
     }),
   },
   methods: {
     ...mapActions(['jobinfoDetail', 'getCorpInfo']),
-    //获取招聘会详情
-    async getData() {
-      let jobinfoDetail = await this.jobinfoDetail();
-      this.$checkRes(jobinfoDetail, () => {
-        this.detail = jobinfoDetail;
-      });
-    },
     //筛选分站信息
     findUnit(unit) {
       let result;

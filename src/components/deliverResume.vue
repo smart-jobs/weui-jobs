@@ -1,22 +1,24 @@
 <template lang='html'>
   <div id="deliverResume">
       <!--@click="deliver(scope.row._id,scope.row.corpid,'jobinfo',scope.row._tenant)"-->
-    <mt-button v-if="uri.includes('/index.html')" type="primary" size='small' @click="popupVisible=true">
+    <mt-button v-if="titleBtn" class="bgnone"   @click="display()">投简历</mt-button>
+    <mt-button v-if="uri.includes('/index.html')" type="primary" size='small' @click="display()">
         投简历
     </mt-button>
 
-    <mt-button v-else style="position: absolute ; left: 42% ;" type="primary"  @click="popupVisible=true">
+    <mt-button v-if="uri.includes('jobinfoDetail')&&titleBtn==false" style="position: absolute ; left: 42% ;" type="primary"  @click="display()">
         投简历
     </mt-button>
 
     <mt-popup
         v-model="popupVisible"
         position="center"
+        :modal="false"
         style="align:center; overflow-y:scroll;width:80%;height:75%;">
         <mt-header title="选择简历模板">
             <mt-button  class="bgnone"  slot="left" @click="popupVisible=false">返回</mt-button>
             <mt-button class="bgnone"   slot="right" v-if="selectedId==''" disabled>选择</mt-button>
-            <mt-button  class="bgnone"  slot="right" @click="deliver()" v-else>投简历</mt-button>
+            <mt-button  class="bgnone"  slot="right" @click="toDeliver()" v-else>投简历</mt-button>
         </mt-header>  
 
         <template>
@@ -28,7 +30,7 @@
                     label="我的简历"
                     highlight-current-row
                     @current-change="select"
-                    :data="list"
+                    :data="resumeList"
                     style="width: 100%">
                     <el-table-column>
                     <template slot-scope="scope">
@@ -38,10 +40,12 @@
                     </template>
                     </el-table-column>
                     <template slot="empty">
-                        <ul>
-                            <li class="tit" @click="$router.push({path:'/wechatMyInfo',query:{type:'resumeAdd'}})">您没有简历,点击添加简历</li>
-                        </ul>
-                    </template>
+                    <ul>
+                      <li class="tit" @click="$router.push({path:'/wechatMyInfo',query:{type:'resumeAdd'}})">
+                        您没有简历,点击添加简历
+                      </li>
+                    </ul>
+                  </template>
                 </el-table>
                 <span v-if="canLoadMore" style="padding: 7px; display: block; font-size: 14px;">没有可加载的数据了</span>
                 <div slot="bottom" class="mint-loadmore-bottom">
@@ -54,49 +58,38 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 export default {
   name: 'deliverResume',
   props: {
-    userid: { type: String, default: null }, //用户id
     origin: { type: String, default: null }, //来源id=>招聘会id/招聘信息id
     corpid: { type: String, default: null }, //企业id
     type: { type: String, defalut: '0' }, //类型=>0:招聘信息;1:招聘会
     _tenant: { type: String, defalut: null }, //分站信息,query部分
+    titleBtn: { type: Boolean, defalut: false }, //企业详情页在标题框左侧显示投简历
   },
   data() {
     return {
-      list: [],
       skip: 0,
       limit: 10,
       uri: window.location.pathname,
       popupVisible: false,
       canLoadMore: false,
       selectedId: '',
-      api: {
-        resumeList: '/weixin/api/jobs/resume/list', //query:userid,skip,limit
-        //query:userid,_tenant;     body:corpid,resumeid=>selectId,type?0:1,origin:jobfair/jobinfo-id
-        deliver: '/weixin/api/jobs/letter/deliver',
-      },
     };
   },
-  created() {
-    this.getData();
+  computed: {
+    ...mapState({
+      user: state => state.publics.user,
+      resumeList: state => state.publics.resumeList,
+    }),
   },
   methods: {
+    ...mapActions(['getResumeList', 'deliver']),
     //获取简历列表
     async getData() {
-      let result = await this.$axios.$get(this.api.resumeList, { userid: this.userid, skip: this.skip, limit: this.limit });
-      this.$checkRes(result, () => {
-        if (this.skip === 0) {
-          this.list = result;
-        } else {
-          result.forEach(item => {
-            this.list.push(item);
-          });
-        }
-        //判断是否还可以读取数据
-        // this.canLoad(result.total);
-      });
+      console.log(this.titleBtn);
+      await this.getResumeList({ skip: this.skip, limit: this.limit });
     },
     //(手指)向下拉,重载列表
     async loadTop() {
@@ -123,13 +116,19 @@ export default {
       this.selectedId = currentRow._id;
     },
     //投递简历
-    async deliver() {
+    async toDeliver() {
       const data = { corpid: this.corpid, resumeid: this.selectedId, type: this.type, origin: this.origin };
-      console.log(data);
-      let result = await this.$axios.$post(this.api.deliver, data, { userid: this.userid, _tenant: this._tenant });
+      let result = await this.deliver({ data: data, _tenant: this._tenant });
+      console.log(this.$checkRes(result, () => {}));
       this.$checkRes(result, () => {
         this.popupVisible = false;
       });
+      this.selectedId = '';
+    },
+    //显示弹框内容
+    async display() {
+      this.popupVisible = true;
+      await this.getData();
     },
   },
 };

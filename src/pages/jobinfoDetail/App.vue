@@ -22,9 +22,9 @@ export default {
   data() {
     return {};
   },
-  created() {
-    this.getUser();
-    this.loadUnit();
+  async created() {
+    await this.getUser();
+    await this.loadUnit();
   },
   methods: {
     //获取用户信息,获取分站列表

@@ -1,24 +1,42 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import methodsUtil from '@/util/methods-util';
+import * as types from './mutation-types';
 
 Vue.use(Vuex);
 
 const api = {
   jobinfoDetail: '/weixin/api/jobs/jobinfo/fetch',
+  corpInfo: '/weixin/api/corp/details',
 };
 
-export const state = () => ({});
+export const state = () => ({
+  detail: {},
+  corpInfo: {},
+});
 
-export const mutations = {};
+export const mutations = {
+  [types.DETAIL](state, payload) {
+    state.detail = payload;
+  },
+  [types.CORPINFO](state, payload) {
+    state.corpInfo = payload;
+  },
+};
 
 export const actions = {
-  //获取招聘会详情
-  async jobinfoDetail() {
+  //获取招聘信息详情
+  async jobinfoDetail({ commit }) {
     let param = methodsUtil.getParams();
     let jobinfoDetail = await this.$axios.$get(api.jobinfoDetail, {
       id: param.id,
     });
-    return jobinfoDetail;
+    commit(types.DETAIL, jobinfoDetail);
+  },
+  //获取查看的企业详情
+  async corpInfos({ commit }, payload) {
+    const { corpid, _tenant } = payload;
+    let result = await this.$axios.$get(api.corpInfo, { corpid: corpid, _tenant: _tenant });
+    commit(types.CORPINFO, result);
   },
 };

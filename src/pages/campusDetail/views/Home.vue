@@ -1,12 +1,10 @@
 <template lang="html">
   <div id="Home">
-        <mt-header title="宣讲会详情">
+      <mt-header title="宣讲会详情">
             <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
         </mt-header> 
         <mt-cell  class="width" :title="detail.subject" id="title"></mt-cell>
-        <mt-cell class="width" title="举办企业" style="text-align:left;">
-              <span style="color:black;"> {{detail.corpname}}</span>
-        </mt-cell>
+        <corpInfo :titleBtn="false" :corpName="detail.corpname" :corpid="detail.corpid" :_tenant="detail._tenant" ></corpInfo>
         <mt-cell class="width" title="分站信息" style="text-align:left;">
               <span style="color:black;"> {{findUnit(detail.unit)}}</span>
         </mt-cell>
@@ -44,6 +42,7 @@ import { mapActions, mapState } from 'vuex';
 import _ from 'lodash';
 import newNavbar from '@/components/newNavbar.vue';
 import jobsList from '@/components/showJobsList-card.vue';
+import corpInfo from '@/components/corpInfo.vue';
 export default {
   name: 'Home',
   metaInfo: {
@@ -52,18 +51,18 @@ export default {
   components: {
     newNavbar,
     jobsList,
+    corpInfo,
   },
   data() {
     return {
-      detail: {},
       active: 'tab0',
       navbar: ['宣讲会详情', '招聘职位'],
     };
   },
-  created() {
-    this.getData();
+  async created() {
+    await this.campusDetail();
     if (_.get(this.user, 'role') === 'corp') {
-      this.getCorpInfo();
+      await this.getCorpInfo();
     }
   },
   computed: {
@@ -71,17 +70,11 @@ export default {
       unitList: state => state.publics.unitList,
       user: state => state.publics.user,
       corpInfo: state => state.publics.corpInfo,
+      detail: state => state.self.detail,
     }),
   },
   methods: {
     ...mapActions(['campusDetail', 'getCorpInfo']),
-    //获取招聘会详情
-    async getData() {
-      let campusDetail = await this.campusDetail();
-      this.$checkRes(campusDetail, () => {
-        this.detail = campusDetail;
-      });
-    },
     //筛选分站信息
     findUnit(unit) {
       let result;

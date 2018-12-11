@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import util from '@/util/user-util';
 import { Util } from 'naf-core';
+import _ from 'lodash';
 import * as types from './mutation-types';
 
 Vue.use(Vuex);
@@ -13,6 +14,8 @@ const api = {
   corpInfo: '/weixin/api/corp/details',
   userApplyJobFair: '/weixin/api/jobs/jobfair/ticket/apply',
   corpApplyJobFair: '/weixin/api/jobs/jobfair/corp/apply',
+  resumeList: '/weixin/api/jobs/resume/list',
+  deliver: '/weixin/api/jobs/letter/deliver',
 };
 
 export const state = () => ({
@@ -21,6 +24,7 @@ export const state = () => ({
   openid: '',
   token: '',
   user: {},
+  resumeList: [],
 });
 
 export const mutations = {
@@ -34,6 +38,16 @@ export const mutations = {
   },
   [types.GET_CORPINFO](state) {
     state.corpInfo = util.corpInfo;
+  },
+  [types.RESUMELIST](state, payload) {
+    const { result, skip } = payload;
+    if (skip === 0) {
+      state.resumeList = result;
+    } else {
+      state.resumeList.forEach(item => {
+        this.list.push(item);
+      });
+    }
   },
 };
 
@@ -86,6 +100,20 @@ export const actions = {
     const { corpid } = user;
     const { fair_id, jobs } = payload;
     const result = await this.$axios.$post(api.corpApplyJobFair, { jobs }, { fair_id: fair_id, corpid: corpid });
+    return result;
+  },
+  //获取简历列表
+  async getResumeList({ commit, state }, payload) {
+    let userid = _.get(state, 'user.userid');
+    const { skip, limit } = payload;
+    let result = await this.$axios.$get(api.resumeList, { userid: userid, skip: skip, limit: limit });
+    commit(types.RESUMELIST, { result: result, skip: skip });
+  },
+  //投递简历
+  async deliver({ state }, payload) {
+    let userid = _.get(state, 'user.userid');
+    const { data, _tenant } = payload; //data:corpid,resumeid,type,origin
+    let result = await this.$axios.$post(api.deliver, data, { userid: userid, _tenant: _tenant });
     return result;
   },
 };

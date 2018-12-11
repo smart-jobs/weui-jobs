@@ -36,7 +36,7 @@
 
             <mt-tab-container-item id="tab1">
                 <span v-for="(item,index) in corpList" :key="index" id="com">
-                    <mt-cell :title="item.corpname"  is-link @click.native.prevent="change(item.corpid,detail._tenant,'jobfair')"></mt-cell>
+                    <corpInfo :titleBtn="true" :corpName="item.corpname" :corpid="item.corpid" :_tenant="detail._tenant" :origin="detail._id" :type="'1'"></corpInfo>
                 </span>
             </mt-tab-container-item>
         </mt-tab-container>
@@ -49,6 +49,7 @@ import { mapActions, mapState } from 'vuex';
 import methodsUtil from '@/util/methods-util';
 import _ from 'lodash';
 import newNavbar from '@/components/newNavbar.vue';
+import corpInfo from '@/components/corpInfo.vue';
 import addJobsPage from '@/components/addJobsPage.vue';
 export default {
   name: 'Home',
@@ -58,19 +59,18 @@ export default {
   components: {
     newNavbar,
     addJobsPage,
+    corpInfo,
   },
   data() {
     return {
-      detail: {},
-      corpList: [],
       active: 'tab0',
       navbar: ['招聘会详情', '参展企业'],
     };
   },
-  created() {
-    this.getData();
+  async created() {
+    await this.jobfairDetail();
     if (_.get(this.user, 'role') === 'corp') {
-      this.getCorpInfo();
+      await this.getCorpInfo();
     }
   },
   computed: {
@@ -78,20 +78,12 @@ export default {
       unitList: state => state.publics.unitList,
       user: state => state.publics.user,
       corpInfo: state => state.publics.corpInfo,
+      detail: state => state.self.detail,
+      corpList: state => state.self.corpList,
     }),
   },
   methods: {
     ...mapActions(['jobfairDetail', 'getCorpInfo']),
-    //获取招聘会详情
-    async getData() {
-      let { jobfairDetail, jobfairCorpList } = await this.jobfairDetail();
-      this.$checkRes(jobfairDetail, () => {
-        this.detail = jobfairDetail;
-      });
-      this.$checkRes(jobfairCorpList, () => {
-        this.corpList = jobfairCorpList;
-      });
-    },
     //筛选分站信息
     findUnit(unit) {
       let result;
