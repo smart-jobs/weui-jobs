@@ -13,7 +13,7 @@ import footerbar from '@/components/footerbar.vue';
 export default {
   name: 'App',
   metaInfo: {
-    title: '',
+    title: '首页',
     titleTemplate: '智慧就业 - %s',
   },
   components: {

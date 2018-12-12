@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require('path');
 
 module.exports = {
   baseUrl: './',
@@ -7,6 +7,9 @@ module.exports = {
     jobfairDetail: 'src/pages/jobfairDetail/main.js',
     campusDetail: 'src/pages/campusDetail/main.js',
     jobinfoDetail: 'src/pages/jobinfoDetail/main.js',
+    indexList: 'src/pages/indexList/main.js',
+    user: 'src/pages/user/main.js',
+    corp: 'src/pages/corp/main.js',
   },
   configureWebpack: config => {
     Object.assign(config, {

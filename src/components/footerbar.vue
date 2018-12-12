@@ -6,8 +6,8 @@
     <img v-else slot="icon" src="@/assets/img/首页.png">
     首页
   </mt-tab-item>
-  <mt-tab-item id="/my.html">
-    <img v-if="selected=='/my.html'" slot="icon" src="@/assets/img/我的1.png">
+  <mt-tab-item :id="myUrl">
+    <img v-if="selected==myUrl" slot="icon" src="@/assets/img/我的1.png">
     <img v-else slot="icon" src="@/assets/img/我的.png">
     我的
   </mt-tab-item>
@@ -21,8 +21,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import _ from 'lodash';
 export default {
   computed: {
+    ...mapState({
+      user: state => state.publics.user,
+    }),
     selected: {
       get() {
         let uri = window.location.pathname;
@@ -33,15 +38,23 @@ export default {
         this.turnTo(value);
       },
     },
+    myUrl: {
+      get() {
+        let role = _.get(this.user, 'role');
+        if (role === 'corp') {
+          return '/corp.html';
+        } else {
+          return '/user.html';
+        }
+      },
+    },
   },
   methods: {
     turnTo(where) {
-      if (where === '/index.html') {
-        window.location.href = '/index.html';
-      } else if (where === '/my.html') {
-        window.location.href = '/my.html';
-      } else if (where === 'account') {
+      if (where === 'account') {
         location.href = '/weixin/ui/center/index.html';
+      } else {
+        window.location.href = `${where}`;
       }
     },
   },

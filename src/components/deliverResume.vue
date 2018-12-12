@@ -2,7 +2,7 @@
   <div id="deliverResume">
       <!--@click="deliver(scope.row._id,scope.row.corpid,'jobinfo',scope.row._tenant)"-->
     <mt-button v-if="titleBtn" class="bgnone"   @click="display()">投简历</mt-button>
-    <mt-button v-if="uri.includes('/index.html')" type="primary" size='small' @click="display()">
+    <mt-button v-if="uri.includes('index')" type="primary" size='small' @click="display()">
         投简历
     </mt-button>
 
@@ -71,7 +71,6 @@ export default {
   data() {
     return {
       skip: 0,
-      limit: 10,
       uri: window.location.pathname,
       popupVisible: false,
       canLoadMore: false,
@@ -82,6 +81,7 @@ export default {
     ...mapState({
       user: state => state.publics.user,
       resumeList: state => state.publics.resumeList,
+      limit: state => state.self.limit,
     }),
   },
   methods: {

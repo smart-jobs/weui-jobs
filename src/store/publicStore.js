@@ -25,6 +25,7 @@ export const state = () => ({
   token: '',
   user: {},
   resumeList: [],
+  limit: 10,
 });
 
 export const mutations = {

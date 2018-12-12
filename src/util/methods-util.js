@@ -1,23 +1,8 @@
-import { MessageBox } from 'mint-ui';
 import { Util } from 'naf-core';
 
 const { isNullOrUndefined } = Util;
 
 export default {
-  //是否提示信息
-  messageAlert(info) {
-    let msg = '';
-    console.log(info);
-    if (isNullOrUndefined(info)) {
-      return;
-    } else {
-      msg = info;
-    }
-    MessageBox({
-      title: '提示',
-      message: msg,
-    });
-  },
   //判断信息是否过期
   isDateOff(dataDate) {
     const now = new Date();
