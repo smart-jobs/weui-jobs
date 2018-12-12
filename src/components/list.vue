@@ -26,9 +26,9 @@
                     <!--招聘信息-->
                     <deliverResume v-if='selectBtn()==="jobinfoList"&&isDateOff(scope.row.expired)&&checkDisplay("user")' :corpid="scope.row.corpid" :origin="scope.row._id" :_tenant="scope.row._tenant" :type="'0'"></deliverResume>
                     <!--学生简历=>删除-->
-                    <mt-button v-if='selectBtn()==="/resumeList"' type='danger' size='small'>删除</mt-button>
+                    <!-- <mt-button v-if='selectBtn()==="resumeList"' type='danger' size='small' @click="toDeleteResume(scope.row._id)">删除</mt-button> -->
                     <!--入场券二维码-->
-                    <qrcode v-if='selectBtn()==="/ticketList"'></qrcode>
+                    <qrcode v-if='selectBtn()==="ticketList"' :fair_id='scope.row.fair_id'></qrcode>
                   </span>
                 </template>
               </el-table-column>
@@ -62,6 +62,7 @@ export default {
   },
   props: {
     needBtn: { type: Boolean, default: false },
+    type: { type: String, default: '' },
   },
   data() {
     return {
@@ -84,30 +85,29 @@ export default {
   },
   async created() {
     this.selcetOptionsTitle();
-    await this.loadList(this.skip);
+    await this.loadList({ skip: this.skip, type: this.type });
     this.canLoad();
+    console.log(this.list);
   },
   methods: {
-    ...mapActions(['loadList', 'userApply', 'getCorpInfo', 'userApply', 'corpApply']),
+    ...mapActions(['loadList', 'userApply', 'getCorpInfo', 'userApply', 'corpApply', 'deleteResume']),
     //-----数据加载部分:-----
     //(手指)向下拉,重载列表
     async loadTop() {
       this.skip = 0;
-      console.log(this.skip);
-      await this.loadList(this.skip);
+      await this.loadList({ skip: this.skip, type: this.type });
       this.canLoad();
       this.$refs.loadmore.onTopLoaded();
     },
     //(手指)向上拉,继续读取数据
     async loadBottom() {
       this.skip += this.limit;
-      console.log(this.skip);
-      await this.loadList(this.skip);
+      await this.loadList({ skip: this.skip, type: this.type });
       this.canLoad();
       this.$refs.loadmore.onBottomLoaded();
     },
     //判断是否可以继续读取数据
-    canLoad(resultTotal) {
+    canLoad() {
       if (this.list.length >= this.total) {
         this.loadMore = true;
       } else {
@@ -119,7 +119,7 @@ export default {
       //首页的3个列表是location.herf;其他的跳转应该都是路由改变
       let routerPath = this.$route.path;
       let params = methodsUtil.getParams();
-      if (!isNullOrUndefined(params)) {
+      if (isNullOrUndefined(routerPath)) {
         if (_.get(params, 'type') === 'jobfairList') {
           window.location.href = `/jobfairDetail.html?id=${row._id}`;
         } else if (_.get(params, 'type') === 'campusList') {
@@ -141,6 +141,21 @@ export default {
       if (optionTitle.prop === 'unit') {
         let unitName = this.findUnit(result);
         return `${optionTitle.label}:${unitName}`;
+      } else if (optionTitle.prop === 'type') {
+        let routerPath = this.$route.name;
+        if (routerPath === 'letterList') {
+          let text = result === 0 ? '招聘信息' : '招聘会';
+          return `类型:${text}`;
+        } else if (routerPath === 'ticketList') {
+          let text = result === 0 ? '受限票' : '普通票';
+          return `${text}`;
+        }
+      } else if (optionTitle.prop === 'status') {
+        let text = result === 0 ? '已接收' : result === 1 ? '已接受' : '已拒绝';
+        return `状态:${text}`;
+      } else if (optionTitle.prop === 'origin') {
+        let text = result === 0 ? '本校学生' : '校外学生';
+        return `${text}`;
       } else if (optionTitle.label !== '') {
         return `${optionTitle.label}:${result}`;
       } else {
@@ -169,9 +184,9 @@ export default {
     selectBtn() {
       //两部分判断,1)一部分是取出url的参数判断是:企业申请加入招聘会/学生参加招聘会,还是学生投简历
       //2)另一部分是url都是user,判断路由是:学生简历的删除,还是入场券的二维码
-      let routerPath = this.$route.path;
+      let routerPath = this.$route.name;
       let params = methodsUtil.getParams();
-      if (!isNullOrUndefined(params)) {
+      if (isNullOrUndefined(routerPath)) {
         //1)情况
         return params.type;
       } else {
@@ -201,10 +216,16 @@ export default {
       let result = await this.userApply({ fair_id: fair_id });
       this.$checkRes(result, () => {});
     },
+    //删除简历
+    async toDeleteResume(resumeid) {
+      let result = await this.deleteResume(resumeid);
+      this.$checkRes(result, () => {});
+    },
     //-----选择输出字段------
     selcetOptionsTitle() {
       //将标头整理到文件中,引用文件=>判断=>赋值
       let param = methodsUtil.getParams();
+      let routerPath = this.$route.name;
       if (param.type === 'jobfairList') {
         this.listContext = optionTitles.JOBFAIR_TITLE;
       } else if (param.type === 'campusList') {
@@ -212,6 +233,14 @@ export default {
       } else if (param.type === 'jobinfoList') {
         this.listContext = optionTitles.JOBINFO_TITLE;
         this.needCalendar = false;
+      } else if (routerPath === 'resumeList') {
+        this.listContext = optionTitles.RESUME_TITLE;
+        this.needCalendar = false;
+      } else if (routerPath === 'letterList') {
+        this.listContext = optionTitles.LETTER_TITLE;
+        this.needCalendar = false;
+      } else if (routerPath === 'ticketList') {
+        this.listContext = optionTitles.TICKET_TITLE;
       }
     },
   },

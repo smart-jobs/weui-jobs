@@ -36,9 +36,8 @@ export const mutations = {
 export const actions = {
   //获取指定列表内容
   async loadList({ state, commit }, payload) {
-    let skip = payload;
-    let param = methodsUtil.getParams();
-    let result = await this.$axios.$get(_.get(api, param.type), { skip: skip, limit: state.limit });
+    let { skip, type } = payload;
+    let result = await this.$axios.$get(_.get(api, type), { skip: skip, limit: state.limit });
     commit(types.LIST_FOR_COMPONENT, { data: result, skip: skip });
   },
 };

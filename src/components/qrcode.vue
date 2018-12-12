@@ -24,11 +24,11 @@ export default {
   name: 'qrcodes',
   props: {
     ticketType: { type: String, default: '普通票' },
+    fair_id: { type: String, default: '' },
   },
   data() {
     return {
       popupVisible: false,
-      text: 'nope',
     };
   },
   computed: {
@@ -38,7 +38,6 @@ export default {
   },
   methods: {
     initQrcode() {
-      let self = this;
       var qrcode = new QRCode('qrcode', {
         width: 150,
         height: 150,
@@ -48,7 +47,7 @@ export default {
       });
 
       qrcode.clear();
-      qrcode.makeCode(this.text);
+      qrcode.makeCode(this.fair_id);
     },
     display() {
       this.popupVisible = true;

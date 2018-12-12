@@ -1,1 +1,2 @@
 export const LIST_FOR_COMPONENT = 'LIST_FOR_COMPONENT';
+export const USER_INFO = 'USER_INFO';

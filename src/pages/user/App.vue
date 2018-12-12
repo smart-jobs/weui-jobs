@@ -25,10 +25,11 @@ export default {
   async created() {
     await this.getUser();
     await this.loadUnit();
+    await this.getUserInfo();
   },
   methods: {
     //获取用户信息,获取分站列表
-    ...mapActions(['getUser', 'loadUnit']),
+    ...mapActions(['getUser', 'loadUnit', 'getUserInfo']),
   },
 };
 </script>

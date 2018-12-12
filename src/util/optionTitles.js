@@ -20,3 +20,19 @@ export const JOBINFO_TITLE = [
   { prop: 'xlreqs.name', label: '最低学历' },
   { prop: 'unit', label: '分站信息' },
 ];
+
+export const RESUME_TITLE = [{ prop: 'title', label: '' }];
+
+export const LETTER_TITLE = [
+  { prop: 'title', label: '' },
+  { prop: 'corpname', label: '企业名称' },
+  { prop: 'type', label: '类型' },
+  { prop: 'status', label: '状态' },
+];
+
+export const TICKET_TITLE = [
+  { prop: 'subject', label: '' },
+  { prop: 'type', label: '门票类型' },
+  { prop: 'origin', label: '' },
+  { prop: 'date', label: '举办日期' },
+];

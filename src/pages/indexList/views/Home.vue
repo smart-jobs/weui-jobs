@@ -4,7 +4,7 @@
         <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
       </mt-header>
 
-          <list :needBtn='true'> </list>
+          <list :type='type' :needBtn='true'> </list>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ import _ from 'lodash';
 export default {
   name: 'Home',
   metaInfo: {
-    title: '首页',
+    title: '首页列表',
   },
   components: {
     list,
@@ -36,6 +36,11 @@ export default {
       corpInfo: state => state.publics.corpInfo,
       limit: state => state.self.limit,
     }),
+    type: {
+      get() {
+        return _.get(methodsUtil.getParams(), 'type');
+      },
+    },
   },
   methods: {
     //获取首页列表;学生申请门票
