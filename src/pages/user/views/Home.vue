@@ -35,7 +35,6 @@ export default {
     }),
   },
   methods: {
-    ...mapActions(['loadList']),
     //检查用户是否注册学籍
     check() {
       let userid = _.get(this.user, 'userid');

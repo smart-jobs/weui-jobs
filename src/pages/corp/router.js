@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import qrcode from '@/util/qrcode.vue';
 
 Vue.use(Router);
 
@@ -10,6 +11,11 @@ const router = new Router({
     {
       path: '/',
       component: Home,
+    },
+    {
+      path: '/qrcode',
+      name: 'qrcode',
+      component: qrcode,
     },
   ],
 });

@@ -26,9 +26,10 @@
                     <!--招聘信息-->
                     <deliverResume v-if='selectBtn()==="jobinfoList"&&isDateOff(scope.row.expired)&&checkDisplay("user")' :corpid="scope.row.corpid" :origin="scope.row._id" :_tenant="scope.row._tenant" :type="'0'"></deliverResume>
                     <!--学生简历=>删除-->
-                    <!-- <mt-button v-if='selectBtn()==="resumeList"' type='danger' size='small' @click="toDeleteResume(scope.row._id)">删除</mt-button> -->
+                    <mt-button v-if='selectBtn()==="resumeList"' type='danger' size='small' @click="toDeleteResume(scope.row._id)">删除</mt-button>
                     <!--入场券二维码-->
-                    <qrcode v-if='selectBtn()==="ticketList"' :fair_id='scope.row.fair_id'></qrcode>
+                    <mt-button v-if='selectBtn()==="ticketList"' type='primary' size='small' @click='toQrcode(scope.row)' > 二维码 </mt-button>
+                    <!-- <qrcode v-if='selectBtn()==="ticketList"' :fair_id='scope.row.fair_id'></qrcode> -->
                   </span>
                 </template>
               </el-table-column>
@@ -44,11 +45,10 @@ import _ from 'lodash';
 import methodsUtil from '@/util/methods-util';
 import calendar from '@/components/calendar.vue';
 import addJobsPage from '@/components/addJobsPage.vue';
-import qrcode from '@/components/qrcode.vue';
 import listOptions from '@/components/listOptions.vue';
 import deliverResume from '@/components/deliverResume.vue';
-import { Util } from 'naf-core';
 import * as optionTitles from '@/util/optionTitles';
+import { Util } from 'naf-core';
 
 const { isNullOrUndefined } = Util;
 export default {
@@ -57,7 +57,6 @@ export default {
     listOptions,
     calendar,
     deliverResume,
-    qrcode,
     addJobsPage,
   },
   props: {
@@ -85,13 +84,21 @@ export default {
   },
   async created() {
     this.selcetOptionsTitle();
-    await this.loadList({ skip: this.skip, type: this.type });
+    await this.getData();
     this.canLoad();
-    console.log(this.list);
   },
   methods: {
     ...mapActions(['loadList', 'userApply', 'getCorpInfo', 'userApply', 'corpApply', 'deleteResume']),
     //-----数据加载部分:-----
+    //根据加载列表不同,需要的参数不同,所以需要判断
+    async getData() {
+      let routerPath = this.$route.path;
+      if (isNullOrUndefined(routerPath)) {
+        await this.loadList({ skip: this.skip, type: this.type });
+      } else {
+        await this.loadList({ skip: this.skip, type: this.type, userid: this.user.userid });
+      }
+    },
     //(手指)向下拉,重载列表
     async loadTop() {
       this.skip = 0;
@@ -131,6 +138,11 @@ export default {
         }
       } else {
         //切换路由,之后写
+        if (routerPath.includes('resume')) {
+          this.$router.push({ name: 'resumeDetail', query: { id: row._id } });
+        } else if (routerPath.includes('letter')) {
+          this.$router.push({ name: 'letterDetail', query: { id: row._id } });
+        }
       }
     },
     //-----数据处理部分:-----
@@ -218,8 +230,15 @@ export default {
     },
     //删除简历
     async toDeleteResume(resumeid) {
-      let result = await this.deleteResume(resumeid);
-      this.$checkRes(result, () => {});
+      console.log(resumeid, this.user.userid);
+      let result = await this.deleteResume({ resumeid: resumeid, userid: this.user.userid });
+      this.$checkRes(result, () => {
+        this.getData();
+      });
+    },
+    //查看二维码
+    toQrcode(row) {
+      this.$router.push({ path: '/qrcode', query: { id: row._id, type: row.type } });
     },
     //-----选择输出字段------
     selcetOptionsTitle() {

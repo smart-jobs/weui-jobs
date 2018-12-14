@@ -55,4 +55,15 @@ export default {
   saveUnit(unitList) {
     sessionStorage.setItem('unit', JSON.stringify(unitList));
   },
+  get userInfo() {
+    const val = sessionStorage.getItem('userInfo');
+    if (val) return JSON.parse(val);
+    return null;
+  },
+  set userInfo(userInfo) {
+    sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+  },
+  saveUserInfo(userInfo) {
+    sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+  }
 };

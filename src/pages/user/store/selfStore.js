@@ -3,22 +3,33 @@ import Vuex from 'vuex';
 import methodsUtil from '@/util/methods-util';
 import * as types from './mutation-types';
 import _ from 'lodash';
+import util from '@/util/user-util';
+import { Util } from 'naf-core';
 
 Vue.use(Vuex);
 
+const { isNullOrUndefined } = Util;
 const api = {
-  resumeList: '/weixin/api/jobs/resume/list', //query:userid,skip,limit 返回所有数据
-  letterList: '/weixin/api/jobs/letter/mylist', //query:userid,skip,limit
-  ticketList: '/weixin/api/jobs/jobfair/ticket/mylist', //query:userid 返回所有数据
   userInfo: '/weixin/api/user/info',
+  //求职信
+  letterList: '/weixin/api/jobs/letter/mylist', //query:userid,skip,limit
+  letterDetail: '/weixin/api/jobs/letter/fetch', //query;id
+  //简历
+  resumeList: '/weixin/api/jobs/resume/list', //query:userid,skip,limit 返回所有数据
   deleteResume: '/weixin/api/jobs/resume/delete', //query:id,userid
+  createResume: '/weixin/api/jobs/resume/create', //query:userid
+  resumeDetail: '/weixin/api/jobs/resume/fetch', //query:id
+  updateResume: '/weixin/api/jobs/resume/update', //query:id,userid
+  //入场券
+  ticketList: '/weixin/api/jobs/jobfair/ticket/mylist', //query:userid 返回所有数据
 };
 
 export const state = () => ({
   limit: 10,
-  userInfo: {},
+  userInfo: null,
   listForComponent: [],
   totalForComponent: 0,
+  detail: null,
 });
 
 export const mutations = {
@@ -41,38 +52,68 @@ export const mutations = {
           state.listForComponent.push(item);
         });
       }
-      console.log(data);
       state.totalForComponent = state.listForComponent.length;
     }
   },
-  [types.USER_INFO](state, payload) {
-    state.userInfo = payload;
+  [types.USER_INFO](state) {
+    state.userInfo = util.userInfo;
+  },
+  [types.DETAIL](state, payload) {
+    state.detail = payload;
   },
 };
 
 export const actions = {
   //获取用户信息
-  async getUserInfo({ commit, rootState }) {
-    let result = await this.$axios.$get(api.userInfo, { id: rootState.publics.user.userid });
-    commit(types.USER_INFO, result);
+  async getUserInfo({ commit }, payload) {
+    const { userid } = payload;
+    if (isNullOrUndefined(util.userInfo)) {
+      let result = await this.$axios.$get(api.userInfo, { id: userid });
+      util.saveUserInfo(result);
+      commit(types.USER_INFO);
+    } else {
+      commit(types.USER_INFO);
+    }
   },
   //获取指定列表内容
-  async loadList({ state, commit, rootState }, payload) {
+  async loadList({ state, commit }, payload) {
     //更改,需要解构payload获得去加载哪个列表 ×
-    let { skip, type } = payload;
-    console.log('in function:');
+    let { skip, type, userid } = payload;
     let result = await this.$axios.$get(_.get(api, type), {
-      userid: rootState.publics.user.userid,
+      userid: userid,
       skip: skip,
       limit: state.limit,
     });
     commit(types.LIST_FOR_COMPONENT, { data: result, skip: skip, type: type });
   },
   //删除简历
-  async deleteResume({ rootState }, payload) {
-    let resumeid = payload;
-    let result = this.$axios.$post(api.deleteResume, null, { id: resumeid, userid: rootState.publics.user.userid });
-    console.log(result);
+  async deleteResume({ state }, payload) {
+    const { resumeid, userid } = payload;
+    console.log(resumeid, userid);
+    let result = this.$axios.$post(api.deleteResume, {}, { id: resumeid, userid: userid });
+    return result;
+  },
+  //查询详情
+  async loadDetail({ commit }, payload) {
+    const { uri, id } = payload;
+    let result = await this.$axios.$get(_.get(api, uri), { id: id });
+    commit(types.DETAIL, result);
+    return result;
+  },
+  //详情操作
+  async operateDetail({ state }, payload) {
+    const { uri, data, id, userid } = payload;
+    let result;
+    if (uri.includes('create')) {
+      result = this.$axios.$post(_.get(api, uri), data, {
+        userid: userid,
+      });
+    } else {
+      result = this.$axios.$post(_.get(api, uri), data, {
+        id: id,
+        userid: userid,
+      });
+    }
     return result;
   },
 };

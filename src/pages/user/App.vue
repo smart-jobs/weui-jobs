@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import footerbar from '@/components/footerbar.vue';
 export default {
   name: 'App',
@@ -19,13 +19,18 @@ export default {
   components: {
     footerbar,
   },
+  computed: {
+    ...mapState({
+      user: state => state.publics.user,
+    }),
+  },
   data() {
     return {};
   },
   async created() {
     await this.getUser();
     await this.loadUnit();
-    await this.getUserInfo();
+    await this.getUserInfo({ userid: this.user.userid });
   },
   methods: {
     //获取用户信息,获取分站列表

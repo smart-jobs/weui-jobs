@@ -1,33 +1,26 @@
 <template lang='html'>
   <div id="qrcodes">
-    <mt-button  type="primary" size='small' @click="display()">二维码</mt-button>
-    <mt-popup
-        v-model="popupVisible"
-        position="center"
-        style="align:center;width:80%;height:80%;">
         <mt-header title="二维码">
-            <mt-button  class="bgnone"  slot="left" @click="popupVisible=false">返回</mt-button>
+            <mt-button  class="bgnone"  slot="left" @click="$router.go(-1)">返回</mt-button>
         </mt-header>
-         <div id="qrcode"  style="position:absolute;top:30%;left:25%; width:100%;"></div>
+        <div id="qrcode"  style="position:absolute;top:30%;left:25%;"></div>
           <span v-if="user.role==='user'">
               <li class="txtQr" style="padding-top:7vh;">学生姓名：{{user.name||''}}</li>
               <li class="txtQr">门票类型：{{ ticketType }}</li>
           </span>
-    </mt-popup>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState, mapMutations } from 'vuex';
 import QRCode from 'qrcodejs2';
+
 export default {
   name: 'qrcodes',
-  props: {
-    ticketType: { type: String, default: '普通票' },
-    fair_id: { type: String, default: '' },
-  },
   data() {
     return {
+      id: this.$route.query.id || '',
+      ticketType: this.$route.query.type && this.$route.query.type === '0' ? '普通票' : '受限票' || '',
       popupVisible: false,
     };
   },
@@ -36,22 +29,24 @@ export default {
       user: state => state.publics.user,
     }),
   },
+  created() {
+    this.$nextTick(() => {
+      this.initQrcode();
+    });
+  },
   methods: {
     initQrcode() {
-      var qrcode = new QRCode('qrcode', {
-        width: 150,
-        height: 150,
-        colorDark: '#123456',
-        colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.L,
-      });
-
-      qrcode.clear();
-      qrcode.makeCode(this.fair_id);
-    },
-    display() {
-      this.popupVisible = true;
-      this.initQrcode();
+      if (!this.booForQrcode) {
+        var qrcode = new QRCode('qrcode', {
+          width: 150,
+          height: 150,
+          colorDark: '#123456',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.L,
+        });
+        qrcode.clear();
+        qrcode.makeCode(this.id);
+      }
     },
   },
 };
