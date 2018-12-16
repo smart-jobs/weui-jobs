@@ -10,7 +10,7 @@
       <newNavbar :titles="navbar" v-model="active"></newNavbar>
       <mt-tab-container v-model="active" style="width:100%; padding:0;">
         <!--主页-招聘会列表-->
-          <mt-tab-container-item id="tab0" style="width:100%; padding:0;">
+          <mt-tab-container-item id="tab1" style="width:100%; padding:0;">
             <el-table
               label="招聘会"
               :data="jobfairList.data"
@@ -26,7 +26,6 @@
                         <li class="txt" >分站信息：{{findUnit( scope.row.unit )}}</li>
                     </ul>
                     <!--style删掉就能看见按钮了,报名的判断少:isDateOff(scope.row.date)&&,先调样式不加-->
-                    <mt-button type="primary" size='small' @click="test(scope.row, 'address')">数据观察</mt-button>
                     <mt-button 
                         type="primary" 
                         size='small' 
@@ -48,7 +47,7 @@
             <!-- </router-link> -->
           </mt-tab-container-item>
           <!--主页-宣讲会列表-->
-          <mt-tab-container-item id="tab1" style="width:100%; padding:0;">
+          <mt-tab-container-item id="tab2" style="width:100%; padding:0;">
             <el-table
               label="宣讲会"
               :data="campusList.data"
@@ -72,7 +71,7 @@
             <!-- </router-link> -->
           </mt-tab-container-item>
           <!--主页-招聘信息列表-->
-          <mt-tab-container-item id="tab2" style="width:100% !important; padding:0 !important;">
+          <mt-tab-container-item id="tab3" style="width:100% !important; padding:0 !important;">
             <el-table
                 label="招聘信息"
                 :data="jobinfoList.data"
@@ -134,7 +133,7 @@ export default {
       jobinfoList: [],
       //列表选择表头
       navbar: ['招聘会', '宣讲会', '招聘信息'],
-      active: 'tab0',
+      active: 'tab1',
       listContext: [
         { prop: 'subject', label: '' },
         { prop: 'address', label: '举办地址' },

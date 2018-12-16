@@ -7,38 +7,100 @@ import _ from 'lodash';
 Vue.use(Vuex);
 
 const api = {
-  ResumeList: '/weixin/api/jobs/jobfair/query_g',
-  letterList: '/weixin/api/jobs/campus/query_g',
-  ticketList: '/weixin/api/jobs/jobinfo/query_g',
+  //企业招聘会
+  corpJobfairList: '/weixin/api/jobs/jobfair/corp/mylist', //query:corpid
+  corpJobfairDetail: '/weixin/api/jobs/jobfair/fetch', //query:id
+  corpJobfairJobList: '/weixin/api/jobs/jobfair/corp/fetch', //query:fair_id,corpid
+  corpJobfairJobAdd: '/weixin/api/jobs/jobfair/corp/job/add', //query:corpid,fair_id
+  corpJobfairJobDelete: '/weixin/api/jobs/jobfair/corp/job/delete', //query:corpid,job_id
+  //企业宣讲会
+  corpCampusList: '/weixin/api/jobs/campus/list', //query:corpid
+  corpCampusCreate: '/weixin/api/jobs/campus/create', //query:corpid,_tenant=>选择的分站,不是user调出来的
+  corpCampusUpdate: '/weixin/api/jobs/campus/update', //query:corpid,id,_tenant=>同上
+  //企业招聘信息
+  corpJobinfoList: '/weixin/api/jobs/jobinfo/list', //query:corpid
+  //企业求职信
+  corpLetterList: '/weixin/api/jobs/letter/list', //query:corpid,type=>0:招聘信息,1:招聘会
+  corpLetterDetail: '/weixin/api/jobs/letter/fetch', //query:id
+  corpLetterReply: '/weixin/api/jobs/letter/reply', //query:id,corpid
 };
 
 export const state = () => ({
-  limit: 1,
+  limit: 10,
   listForComponent: [],
   totalForComponent: 0,
+  detail: {},
 });
 
 export const mutations = {
   [types.LIST_FOR_COMPONENT](state, payload) {
-    const { data, skip } = payload;
-    if (skip === 0) {
-      state.listForComponent = _.get(data, 'data');
-      state.totalForComponent = _.get(data, 'total');
+    const { data, skip, type } = payload;
+    if (type === 'corpJobfairList') {
+      if (skip === 0) {
+        state.listForComponent = data;
+      } else {
+        data.forEach(item => {
+          state.listForComponent.push(item);
+        });
+      }
+      state.totalForComponent = state.listForComponent.length;
     } else {
-      _.get(data, 'data').forEach(item => {
-        state.listForComponent.push(item);
-      });
-      state.totalForComponent = _.get(data, 'total');
+      if (skip === 0) {
+        state.listForComponent = _.get(data, 'data');
+        state.totalForComponent = _.get(data, 'total');
+      } else {
+        _.get(data, 'data').forEach(item => {
+          state.listForComponent.push(item);
+        });
+        state.totalForComponent = _.get(data, 'total');
+      }
     }
+  },
+  [types.DETAIL](state, payload) {
+    state.detail = payload;
   },
 };
 
 export const actions = {
   //获取指定列表内容
   async loadList({ state, commit }, payload) {
-    let skip = payload;
-    let param = methodsUtil.getParams();
-    let result = await this.$axios.$get(_.get(api, param.type), { skip: skip, limit: state.limit });
-    commit(types.LIST_FOR_COMPONENT, { data: result, skip: skip });
+    let { skip, uri, corpid, type } = payload;
+    let result;
+    if (uri === 'corpLetterList') {
+      result = await this.$axios.$get(_.get(api, uri), { corpid: corpid, type: type, skip: skip, limit: state.limit });
+      return result;
+    } else {
+      result = await this.$axios.$get(_.get(api, uri), { corpid: corpid, skip: skip, limit: state.limit });
+      commit(types.LIST_FOR_COMPONENT, { data: result, skip: skip, type: uri });
+    }
+  },
+  //查询详情
+  async loadDetail({ commit }, payload) {
+    const { uri, id, corpid } = payload;
+    let result = await this.$axios.$get(_.get(api, uri), { id: id });
+    commit(types.DETAIL, result);
+    if (uri === 'corpJobfairDetail') {
+      result = this.$axios.$get(api.corpJobfairJobList, { fair_id: id, corpid: corpid });
+    }
+    return result;
+  },
+  //详情操作
+  async operateDetail({ state }, payload) {
+    const { uri, data, id, corpid, _tenant } = payload;
+    let result;
+    if (uri.includes('create')) {
+      result = this.$axios.$post(_.get(api, uri), data, { corpid: corpid });
+    } else if (uri === 'corpJobfairJobAdd') {
+      result = this.$axios.$post(_.get(api, uri), data, { fair_id: id, corpid: corpid });
+    } else if (uri === 'corpJobfairJobDelete') {
+      result = this.$axios.$post(_.get(api, uri), {}, { job_id: id, corpid: corpid });
+    } else if (uri === 'corpCampusCreate') {
+      result = this.$axios.$post(_.get(api, uri), data, { corpid: corpid, _tenant: _tenant });
+    } else if (uri === 'corpCampusUpdate') {
+      result = this.$axios.$post(_.get(api, uri), data, { corpid: corpid, _tenant: _tenant, id: id });
+    } else {
+      result = this.$axios.$post(_.get(api, uri), data, { id: id, corpid: corpid });
+    }
+    return result;
   },
 };

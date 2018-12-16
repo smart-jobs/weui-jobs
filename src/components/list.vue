@@ -2,6 +2,9 @@
   <div id="list">
       <template>
         <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="loadMore" :auto-fill="false" ref="loadmore">
+            <div slot="top" class="mint-loadmore-top">
+                <span style="padding: 7px 0; display: block; font-size: 14px;">刷新中...</span>
+            </div>
             <el-table
               :data="list"
               style="width: 100%;">
@@ -34,6 +37,10 @@
                 </template>
               </el-table-column>
             </el-table>
+            <span  style="padding: 7px 0; display: block; font-size: 14px;" v-if="loadMore">没有可加载的数据了</span>
+            <div slot="bottom" class="mint-loadmore-bottom">
+                <span  style="padding: 7px 0; display: block; font-size: 14px;" v-if="loadMore==false">正在加载...</span>
+            </div>
         </mt-loadmore>
       </template>
   </div>
@@ -92,24 +99,30 @@ export default {
     //-----数据加载部分:-----
     //根据加载列表不同,需要的参数不同,所以需要判断
     async getData() {
+      console.log('in function:');
       let routerPath = this.$route.path;
       if (isNullOrUndefined(routerPath)) {
-        await this.loadList({ skip: this.skip, type: this.type });
+        await this.loadList({ skip: this.skip, uri: this.type });
       } else {
-        await this.loadList({ skip: this.skip, type: this.type, userid: this.user.userid });
+        if (this.user.role === 'corp') {
+          await this.loadList({ skip: this.skip, uri: this.type, corpid: this.user.corpid });
+        } else {
+          await this.loadList({ skip: this.skip, uri: this.type, userid: this.user.userid });
+        }
+        this.canLoad();
       }
     },
     //(手指)向下拉,重载列表
-    async loadTop() {
+    loadTop() {
       this.skip = 0;
-      await this.loadList({ skip: this.skip, type: this.type });
+      this.getData();
       this.canLoad();
       this.$refs.loadmore.onTopLoaded();
     },
     //(手指)向上拉,继续读取数据
-    async loadBottom() {
+    loadBottom() {
       this.skip += this.limit;
-      await this.loadList({ skip: this.skip, type: this.type });
+      this.getData();
       this.canLoad();
       this.$refs.loadmore.onBottomLoaded();
     },
@@ -119,30 +132,6 @@ export default {
         this.loadMore = true;
       } else {
         this.loadMore = false;
-      }
-    },
-    //查看详情
-    toDetail(row) {
-      //首页的3个列表是location.herf;其他的跳转应该都是路由改变
-      let routerPath = this.$route.path;
-      let params = methodsUtil.getParams();
-      if (isNullOrUndefined(routerPath)) {
-        if (_.get(params, 'type') === 'jobfairList') {
-          window.location.href = `/jobfairDetail.html?id=${row._id}`;
-        } else if (_.get(params, 'type') === 'campusList') {
-          window.location.href = `/campusDetail.html?id=${row._id}`;
-        } else if (_.get(params, 'type') === 'jobinfoList') {
-          window.location.href = `/jobinfoDetail.html?id=${row._id}&corpid=${row.corpid}`;
-        } else {
-          console.error('跳转出现错误,请调试list.vue组件');
-        }
-      } else {
-        //切换路由,之后写
-        if (routerPath.includes('resume')) {
-          this.$router.push({ name: 'resumeDetail', query: { id: row._id } });
-        } else if (routerPath.includes('letter')) {
-          this.$router.push({ name: 'letterDetail', query: { id: row._id } });
-        }
       }
     },
     //-----数据处理部分:-----
@@ -245,21 +234,80 @@ export default {
       //将标头整理到文件中,引用文件=>判断=>赋值
       let param = methodsUtil.getParams();
       let routerPath = this.$route.name;
-      if (param.type === 'jobfairList') {
-        this.listContext = optionTitles.JOBFAIR_TITLE;
-      } else if (param.type === 'campusList') {
-        this.listContext = optionTitles.CAMPUS_TITLE;
-      } else if (param.type === 'jobinfoList') {
-        this.listContext = optionTitles.JOBINFO_TITLE;
-        this.needCalendar = false;
-      } else if (routerPath === 'resumeList') {
-        this.listContext = optionTitles.RESUME_TITLE;
-        this.needCalendar = false;
-      } else if (routerPath === 'letterList') {
-        this.listContext = optionTitles.LETTER_TITLE;
-        this.needCalendar = false;
-      } else if (routerPath === 'ticketList') {
-        this.listContext = optionTitles.TICKET_TITLE;
+      if (isNullOrUndefined(routerPath)) {
+        switch (param.type) {
+          case 'jobfairList':
+            this.listContext = optionTitles.JOBFAIR_TITLE;
+            break;
+          case 'campusList':
+            this.listContext = optionTitles.CAMPUS_TITLE;
+            break;
+          case 'jobinfoList':
+            this.listContext = optionTitles.JOBINFO_TITLE;
+            this.needCalendar = false;
+            break;
+          default:
+            console.error('找不到对应的列名');
+            break;
+        }
+      } else {
+        switch (routerPath) {
+          case 'resumeList':
+            this.listContext = optionTitles.RESUME_TITLE;
+            this.needCalendar = false;
+            break;
+          case 'letterList':
+            this.listContext = optionTitles.LETTER_TITLE;
+            this.needCalendar = false;
+            break;
+          case 'ticketList':
+            this.listContext = optionTitles.TICKET_TITLE;
+            break;
+          case 'corpJobfairList':
+            this.listContext = optionTitles.CORP_JOBFAIR;
+            break;
+          case 'corpCampusList':
+            this.listContext = optionTitles.CAMPUS_TITLE;
+            break;
+          case 'corpJobinfoList':
+            this.listContext = optionTitles.JOBINFO_TITLE;
+            this.needCalendar = false;
+            break;
+          default:
+            console.error('找不到对应的列名');
+            break;
+        }
+      }
+    },
+    //查看详情
+    toDetail(row) {
+      //首页的3个列表是location.herf;其他的跳转应该都是路由改变
+      let routerPath = this.$route.name;
+      let params = methodsUtil.getParams();
+      if (isNullOrUndefined(routerPath)) {
+        if (_.get(params, 'type') === 'jobfairList') {
+          window.location.href = `/jobfairDetail.html?id=${row._id}`;
+        } else if (_.get(params, 'type') === 'campusList') {
+          window.location.href = `/campusDetail.html?id=${row._id}`;
+        } else if (_.get(params, 'type') === 'jobinfoList') {
+          window.location.href = `/jobinfoDetail.html?id=${row._id}&corpid=${row.corpid}`;
+        } else {
+          console.error('跳转出现错误,请调试list.vue组件-toDetail(row)-if部分');
+        }
+      } else {
+        //切换路由,之后写
+        //修改:可以根据当前路由名进行截串,取'List'前的字符串,然后使用字符串模板后面加上Detail
+        if (routerPath.includes('resume')) {
+          this.$router.push({ name: 'resumeDetail', query: { id: row._id } });
+        } else if (routerPath.includes('letter')) {
+          this.$router.push({ name: 'letterDetail', query: { id: row._id } });
+        } else if (routerPath === 'corpJobfairList') {
+          this.$router.push({ name: 'corpJobfairDetail', query: { id: row._id } });
+        } else if (routerPath === 'corpCampusList') {
+          this.$router.push({ name: 'corpCampusDetail', query: { id: row._id } });
+        } else if (routerPath === 'corpJobinfoList') {
+          this.$router.push({ name: 'corpJobinfoDetail', query: { id: row._id } });
+        }
       }
     },
   },

@@ -36,3 +36,10 @@ export const TICKET_TITLE = [
   { prop: 'origin', label: '' },
   { prop: 'date', label: '举办日期' },
 ];
+
+export const CORP_JOBFAIR = [
+  { prop: 'subject', label: '' },
+  { prop: 'time', label: '举办时间' },
+  { prop: 'date', label: '举办日期' },
+  { prop: 'unit', label: '分站信息' },
+];

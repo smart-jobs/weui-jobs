@@ -1,7 +1,7 @@
 <template lang='html'>
   <div id="newNavbar">
       <mt-navbar id="tabTab" v-model="active" >
-        <mt-tab-item v-for="(item,index) in titles" :key="index" :id="'tab'+index" >{{item}}</mt-tab-item>
+        <mt-tab-item v-for="(item,index) in titles" :key="index" :id="'tab'+(index+1)" >{{item}}</mt-tab-item>
       </mt-navbar>
   </div>
 </template>
@@ -10,9 +10,7 @@
 export default {
   name: 'newNavbar',
   props: {
-    titles: {
-      type: Array,
-    },
+    titles: { type: Array },
   },
   watch: {
     active: {
@@ -23,7 +21,7 @@ export default {
   },
   data() {
     return {
-      active: 'tab0',
+      active: 'tab1',
     };
   },
 };

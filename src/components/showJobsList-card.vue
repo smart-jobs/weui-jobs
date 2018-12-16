@@ -14,33 +14,30 @@
                   职位要求:
                   {{item.requirement}}
               </li>
-              <mt-button v-if="needBtn"  type="danger" style="position:relative;left:80%;bottom: 3em;" @click="operation(index)"> {{btnTitle}}</mt-button>
+              <mt-button v-if="needBtn&&withApi"  type="danger" style="position:relative;left:80%;bottom: 3em;" @click="operation(item)"> {{btnTitle}}</mt-button>
+              <mt-button v-else  type="danger" style="position:relative;left:80%;bottom: 3em;" @click="operation(index)"> {{btnTitle}}</mt-button>
           </ul>
       </el-card>
   </div>
 </template>
 
 <script>
-// import _ from "lodash";
 export default {
   name: 'showList-card',
   props: {
     list: { type: Array },
-    // listTitle: { type: Array },
     needBtn: { type: Boolean, default: false },
-    btnTitle: { type: String, default: '' },
+    btnTitle: { type: String, default: '删除' },
+    withApi: { type: Boolean, default: true },
   },
   methods: {
     operation(data) {
-      this.$emit('', data);
+      if (this.withApi) {
+        this.$emit('operation', { type: 'delete', id: data._id });
+      } else {
+        this.$emit('operation', { type: 'delete', id: data });
+      }
     },
-    //以后再研究把对应的key也跟着循环输出,先固定输出这些
-    // getTitle(data){
-    //       const {position,keys}=data
-    //       let keyNames=Object.keys(keys);
-    //       let name=_.get(_.find(this.listTitle,keyNames[position]),keyNames[position])
-    //       return name
-    // }
   },
 };
 </script>

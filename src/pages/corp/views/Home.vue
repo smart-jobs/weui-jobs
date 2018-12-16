@@ -12,10 +12,10 @@
           </a>
       </span>
       <span v-else>
-        <mt-cell id="nameM" title="修改申请参加的招聘会的职位信息" ></mt-cell><!--:to="{name:'wechatPersonalList',query:{type:'companyJobfairList'}}";:to="{name:'wechatPersonalList',query:{type:'campusList',id:$store.state.user.corpid}}";:to="{name:'wechatPersonalList',query:{type:'jobInfoList';:to="{name:'wechatPersonalList',query:{type:'corpLetterList'}}";:to="{path:'/QRcodePage',query:{title:'企业的二维码','info':$store.state.user.corpid}}"}}"-->
-        <mt-cell id="nameN" title="企业宣讲会" ></mt-cell>
-        <mt-cell id="nameN" title="企业的招聘信息" ></mt-cell>
-        <mt-cell id="nameN" title="企业求职信" ></mt-cell>
+        <mt-cell id="nameM" title="修改申请参加的招聘会的职位信息" @click.native="toList('corpJobfairList')"></mt-cell>
+        <mt-cell id="nameN" title="企业宣讲会" @click.native="toList('corpCampusList')"></mt-cell>
+        <mt-cell id="nameN" title="企业的招聘信息" @click.native="toList('corpJobinfoList')"></mt-cell>
+        <mt-cell id="nameN" title="企业求职信" @click.native="toList('corpLetterList')"></mt-cell>
         <mt-cell id="nameN" title="我的二维码" @click.native="toQrcode()"></mt-cell>
       </span>
   </div>
@@ -48,6 +48,10 @@ export default {
     //查看二维码
     toQrcode() {
       this.$router.push({ path: '/qrcode', query: { id: this.corpInfo.corpid } });
+    },
+    //查询列表+切换路由
+    async toList(searchItem) {
+      this.$router.push({ path: `/${searchItem}` });
     },
   },
 };

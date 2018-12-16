@@ -30,11 +30,11 @@
         </mt-cell> 
         <newNavbar v-model="active" :titles="navbar"></newNavbar>
         <mt-tab-container v-model="active">
-            <mt-tab-container-item id="tab0" >
+            <mt-tab-container-item id="tab1" >
                 <pre  style="text-align:left;">{{detail.content}}</pre>
             </mt-tab-container-item>
 
-            <mt-tab-container-item id="tab1">
+            <mt-tab-container-item id="tab2">
                 <span v-for="(item,index) in corpList" :key="index" id="com">
                     <corpInfo :titleBtn="true" :corpName="item.corpname" :corpid="item.corpid" :_tenant="detail._tenant" :origin="detail._id" :type="'1'"></corpInfo>
                 </span>
@@ -63,7 +63,7 @@ export default {
   },
   data() {
     return {
-      active: 'tab0',
+      active: 'tab1',
       navbar: ['招聘会详情', '参展企业'],
     };
   },

@@ -25,11 +25,11 @@
         </mt-cell>
         <newNavbar v-model="active" :titles="navbar"></newNavbar>
         <mt-tab-container v-model="active">
-            <mt-tab-container-item id="tab0" >
+            <mt-tab-container-item id="tab1" >
                 <pre  style="text-align:left;">{{detail.content}}</pre>
             </mt-tab-container-item>
 
-            <mt-tab-container-item id="tab1">
+            <mt-tab-container-item id="tab2">
                 <jobsList :list="detail.jobs" :needBtn="false"></jobsList>
             </mt-tab-container-item>
         </mt-tab-container>
@@ -55,7 +55,7 @@ export default {
   },
   data() {
     return {
-      active: 'tab0',
+      active: 'tab1',
       navbar: ['宣讲会详情', '招聘职位'],
     };
   },

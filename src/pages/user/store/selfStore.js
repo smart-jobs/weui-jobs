@@ -77,14 +77,9 @@ export const actions = {
   },
   //获取指定列表内容
   async loadList({ state, commit }, payload) {
-    //更改,需要解构payload获得去加载哪个列表 ×
-    let { skip, type, userid } = payload;
-    let result = await this.$axios.$get(_.get(api, type), {
-      userid: userid,
-      skip: skip,
-      limit: state.limit,
-    });
-    commit(types.LIST_FOR_COMPONENT, { data: result, skip: skip, type: type });
+    let { skip, uri, userid } = payload;
+    let result = await this.$axios.$get(_.get(api, uri), { userid: userid, skip: skip, limit: state.limit });
+    commit(types.LIST_FOR_COMPONENT, { data: result, skip: skip, type: uri });
   },
   //删除简历
   async deleteResume({ state }, payload) {
