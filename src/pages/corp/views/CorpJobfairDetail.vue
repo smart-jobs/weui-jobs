@@ -143,7 +143,7 @@ export default {
       const { uri, id } = data;
       let result = await this.operateDetail({ uri: uri, data: this.form, corpid: this.user.corpid, id: this.id });
       this.$checkRes(result, () => {
-        this.$set(this, 'jobs', result.jobs);
+        this.$router.push({ name: 'corpJobfairList' });
       });
     },
     //验证错误

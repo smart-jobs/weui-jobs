@@ -5,6 +5,9 @@
         </mt-header>    
         <mt-cell :title="detail.title"  class="width" id="title"></mt-cell>
         <corpInfo :titleBtn="true" :corpName="detail.corpname" :corpid="detail.corpid" :_tenant="detail._tenant" :origin="detail._id" :type="'0'"></corpInfo>
+        <mt-cell class="width"  title="工作位置" style="text-align:left;">
+              <span style="color:black;font-size: 14px;"> {{{data:detail,searchItem:"city.name"}|getName}} </span>
+        </mt-cell>
         <mt-cell class="width"  title="薪资待遇" style="text-align:left;">
               <span style="color:black;font-size: 14px;"> {{{data:detail,searchItem:"salary.name"}|getName}} </span>
         </mt-cell>

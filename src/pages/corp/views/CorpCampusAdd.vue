@@ -11,7 +11,7 @@
       <mt-cell title="举办日期"  @click.native="openDate()" >
         <span style="font-size:14px;" :style="selectColor">{{detail.date||'请选择举办日期'}}</span>
       </mt-cell>
-      <newSelect type='unit' title="选择分站" v-model="detail.unit" ></newSelect>
+      <newSelect type='unit' title="选择分站" v-model="detail.unit" placeholder='请选择分站'></newSelect>
       <mt-cell  id="zhiwei" title="招聘职位" label="点击此处为宣讲会添加招聘信息" @click.native="toOperateJobs()"></mt-cell>
       <!--编辑职位框-->
       <mt-popup
@@ -43,7 +43,7 @@
       </mt-tab-container>
       <mt-button style="height:35px !important; line-height:35px !important;"  type="primary" size="large" @click.prevent="toApplyCampus()">申请宣讲会</mt-button>
 
-      <!--弹框部分-->
+      <!--时间弹框部分-->
       <mt-datetime-picker
             ref="picker"
             v-model="dateSelect"
@@ -63,12 +63,16 @@ import newSelect from '@/components/newSelect.vue';
 import newNavbar from '@/components/newNavbar.vue';
 import showJobsListCard from '@/components/showJobsList-card.vue';
 import Validator from 'async-validator';
+import { MessageBox } from 'mint-ui';
 import _ from 'lodash';
 import { Util } from 'naf-core';
 
 const { isNullOrUndefined } = Util;
 export default {
   name: 'CorpCampusAdd',
+  metaInfo: {
+    title: '企业宣讲会添加',
+  },
   components: { newSelect, newNavbar, showJobsListCard },
   data() {
     return {
@@ -90,7 +94,7 @@ export default {
         email: { type: 'string', required: true, message: '电子邮箱不能为空' },
         contact: { type: 'string', required: true, message: '联系电话不能为空' },
         date: { type: 'string', required: true, message: '举办日期不能为空' },
-        unit: { type: 'string', required: true, message: '举办日期不能为空' },
+        unit: { type: 'string', required: true, message: '分站信息不能为空' },
       }),
     };
   },
@@ -123,8 +127,17 @@ export default {
       },
     },
   },
+  watch: {
+    dateSelect(val) {
+      if (val) {
+        this.closeTouch();
+      } else {
+        this.openTouch();
+      }
+    },
+  },
   methods: {
-    ...mapActions(['corpCampusCreate']),
+    ...mapActions(['operateDetail']),
     //选择日期组件开关
     openDate() {
       this.$refs.picker.open();
@@ -177,9 +190,11 @@ export default {
           this.detail.jobs.splice(id, 1);
         }
       } else {
-        let result = await this.corpCampusCreate({ corpid: this.user.corpid, _tenant: this.unit, data: this.detail.unit });
+        let result = await this.operateDetail({ uri: 'corpCampusCreate', corpid: this.user.corpid, _tenant: this.detail.unit, data: this.detail });
         this.$checkRes(result, () => {
-          console.log('success');
+          MessageBox.alert('创建宣讲会成功').then(() => {
+            this.$router.push({ name: 'corpCampusList' });
+          });
         });
       }
     },
@@ -193,6 +208,13 @@ export default {
       }, {});
       // eslint-disable-next-line no-console
       console.debug(errors, fields);
+    },
+    //滑动穿屏问题
+    closeTouch() {
+      document.getElementsByTagName('body')[0].addEventListener('touchmove', this.handler, { passive: false }); //阻止默认事件
+    },
+    openTouch() {
+      document.getElementsByTagName('body')[0].removeEventListener('touchmove', this.handler, { passive: false }); //打开默认事件
     },
   },
 };

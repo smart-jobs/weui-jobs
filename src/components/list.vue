@@ -99,7 +99,6 @@ export default {
     //-----数据加载部分:-----
     //根据加载列表不同,需要的参数不同,所以需要判断
     async getData() {
-      console.log('in function:');
       let routerPath = this.$route.path;
       if (isNullOrUndefined(routerPath)) {
         await this.loadList({ skip: this.skip, uri: this.type });

@@ -15,7 +15,7 @@
                   {{item.requirement}}
               </li>
               <mt-button v-if="needBtn&&withApi"  type="danger" style="position:relative;left:80%;bottom: 3em;" @click="operation(item)"> {{btnTitle}}</mt-button>
-              <mt-button v-else  type="danger" style="position:relative;left:80%;bottom: 3em;" @click="operation(index)"> {{btnTitle}}</mt-button>
+              <mt-button v-else-if='needBtn&&withApi===false'  type="danger" style="position:relative;left:80%;bottom: 3em;" @click="operation(index)"> {{btnTitle}}</mt-button>
           </ul>
       </el-card>
   </div>

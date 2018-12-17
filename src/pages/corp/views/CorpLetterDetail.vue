@@ -56,7 +56,7 @@
 
             <mt-field  id="neirong" label="回复理由" v-if="info.status!='0'" v-model="info.reply" type="textarea" rows="5" disabled></mt-field>
             <mt-field  id="neirong"  label="回复理由" v-else v-model="form.reply" type="textarea" rows="5" ></mt-field>
-            <mt-button type="primary" style="margin-top:30px !important; height:35px !important; line-height:35px !important; margin-bottom:30px !important;" v-if="info.status=='0'" size="large" @click.prevent="letterReply()">回复</mt-button>
+            <mt-button type="primary" style="margin-top:30px !important; height:35px !important; line-height:35px !important; margin-bottom:30px !important;" v-if="info.status=='0'" size="large" @click.prevent="toLetterReply()">回复</mt-button>
 
   </div>
 </template>
@@ -66,6 +66,9 @@ import { mapActions, mapState } from 'vuex';
 import Validator from 'async-validator';
 export default {
   name: 'CorpLetterDetail',
+  metaInfo: {
+    title: '企业求职信',
+  },
   components: {},
   data() {
     return {
@@ -95,7 +98,7 @@ export default {
   },
   methods: {
     ...mapActions(['loadDetail', 'operateDetail']),
-    letterReply() {
+    toLetterReply() {
       this.formValidator.validate(this.form, (errors, fields) => {
         if (errors) {
           return this.handleErrors(errors, fields);
@@ -107,7 +110,7 @@ export default {
     async handleSuccess() {
       let result = await this.operateDetail({ uri: 'corpLetterReply', data: this.form, corpid: this.user.corpid, id: this.id });
       this.$checkRes(result, () => {
-        this.$set(this, 'info', result);
+        this.$router.push({ name: 'corpLetterList' });
       });
     },
     //验证错误

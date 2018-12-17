@@ -10,6 +10,8 @@ import corpCampusList from './views/CorpCampusList.vue';
 import corpCampusAdd from './views/CorpCampusAdd.vue';
 import corpCampusDetail from './views/CorpCampusDetail.vue';
 import corpJobinfoList from './views/CorpJobinfoList.vue';
+import corpJobinfoAdd from './views/CorpJobinfoAdd.vue';
+import corpJobinfoDetail from './views/CorpJobinfoDetail.vue';
 import corpLetterList from './views/CorpLetterList.vue';
 import corpLetterDetail from './views/CorpLetterDetail.vue';
 const router = new Router({
@@ -58,6 +60,16 @@ const router = new Router({
       path: '/corpCampusDetail',
       name: 'corpCampusDetail',
       component: corpCampusDetail,
+    },
+    {
+      path: '/corpJobinfoAdd',
+      name: 'corpJobinfoAdd',
+      component: corpJobinfoAdd,
+    },
+    {
+      path: '/corpJobinfoDetail',
+      name: 'corpJobinfoDetail',
+      component: corpJobinfoDetail,
     },
   ],
 });

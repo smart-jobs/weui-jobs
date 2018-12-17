@@ -15,14 +15,26 @@ const api = {
   corpJobfairJobDelete: '/weixin/api/jobs/jobfair/corp/job/delete', //query:corpid,job_id
   //企业宣讲会
   corpCampusList: '/weixin/api/jobs/campus/list', //query:corpid
+  corpCampusDetail: '/weixin/api/jobs/campus/fetch', //query:id
   corpCampusCreate: '/weixin/api/jobs/campus/create', //query:corpid,_tenant=>选择的分站,不是user调出来的
   corpCampusUpdate: '/weixin/api/jobs/campus/update', //query:corpid,id,_tenant=>同上
   //企业招聘信息
   corpJobinfoList: '/weixin/api/jobs/jobinfo/list', //query:corpid
+  corpJobinfoDetail: '/weixin/api/jobs/jobinfo/fetch', //query:id,corpid
+  corpJobinfoAdd: '/weixin/api/jobs/jobinfo/create', //query:corpid,_tenant
+  corpJobinfoUpdate: '/weixin/api/jobs/jobinfo/update', //query:id,corpid,_tenant
   //企业求职信
   corpLetterList: '/weixin/api/jobs/letter/list', //query:corpid,type=>0:招聘信息,1:招聘会
   corpLetterDetail: '/weixin/api/jobs/letter/fetch', //query:id
   corpLetterReply: '/weixin/api/jobs/letter/reply', //query:id,corpid
+};
+const dictionary = {
+  jobcat: '/weixin/api/naf/code/zwlb/list',
+  nature: '/weixin/api/naf/code/gzxz/list',
+  salary: '/weixin/api/naf/code/xzdy/list',
+  xlreqs: '/weixin/api/naf/code/xlcc/list',
+  provice: '/weixin/api/naf/code/xzqh/list',
+  city: '/weixin/api/naf/code/xzqh/list', //query:level=2,parent:省份
 };
 
 export const state = () => ({
@@ -80,7 +92,9 @@ export const actions = {
     let result = await this.$axios.$get(_.get(api, uri), { id: id });
     commit(types.DETAIL, result);
     if (uri === 'corpJobfairDetail') {
-      result = this.$axios.$get(api.corpJobfairJobList, { fair_id: id, corpid: corpid });
+      result = await this.$axios.$get(_.get(api, uri), { fair_id: id, corpid: corpid });
+    } else if (uri === 'corpJobinfoDetail') {
+      result = await this.$axios.$get(_.get(api, uri), { id: id, corpid: corpid });
     }
     return result;
   },
@@ -102,5 +116,27 @@ export const actions = {
       result = this.$axios.$post(_.get(api, uri), data, { id: id, corpid: corpid });
     }
     return result;
+  },
+  //读取字典表数据
+  async loadDictionary({ state }, payload) {
+    const { type, parent } = payload;
+    let result;
+    if (type === 'provice') {
+      result = await this.$axios.$get(_.get(dictionary, type), { level: '1' });
+    } else if (type === 'city') {
+      result = await this.$axios.$get(_.get(dictionary, type), { level: '2', parent: parent });
+    } else {
+      result = await this.$axios.$get(_.get(dictionary, type));
+    }
+    let list;
+    let newList = [];
+    result.forEach(item => {
+      list = {
+        label: item.name,
+        value: item.code,
+      };
+      newList.push(list);
+    });
+    return newList;
   },
 };
