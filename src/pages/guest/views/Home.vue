@@ -1,7 +1,9 @@
 <template lang="html">
   <div id="Home">
       <mt-header title="您当前是游客"></mt-header>
-      <mt-cell style="marign-top:50px !important;" id="nameM" title="前往个人中心注册或完善企业信息" @click.native='turnTo()'></mt-cell>
+      <a href="/weixin/ui/center/index.html">
+          <mt-cell style="marign-top:50px !important;" id="nameM" title="前往个人中心注册或完善企业信息" ></mt-cell>
+      </a>
   </div>
 </template>
 
@@ -13,7 +15,7 @@ import _ from 'lodash';
 export default {
   name: 'Home',
   metaInfo: {
-    title: '游客',
+    title: '首页',
   },
   data() {
     return {};
@@ -25,9 +27,10 @@ export default {
     }),
   },
   methods: {
-    turnTo() {
-      window.location.href = '/weixin/ui/center/index.html';
-    },
+    //获取首页列表;学生申请门票
+    ...mapActions(['loadIndexList', 'userApply', 'getCorpInfo', 'userApply', 'corpApply']),
+    //获取首页的招聘会,宣讲会,招聘信息列表
+    async getData() {},
   },
 };
 </script>
