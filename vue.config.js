@@ -10,6 +10,7 @@ module.exports = {
     indexList: 'src/pages/indexList/main.js',
     user: 'src/pages/user/main.js',
     corp: 'src/pages/corp/main.js',
+    guest: 'src/pages/guest/main.js',
   },
   configureWebpack: config => {
     Object.assign(config, {
