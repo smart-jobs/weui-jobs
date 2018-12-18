@@ -168,7 +168,14 @@ export default {
       if (optionTitle.label !== '') {
         return 'txt';
       } else {
-        return 'tit';
+        let routerPath = this.$route.name;
+        let params = methodsUtil.getParams();
+        // console.log(routerPath === 'corpJobinfoList' || ( window.location.pathname === '/indexList.html' && params.type === 'jobinfoList' ));
+        if (routerPath === 'corpJobinfoList' || (window.location.pathname === '/indexList.html' && params.type === 'jobinfoList')) {
+          return 'txtOne';
+        } else {
+          return 'tit';
+        }
       }
     },
     //筛选分站名称
