@@ -17,8 +17,8 @@
               style="width: 100%;">
               <el-table-column >
                 <template slot-scope="scope">
-                  <span>
-                    <calendar :time="scope.row.date"></calendar>
+                  <!-- <span> -->
+                    <calendar :time="scope.row.date" class="cla" style="margin-top: 10px;"></calendar>
                     <ul @click="toDetail('jobfairDetail',scope.row)" style="float:left; width:53%; margin-right:2%;">
                         <li class="tit">{{ scope.row.subject }} </li>
                         <li class="txt">举办地址：{{ scope.row.address }}</li>
@@ -29,6 +29,7 @@
                     <mt-button 
                         type="primary" 
                         size='small' 
+                        class="btnClass"
                         v-if='checkDisplay("user")'
                         @click='apply(scope.row._id)'> 
                         我要报名
@@ -38,12 +39,12 @@
                         <addJobsPage btnTitle="申请加入" :fair_id="scope.row._id"></addJobsPage>
                       </div>  
                     </div> 
-                  </span>
+                  <!-- </span> -->
                 </template>
               </el-table-column>
             </el-table>
            <!-- <router-link :to="{path:'/'}"  v-if="jobfairList.total>limit"  class="moreA" > -->
-                <p @click="toList('jobfairList')">查看更多</p>
+                <p @click="toList('jobfairList')" class="moreA">查看更多</p>
             <!-- </router-link> -->
           </mt-tab-container-item>
           <!--主页-宣讲会列表-->
@@ -55,7 +56,7 @@
               <el-table-column>
               <template slot-scope="scope">
                 <span>
-                  <calendar :time="scope.row.date"></calendar>
+                  <calendar :time="scope.row.date" class="cla" style="margin-top: 10px;"></calendar>
                   <ul @click="toDetail('campusDetail',scope.row)" style="float:left; width:73%; margin-right:3%;">
                     <li class="tit">{{ scope.row.subject }}</li>
                     <li class="txt">举办地址：{{ scope.row.address }}</li>
@@ -67,7 +68,7 @@
               </el-table-column>
             </el-table>
             <!-- <router-link :to="{path:'/'}"  v-if="campusList.total>limit"  class="moreA" > -->
-                <p @click="toList('campusList')">查看更多</p>
+                <p @click="toList('campusList')" class="moreA">查看更多</p>
             <!-- </router-link> -->
           </mt-tab-container-item>
           <!--主页-招聘信息列表-->
@@ -96,7 +97,7 @@
                 </el-table-column>
             </el-table>
             <!-- <router-link :to="{path:'/'}"  v-if="jobinfoList.total>limit"  class="moreA" > -->
-                <p @click="toList('jobinfoList')">查看更多</p>
+                <p @click="toList('jobinfoList')" class="moreA">查看更多</p>
             <!-- </router-link> -->
           </mt-tab-container-item>
 
@@ -223,6 +224,7 @@ export default {
 </script>
 <style scoped>
 @import '../../../style/index.css';
+@import '../../../style/common.css';
 </style>
 <style lang="css" scoped>
 .mint-swipe {
@@ -237,4 +239,13 @@ export default {
   font-size: 16px;
   padding: 0;
 }
+.btnClass{
+    float:left; 
+    width:17%; 
+    padding:0; 
+    margin-right:0;
+    position: absolute; 
+    bottom: 40px;
+    border-radius: 0;
+  }
 </style>

@@ -1,6 +1,6 @@
 <template lang='html'>
   <div id="calendar">
-      <div class="cla" style="margin-top: 10px;">
+      <div>
           <div class="claTop">{{ time | yearMonth }}</div>
           <div class="claCenter">{{ time | monthDay }}</div>
           <div class="calBottom">{{ time | weekDay }}</div>

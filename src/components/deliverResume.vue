@@ -2,7 +2,7 @@
   <div id="deliverResume">
       <!--@click="deliver(scope.row._id,scope.row.corpid,'jobinfo',scope.row._tenant)"-->
     <mt-button v-if="titleBtn" class="bgnone"   @click="display()">投简历</mt-button>
-    <mt-button v-if="uri.includes('index')" type="primary" size='small' @click="display()">
+    <mt-button v-if="uri.includes('index')" type="primary" class="btnClass" size='small' @click="display()">
         投简历
     </mt-button>
 
@@ -135,4 +135,13 @@ export default {
 </script>
 
 <style lang='css' scoped>
+.btnClass{
+    float:left; 
+    width:17%; 
+    padding:0; 
+    margin-right:0;
+    position: absolute; 
+    bottom: 35px;
+    border-radius: 0;
+  }
 </style>

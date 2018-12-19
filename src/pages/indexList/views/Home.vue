@@ -120,4 +120,25 @@ export default {
   font-size: 16px;
   padding: 0;
 }
+ .bgnone{
+       padding-left: 15px !important;
+    
+  }
+  .tit{
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .txt{
+   
+    font-size: 14px;
+    margin-bottom: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 </style>

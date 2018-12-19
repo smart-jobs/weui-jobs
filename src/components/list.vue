@@ -3,14 +3,14 @@
       <template>
         <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="loadMore" :auto-fill="false" ref="loadmore">
             <div slot="top" class="mint-loadmore-top">
-                <span style="padding: 7px 0; display: block; font-size: 14px;">刷新中...</span>
+                <span style="padding: 7px 0; display: block;text-align: center; font-size: 14px;">刷新中...</span>
             </div>
             <el-table
               :data="list"
               style="width: 100%;">
               <el-table-column>
                 <template slot-scope="scope">
-                  <calendar v-if="needCalendar" :time="scope.row.date"></calendar>
+                  <calendar v-if="needCalendar" :time="scope.row.date" class="cla" style="margin-top: 10px;"></calendar>
                   <ul @click="toDetail(scope.row)" style="float:left; width:53%; margin-right:2%;">
                     <span v-for="(item, index) in  listContext" :key="index">
                       <li>
@@ -21,7 +21,7 @@
                   <span v-if="needBtn"><!--判断是否需要按钮-->
                     <!--招聘会-->
                     <span v-if='selectBtn()==="jobfairList"'>
-                      <mt-button type="primary" size='small' v-if='checkDisplay("user")' @click='apply(scope.row._id)'> 
+                      <mt-button type="primary" size='small' class="btnClass" v-if='checkDisplay("user")' @click='apply(scope.row._id)'> 
                           我要报名
                       </mt-button>
                       <addJobsPage v-if='checkDisplay("corp")&&pageCheckCorp(scope.row.unit)' btnTitle="申请加入" :fair_id="scope.row._id"></addJobsPage>
@@ -37,9 +37,9 @@
                 </template>
               </el-table-column>
             </el-table>
-            <span  style="padding: 7px 0; display: block; font-size: 14px;" v-if="loadMore">没有可加载的数据了</span>
+            <span  style="padding: 7px 0; display: block; text-align: center; font-size: 14px;" v-if="loadMore">没有可加载的数据了</span>
             <div slot="bottom" class="mint-loadmore-bottom">
-                <span  style="padding: 7px 0; display: block; font-size: 14px;" v-if="loadMore==false">正在加载...</span>
+                <span  style="padding: 7px 0; display: block;text-align: center; font-size: 14px;" v-if="loadMore==false">正在加载...</span>
             </div>
         </mt-loadmore>
       </template>
@@ -313,5 +313,21 @@ export default {
 };
 </script>
 
+<style scoped>
+@import '../style/index.css';
+@import '../style/common.css';
+@import '../style/jobFair.less';
+</style>
+
 <style lang='css' scoped>
+.btnClass{
+    float:left; 
+    width:17%; 
+    padding:0; 
+    margin-right:0;
+    position: absolute; 
+    bottom: 40px;
+    border-radius: 0;
+  }
+  
 </style>
