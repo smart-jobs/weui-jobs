@@ -43,8 +43,10 @@ export default {
         let role = _.get(this.user, 'role');
         if (role === 'corp') {
           return '/corp.html';
-        } else {
+        } else if (role === 'user') {
           return '/user.html';
+        } else {
+          return '/guest.html';
         }
       },
     },

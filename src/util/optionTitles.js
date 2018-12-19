@@ -18,7 +18,7 @@ export const JOBINFO_TITLE = [
   { prop: 'nature.name', label: '工作性质' },
   { prop: 'salary.name', label: '薪资待遇' },
   { prop: 'xlreqs.name', label: '最低学历' },
-  { prop: 'unit', label: '分站信息' },
+  { prop: 'city.name', label: '所在城市' },
 ];
 
 export const RESUME_TITLE = [{ prop: 'title', label: '' }];
