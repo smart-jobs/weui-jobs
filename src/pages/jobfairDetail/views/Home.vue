@@ -127,4 +127,12 @@ export default {
     font-size: 16px;
     padding: 0;
 }
+  .mint-cell-title{
+    width: 80px !important;
+    padding-left: 25px !important;
+    -webkit-box-flex: 0 !important;
+    -ms-flex: none !important;
+    flex: none !important;
+    text-align: left !important;
+  } 
 </style>
