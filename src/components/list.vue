@@ -11,7 +11,7 @@
               <el-table-column>
                 <template slot-scope="scope">
                   <calendar v-if="needCalendar" :time="scope.row.date" class="cla" style="margin-top: 10px;"></calendar>
-                  <ul @click="toDetail(scope.row)" style="float:left; width:53%; margin-right:2%;">
+                  <ul @click="toDetail(scope.row)" style="float:left;margin-right:2%;" :style='getUlWidth'><!--width:宣讲会73,招聘信息78,招聘会53-->
                     <span v-for="(item, index) in  listContext" :key="index">
                       <li>
                         <listOptions :content="arrangeData({data:scope.row,optionTitle:item})" :selectClass="selectClass({data:scope.row,optionTitle:item})" ></listOptions>
@@ -88,6 +88,24 @@ export default {
       list: state => state.self.listForComponent,
       total: state => state.self.totalForComponent,
     }),
+    getUlWidth: {
+      get() {
+        let style = { width: '53%' };
+        let routerPath = this.$route.name;
+        let params = methodsUtil.getParams();
+        if ((routerPath !== undefined && routerPath.includes('Jobfair')) || (params.type !== undefined && params.type.includes('jobfair'))) {
+          return style;
+        } else if ((routerPath !== undefined && routerPath.includes('Campus')) || (params.type !== undefined && params.type.includes('campus'))) {
+          style = { width: '73%' };
+          return style;
+        } else if ((routerPath !== undefined && routerPath.includes('Jobinfo')) || (params.type !== undefined && params.type.includes('jobinfo'))) {
+          style = { width: '78%' };
+          return style;
+        } else {
+          return style;
+        }
+      },
+    },
   },
   async created() {
     this.selcetOptionsTitle();
