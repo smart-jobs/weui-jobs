@@ -83,10 +83,10 @@
                     <ul @click="toDetail('jobinfoDetail',scope.row)" style="float:left; width:78%; margin-right:2%;">
                       <li class="tit">{{ scope.row.title }}</li>
                       <li class="txtOne">需求人数：{{ scope.row.count }}</li>
-                      <li class="txtOne">工作性质：{{scope.row.nature&&scope.row.nature.name }}</li>
-                      <li class="txtOne">薪资待遇：{{scope.row.salary&&scope.row.salary.name }}</li>
-                      <li class="txtOne">最低学历：{{scope.row.xlreqs&&scope.row.xlreqs.name }}</li>
-                      <li class="txt mb0" style="float:left;">分站信息：{{ findUnit( scope.row.unit ) }}</li>
+                      <li class="txtOne">工作性质：{{{data:scope.row,searchItem:'nature.name'}|getName }}</li>
+                      <li class="txtOne">薪资待遇：{{{data:scope.row,searchItem:'salary.name'}|getName }}</li>
+                      <li class="txtOne">最低学历：{{{data:scope.row,searchItem:'xlreqs.name'}|getName }}</li>
+                      <li class="txt mb0" style="float:left;">所在城市:{{ {data:scope.row,searchItem:'city.name'}|getName }}</li>
                       <li style="font-size:12px; color:#888;"> </li>
                     </ul>
                     <span v-if='isDateOff(scope.row.expired)&&checkDisplay("user")'>

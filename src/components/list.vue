@@ -166,16 +166,15 @@ export default {
     selectClass(datas) {
       const { data, optionTitle } = datas;
       if (optionTitle.label !== '') {
-        return 'txt';
-      } else {
         let routerPath = this.$route.name;
         let params = methodsUtil.getParams();
-        // console.log(routerPath === 'corpJobinfoList' || ( window.location.pathname === '/indexList.html' && params.type === 'jobinfoList' ));
         if (routerPath === 'corpJobinfoList' || (window.location.pathname === '/indexList.html' && params.type === 'jobinfoList')) {
           return 'txtOne';
         } else {
-          return 'tit';
+          return 'txt';
         }
+      } else {
+        return 'tit';
       }
     },
     //筛选分站名称
