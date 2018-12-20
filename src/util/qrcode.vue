@@ -1,20 +1,22 @@
 <template lang='html'>
-  <div id="qrcodes">
+  <div id="qrcodes" style="width:100%">
         <mt-header title="二维码">
             <mt-button  class="bgnone"  slot="left" @click="$router.go(-1)">返回</mt-button>
         </mt-header>
-        <div id="qrcode"  style="position:absolute;top:30%;left:25%;"></div>
-          <span v-if="user.role==='user'">
-              <li class="txtQr" style="padding-top:7vh;">学生姓名：{{user.name||''}}</li>
-              <li class="txtQr">门票类型：{{ ticketType }}</li>
-          </span>
+        <span v-if="user.role==='user'">
+            <li class="txtQr" style="padding-top:7vh;">学生姓名：{{user.name||''}}</li>
+            <li class="txtQr">门票类型：{{ ticketType }}</li>
+        </span>
+        <div id="qrcode" style='display:flex;justify-content:center;align-items:center;' :style='newHeight'  ref='qrcode'>
+          <canvas id="canvas" style="display:-webkit-inline-box;width: 256px !important;height:256px !important;"></canvas>
+        </div>
+          
   </div>
 </template>
 
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex';
-import QRCode from 'qrcodejs2';
-
+import QRCode from 'qrcode';
 export default {
   name: 'qrcodes',
   data() {
@@ -28,6 +30,18 @@ export default {
     ...mapState({
       user: state => state.publics.user,
     }),
+    newHeight: {
+      get() {
+        let height;
+        if (this.user.role === 'user') {
+          height = window.screen.availHeight * 0.3 + 'px';
+        } else {
+          height = window.screen.availHeight * 0.6 + 'px';
+        }
+        let style = { height: height };
+        return style;
+      },
+    },
   },
   created() {
     this.$nextTick(() => {
@@ -35,24 +49,16 @@ export default {
     });
   },
   methods: {
-    initQrcode() {
+    async initQrcode() {
       if (!this.booForQrcode) {
-        var qrcode = new QRCode('qrcode', {
-          width: 150,
-          height: 150,
-          colorDark: '#123456',
-          colorLight: '#ffffff',
-          correctLevel: QRCode.CorrectLevel.L,
-        });
-        qrcode.clear();
-        qrcode.makeCode(this.id);
+        await QRCode.toCanvas(document.getElementById('canvas'), this.id);
       }
     },
   },
 };
 </script>
 
-<style lang='css' scoped>
+<style lang='less' scoped>
 .txtQr {
   font-size: 14px;
   text-align: center;
