@@ -56,6 +56,19 @@ export default {
   },
 };
 </script>
-
+<style scoped>
+@import '../../../style/index.css';
+@import '../../../style/common.css';
+</style>
 <style lang='css' scoped>
+.mint-header {
+  background-color: #2577e3;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+}
+#nameM{
+    border-top: 2px solid #f4f4f4;
+    margin-top: 50px;
+}
 </style>

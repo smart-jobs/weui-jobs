@@ -9,7 +9,7 @@
         <span style="color:black;font-size: 14px; padding: 10px 0; line-height: 20px;"> {{corpName||''}} </span>
     </mt-cell>
     <!--招聘会显示-->
-    <mt-cell v-else :title="corpName" @click.native="display()"></mt-cell>
+    <div style="height:38px; line-height:38px; width:96%; margin:0 2%; border-bottom:2px solid #f4f4f4;" v-else  @click="display()">{{corpName}}</div>
     <mt-popup
         v-model="popupVisible"
         position="center"
@@ -20,6 +20,7 @@
         </mt-header>
         <!--企业详情部分-->
         <span id="corpInfo">
+
           <mt-cell title="企业名称" style="text-align:left;">
                 <span style="color:black;font-size: 14px; padding: 10px 0; line-height: 20px;"> {{corpInfo.corpname}} </span>
           </mt-cell>
@@ -143,6 +144,17 @@ export default {
   },
 };
 </script>
-
+<style scoped>
+@import '../style/index.css';
+@import '../style/common.css';
+@import '../style/jobFair.less';
+</style>
 <style lang='css' scoped>
+.mint-header {
+  background-color: #2577e3;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+}
+
 </style>

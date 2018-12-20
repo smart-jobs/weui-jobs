@@ -36,7 +36,7 @@
                     </mt-button>
                     <div v-else-if='checkDisplay("corp")'>
                       <div v-if="pageCheckCorp(scope.row.unit)">
-                        <addJobsPage btnTitle="申请加入" :fair_id="scope.row._id"></addJobsPage>
+                        <addJobsPage btnTitle="申请加入" :fair_id="scope.row._id" ></addJobsPage>
                       </div>  
                     </div> 
                   <!-- </span> -->
@@ -234,10 +234,9 @@ export default {
 }
 .mint-header {
   background-color: #2577e3;
-  height: 50px;
-  line-height: 50px;
+  height: 40px;
+  line-height: 40px;
   font-size: 16px;
-  padding: 0;
 }
 .btnClass{
     float:left; 
@@ -245,7 +244,7 @@ export default {
     padding:0; 
     margin-right:0;
     position: absolute; 
-    bottom: 40px;
+    bottom: 29px;
     border-radius: 0;
   }
 </style>

@@ -35,5 +35,5 @@ export default {
 
 <style lang='less' scoped>
 @import '../../style/common.css';
-@import '../../style/jobFair.less';
+
 </style>

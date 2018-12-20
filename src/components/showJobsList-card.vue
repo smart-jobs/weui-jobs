@@ -1,7 +1,7 @@
 <template lang='html'>
   <div id="showList-card">
       <el-card class="box-card" v-for="(item,index) in list" :key="index" >
-          <ul style="text-align:left;" >
+          <ul style="text-align:left; float:left; width:70%; padding-bottom: 10px; margin-right:10%;">
               <li slot="header" class="clearfix">
                   招聘职位:
                   {{item.name}}
@@ -14,9 +14,9 @@
                   职位要求:
                   {{item.requirement}}
               </li>
-              <mt-button v-if="needBtn&&withApi"  type="danger" style="position:relative;left:80%;bottom: 3em;" @click="operation(item)"> {{btnTitle}}</mt-button>
-              <mt-button v-else-if='needBtn&&withApi===false'  type="danger" style="position:relative;left:80%;bottom: 3em;" @click="operation(index)"> {{btnTitle}}</mt-button>
           </ul>
+          <mt-button v-if="needBtn&&withApi"  type="danger" class="btnClass" style="text-align:center !important;" @click="operation(item)"> {{btnTitle}}</mt-button>
+          <mt-button v-else-if='needBtn&&withApi===false' style="text-align:center !important;"  type="danger" class="btnClass" @click="operation(index)"> {{btnTitle}}</mt-button>
       </el-card>
   </div>
 </template>
@@ -43,4 +43,13 @@ export default {
 </script>
 
 <style lang='css' scoped>
+.btnClass{
+    float:left; 
+    width:17%; 
+    padding:0; 
+    margin-right:0;
+    margin-top: 30px;
+    font-size: 12px;
+    border-radius: 0;
+}
 </style>

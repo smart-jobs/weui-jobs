@@ -1,7 +1,7 @@
 <template lang="html">
   <div id="App">
     <!-- <el-container> -->
-      <router-view style="width:100%;margin-bottom:50px"/>
+      <router-view style="width:100%;margin-bottom:80px"/>
       <footerbar></footerbar>
     <!-- </el-container> -->
   </div>

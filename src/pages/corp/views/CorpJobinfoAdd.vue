@@ -17,7 +17,7 @@
         </mt-cell>
         <newSelect type='unit' title="选择分站" v-model="detail.unit" placeholder='请选择分站'></newSelect>
         <mt-field label="信息内容" id="neirong" placeholder="请输入信息内容" v-model="detail.content" type="textarea" rows="5" ></mt-field>
-        <mt-button style="height:35px !important; line-height:35px !important;"  type="primary" size="large" @click.prevent="toApplyJobinfo()">发布招聘信息</mt-button>
+        <mt-button style="height:35px !important; line-height:35px !important;margin-top: 20px !important; "  type="primary" size="large" @click.prevent="toApplyJobinfo()">发布招聘信息</mt-button>
         
         <!--时间弹框部分-->
         <mt-datetime-picker
@@ -149,6 +149,17 @@ export default {
 };
 </script>
 
+<style scoped>
+@import '../../../style/index.css';
+@import '../../../style/common.css';
+</style>
 <style lang='css' scoped>
+
+.mint-header {
+  background-color: #2577e3;
+  height: 40px;
+  line-height:40px;
+  font-size: 16px;
+}
 
 </style>

@@ -12,7 +12,7 @@
           <mt-index-list>
           <mt-header title="请选择" >
               <mt-button  class="bgnone" slot="left" @click="closePopup()">返回</mt-button>
-              <mt-button  class="bgnone" slot="right" @click="choose()">选择</mt-button>
+              <mt-button  class="bgnone" style="text-align:right !important;" slot="right" @click="choose()">选择</mt-button>
           </mt-header>
           <mt-radio
           id="xingbie"
@@ -237,6 +237,16 @@ export default {
   },
 };
 </script>
-
+<style scoped>
+@import '../style/index.css';
+@import '../style/common.css';
+@import '../style/jobFair.less';
+</style>
 <style lang='css' scoped>
+.mint-header {
+  background-color: #2577e3;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+}
 </style>

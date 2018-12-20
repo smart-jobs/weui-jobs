@@ -33,5 +33,11 @@ export default {
 </script>
 
 <style lang='css' scoped>
+    .mint-header{
+      background-color: #2577e3;
+      height: 40px;
+      line-height: 40px;
+      font-size: 16px;
+  }
 
 </style>

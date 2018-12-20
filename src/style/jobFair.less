@@ -4,7 +4,7 @@
     border-bottom:none;
   }
   .mint-navbar .mint-tab-item.is-selected {
-    border-bottom: 4px solid #2577e3 !important;
+    border-bottom: 2px solid #2577e3 !important;
     color: #2577e3 !important;
     margin-bottom: -2px !important;
   }
@@ -145,8 +145,10 @@
   .mint-button--normal {
     display: inline-block;
     padding: 0 !important;
-   width:70px;
-  }
+    width: 70px;
+    padding-left: 5px !important;
+    text-align: left !important;
+}
   .mint-button--default {
     color: 888888;
     margin-right: 10px;
@@ -159,7 +161,7 @@
   .mint-cell {
     width:96%;
     margin:0 2%;
-    min-height:38px;
+    min-height:38px !important;
   }
   .width{
     min-height: 38px;
@@ -186,8 +188,16 @@
     flex: none !important;
     text-align: left !important;
   } */
+  .mint-cell-title{
+    width: 80px !important;
+    -webkit-box-flex: 0 !important;
+    -ms-flex: none !important;
+    flex: none !important;
+    text-align: left !important;
+  } 
   
   .mint-cell-text {
+    padding-left: 5px;
     font-size: 14px;
     display: block;
     min-height: 20px;
@@ -214,21 +224,7 @@
     border: 1px solid #ccc;
     height: 105px;
   }
-  #title .mint-cell-text{
-    font-weight:bold;  
-    font-size:14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: block;
-    min-height: 20px;
-    line-height: 20px;
-    text-align: center;
-  }
-  #title .mint-cell-title{
-    width: 90%;
-    padding: 0 5%;
-  }
+
   #detailpage #title .mint-cell-title{
     -webkit-box-flex: 1;
     -ms-flex: 1;
@@ -254,11 +250,10 @@
     border-radius: 0 !important;
    }
    #detailpage #com .mint-cell-wrapper .mint-cell-title {
-    width:280px;
+    width:280px !important;
   }
-  #com .mint-cell-title{
-    text-align: left !important;
-  }
+
+
   /* 结束detailPage */
   textarea:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
     height: 90px;
@@ -293,12 +288,12 @@
     background: #2577e3 !important;
     font-size: 12px !important;
   }
-  #detailpage #xingbie .mint-cell-wrapper .mint-cell-title{
-    width: 280px;
+   #xingbie .mint-cell-wrapper .mint-cell-title{
+    width: 320px!important;
     padding-left: 0px;
   }
-  #detailpage #xingbie .mint-radiolist-label{
-    padding-left: 5% !important;
+  #xingbie .mint-radiolist-label{
+    padding-left: 2% !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -310,13 +305,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   }
-  #detailpage #nameN .mint-cell-title{
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    padding-left: 0;
-    text-align:center;
-  }
+
   #footer .mint-tab-item-label{
     line-height: 10px !important;
   }
@@ -362,3 +351,92 @@
     height: 0px !important;
     border-bottom:none  !important;
   }
+  #title .mint-cell-text{
+    font-weight:bold;  
+    font-size:14px;
+    padding-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    min-height: 20px;
+    line-height: 20px;
+    text-align: center;
+  }
+  #title .mint-cell-title{
+    width: 90% !important;
+    padding: 0 5%;
+  }
+  .spanCla{
+    color: rgb(255, 153, 19);
+    font-size: 14px;
+    width: 100%;
+    padding: 5px 20%;
+    line-height: 18px;
+    text-align: center;
+  }
+ #nameSpan .mint-cell-title{
+    width: 0 !important;
+  }
+  pre {
+    background: #fff;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    width: 96%;
+    margin: 0 2%;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    }
+    .mint-tab-container{
+      margin-top: 12px;
+    }
+    #nameM .mint-cell-title{
+      padding-left: 0;
+      width: 100% !important;
+      text-align:center !important;
+  }
+  #nameN .mint-cell-title{
+      padding-left: 0;
+      width: 100% !important;
+      text-align:center !important;
+  }
+  .mint-tab-container {
+    font-size: 14px;
+}
+.el-card {
+  border: 1px solid #ebeef5;
+  background-color: #fff;
+  color: #303133;
+  width: 95%;
+  margin: 0 2%;
+  -webkit-transition: .3s;
+  transition: .3s;
+   font-size: 14px;
+   margin-bottom: 15px;
+}
+#zhiwei .mint-cell-title{
+  width:100% !important;
+  text-align:center !important;
+  
+}
+#zhiwei .mint-cell-text{
+ min-height:0 !important;
+}
+#zhiwei .mint-cell-label{
+  color: rgb(255, 153, 19);
+  margin-top: 0 !important;
+}
+#com  .mint-cell-title{
+  text-align: left !important;
+  width:80px !important;
+}
+#xiugai .mint-button--normal{
+  width: 90px !important;
+  position: absolute;
+  left: 38%;
+  padding:  0 !important;
+  text-align: center !important;
+}
+#xiugai{
+  min-height: 48px !important;
+}

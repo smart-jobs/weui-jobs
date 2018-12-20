@@ -19,7 +19,7 @@
         <mt-cell class="width" title="举办地址" style="text-align:left;">
               <span style="color:black; font-size:14px;"> {{detail.address}} </span>
         </mt-cell>
-        <mt-cell id="nameN" class="width" title="" >
+        <mt-cell id="nameSpan" class="width" title="" >
               <span class="spanCla">温馨提示：为防讯息临时变动,参会前可联系招聘会举办方确认。</span>
         </mt-cell>
         <mt-cell id="xiugai">
@@ -40,7 +40,7 @@
             <mt-field label="需求人数" placeholder="请输入需求人数,例如:1人或1-5人" v-model="form.count"></mt-field>
             <mt-field label="职位要求" placeholder="请输入职位要求" v-model="form.requirement"></mt-field>
             <br/>
-            <mt-button type="primary" size="large" @click.prevent="operateJobs({type:'add',id:detail.fair_id})">保存职位</mt-button>
+            <mt-button type="primary"  style="height:35px !important;line-height:35px !important;"  size="large" @click.prevent="operateJobs({type:'add',id:detail.fair_id})">保存职位</mt-button>
         </mt-popup>
         <newNavbar v-model="tab" :titles='navbarTitle'></newNavbar>
         <mt-tab-container v-model="tab">
@@ -161,6 +161,18 @@ export default {
 };
 </script>
 
+<style scoped>
+@import '../../../style/index.css';
+@import '../../../style/common.css';
+@import '../../../style/jobFair.less';
+</style>
 <style lang='css' scoped>
+
+.mint-header {
+  background-color: #2577e3;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+}
 
 </style>

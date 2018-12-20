@@ -108,6 +108,16 @@ export default {
   },
 };
 </script>
-
+<style scoped>
+@import '../../../style/index.css';
+@import '../../../style/common.css';
+@import '../../../style/jobFair.less';
+</style>
 <style lang="css" scoped>
+.mint-header{
+    background-color: #2577e3;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+}
 </style>

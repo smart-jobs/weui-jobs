@@ -106,6 +106,7 @@ export default {
 </script>
 <style scoped>
 @import '../../../style/index.css';
+@import '../../../style/common.css';
 </style>
 <style lang="css" scoped>
 .mint-swipe {
@@ -115,15 +116,11 @@ export default {
 }
 .mint-header {
   background-color: #2577e3;
-  height: 50px;
-  line-height: 50px;
+  height: 40px;
+  line-height: 40px;
   font-size: 16px;
-  padding: 0;
 }
- .bgnone{
-       padding-left: 15px !important;
-    
-  }
+
   .tit{
     font-weight: bold;
     font-size: 14px;

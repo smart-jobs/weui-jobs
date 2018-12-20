@@ -14,6 +14,7 @@ import corpJobinfoAdd from './views/CorpJobinfoAdd.vue';
 import corpJobinfoDetail from './views/CorpJobinfoDetail.vue';
 import corpLetterList from './views/CorpLetterList.vue';
 import corpLetterDetail from './views/CorpLetterDetail.vue';
+import corpJobfairDetail from './views/CorpJobfairDetail.vue';
 const router = new Router({
   base: process.env.BASE_URL,
   routes: [
@@ -66,6 +67,11 @@ const router = new Router({
       name: 'corpJobinfoAdd',
       component: corpJobinfoAdd,
     },
+    {
+      path: '/corpJobfairDetail',
+      name: 'corpJobfairDetail',
+      component: corpJobfairDetail,
+      },
     {
       path: '/corpJobinfoDetail',
       name: 'corpJobinfoDetail',

@@ -11,13 +11,13 @@
       <mt-cell title="举办日期"  @click.native="openDate()" >
         <span style="font-size:14px;" :style="selectColor">{{info.date||'请选择举办日期'}}</span>
       </mt-cell>
-      <newSelect type='unit' title="选择分站" v-model="info.unit" :originalValue='info.unit' :canEdit='!canEdit' placeholder='请选择分站'></newSelect>
+      <newSelect type='unit' title="选择分站" v-model="info.unit" :originalValue='info.unit' :canEdit='canEdit' placeholder='请选择分站'></newSelect>
       <mt-cell  id="zhiwei" title="招聘职位" label="点击此处为宣讲会添加招聘信息" @click.native="toOperateJobs()"></mt-cell>
       <!--编辑职位框-->
       <mt-popup
           v-model="popupVisible"
           position="center"
-          :modal='false'
+         
           style="width:80%;height:40%;align:center;">
           <mt-header title="添加招聘职位">
               <mt-button   class="bgnone" slot="left" @click="popupVisible=false">返回</mt-button>
@@ -27,7 +27,7 @@
           <mt-field label="需求人数" placeholder="请输入需求人数" v-model="form.count"></mt-field>
           <mt-field label="职位要求" placeholder="请输入职位要求" v-model="form.requirement"></mt-field>
           <br/>
-          <mt-button type="primary" size="large" @click.prevent="operateJobs({type:'add',id:info.fair_id})">保存职位</mt-button>
+          <mt-button type="primary" size="large" style="height:35px !important; line-height:35px !important;" @click.prevent="operateJobs({type:'add',id:info.fair_id})">保存职位</mt-button>
       </mt-popup>
       <newNavbar v-model="tab" :titles='navbarTitle'></newNavbar>
 
@@ -172,7 +172,7 @@ export default {
     },
     //打开编辑职位弹框
     toOperateJobs() {
-      if (!this.canEdit) {
+      if (this.canEdit) {
         this.popupVisible = true;
       }
     },
@@ -233,8 +233,26 @@ export default {
 };
 </script>
 
+<style scoped>
+@import '../../../style/index.css';
+@import '../../../style/common.css';
+@import '../../../style/jobFair.less';
+</style>
 <style lang='css' scoped>
+.mint-header {
+  background-color: #2577e3;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+}
 .lastbtn{
   margin-top:50px !important;
 }
+
+  #zhiwei .mint-cell-title{
+    width:100% !important;
+    text-align:center !important;
+  }
 </style>
+
+

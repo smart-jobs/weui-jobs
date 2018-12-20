@@ -1,9 +1,9 @@
 <template lang='html'>
   <div id="addJobsPage" >
-    <mt-button v-if="uri.includes('/index.html')"  type="primary" size='small' @click="popupVisible=true">
+    <mt-button v-if="uri.includes('/index.html')" class="btnClass" type="primary" size='small' @click="popupVisible=true">
        {{btnTitle}}
     </mt-button>
-    <mt-button v-else style="position: absolute !important; left: 42% !important;" type="primary" @click="popupVisible=true">
+    <mt-button v-else class="btnClass"  type="primary" @click="popupVisible=true">
       {{btnTitle}}
     </mt-button>
 
@@ -64,7 +64,7 @@ export default {
       get() {
         let style = { width: '80%', height: '40%' };
         if (this.uri.includes('index') || this.uri.includes('jobfairDetail')) {
-          style = { width: '100%', height: '75%' };
+          style = { width: '80%', height: '40%' };
         }
         return style;
       },
@@ -117,9 +117,33 @@ export default {
 };
 </script>
 
+<style scoped>
+@import '../style/index.css';
+@import '../style/common.css';
+@import '../style/jobFair.less';
+</style>
 <style lang='css' scoped>
+.mint-header {
+  background-color: #2577e3;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+}
+
 #com .mint-cell-title {
   text-align: left !important;
   width: 280px;
 }
+
+.btnClass{
+    float:left; 
+    width:17%; 
+    padding:0; 
+    margin-right:0;
+    position: absolute; 
+    bottom:30px;
+    border-radius: 0;
+  }
+
 </style>
+

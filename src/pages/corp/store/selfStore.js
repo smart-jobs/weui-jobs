@@ -92,7 +92,7 @@ export const actions = {
     let result = await this.$axios.$get(_.get(api, uri), { id: id });
     commit(types.DETAIL, result);
     if (uri === 'corpJobfairDetail') {
-      result = await this.$axios.$get(_.get(api, uri), { fair_id: id, corpid: corpid });
+      result = await this.$axios.$get(api.corpJobfairJobList, { fair_id: id, corpid: corpid });
     } else if (uri === 'corpJobinfoDetail') {
       result = await this.$axios.$get(_.get(api, uri), { id: id, corpid: corpid });
     }

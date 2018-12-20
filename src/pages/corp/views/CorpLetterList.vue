@@ -16,12 +16,12 @@
                   style="width: 100%;">
                   <el-table-column>
                     <template slot-scope="scope">
-                      <ul @click="toDetail(scope.row)" style="float:left; width:53%; margin-right:2%;">
-                        <li>姓名:{{{data:scope.row, searchItem: 'info.xm'}|getName}} </li>
-                        <li>性别:{{{data:scope.row, searchItem: 'info.xb'}|getName}} </li>
-                        <li>学历:{{{data:scope.row, searchItem: 'info.xl'}|getName}} </li>
-                        <li>毕业院校:{{{data:scope.row, searchItem: 'info.yxmc'}|getName}} </li>
-                        <li>专业:{{{data:scope.row, searchItem: 'info.zymc'}|getName}} </li>
+                      <ul @click="toDetail(scope.row)" style="float:left; width:100%; ">
+                        <li class="txtOne">姓名:{{{data:scope.row, searchItem: 'info.xm'}|getName}} </li>
+                        <li class="txtOne">性别:{{{data:scope.row, searchItem: 'info.xb'}|getName}} </li>
+                        <li class="txtOne">学历:{{{data:scope.row, searchItem: 'info.xl'}|getName}} </li>
+                        <li class="txtOne">毕业院校:{{{data:scope.row, searchItem: 'info.yxmc'}|getName}} </li>
+                        <li class="txtOne">专业:{{{data:scope.row, searchItem: 'info.zymc'}|getName}} </li>
                         <li class="txtOne">状态:{{ scope.row.status==0?"已接收":(scope.row.status==1?"已接受":"已拒绝") }}</li>
                       </ul>
                     </template>
@@ -34,12 +34,12 @@
                   style="width: 100%;">
                   <el-table-column>
                     <template slot-scope="scope">
-                      <ul @click="toDetail(scope.row)" style="float:left; width:53%; margin-right:2%;">
-                        <li>姓名:{{{data:scope.row, searchItem: 'info.xm'}|getName}} </li>
-                        <li>性别:{{{data:scope.row, searchItem: 'info.xb'}|getName}} </li>
-                        <li>学历:{{{data:scope.row, searchItem: 'info.xl'}|getName}} </li>
-                        <li>毕业院校:{{{data:scope.row, searchItem: 'info.yxmc'}|getName}} </li>
-                        <li>专业:{{{data:scope.row, searchItem: 'info.zymc'}|getName}} </li>
+                      <ul @click="toDetail(scope.row)" style="float:left; width:100%; ">
+                        <li class="txtOne">姓名:{{{data:scope.row, searchItem: 'info.xm'}|getName}} </li>
+                        <li class="txtOne">性别:{{{data:scope.row, searchItem: 'info.xb'}|getName}} </li>
+                        <li class="txtOne">学历:{{{data:scope.row, searchItem: 'info.xl'}|getName}} </li>
+                        <li class="txtOne">毕业院校:{{{data:scope.row, searchItem: 'info.yxmc'}|getName}} </li>
+                        <li class="txtOne">专业:{{{data:scope.row, searchItem: 'info.zymc'}|getName}} </li>
                         <li class="txtOne">状态:{{ scope.row.status==0?"已接收":(scope.row.status==1?"已接受":"已拒绝") }}</li>
                       </ul>
                     </template>
@@ -47,9 +47,9 @@
                 </el-table>
               </mt-tab-container-item>
             </mt-tab-container>
-            <span  style="padding: 7px 0; display: block; font-size: 14px;" v-if="loadMore">没有可加载的数据了</span>
+            <span  style="padding: 7px 0; display: block; text-align:center; font-size: 14px;" v-if="loadMore">没有可加载的数据了</span>
             <div slot="bottom" class="mint-loadmore-bottom">
-                <span  style="padding: 7px 0; display: block; font-size: 14px;" v-if="loadMore==false">正在加载...</span>
+                <span  style="padding: 7px 0; display: block;  text-align:center;  font-size: 14px;" v-if="loadMore==false">正在加载...</span>
             </div>
         </mt-loadmore>
       </template>
@@ -199,6 +199,17 @@ export default {
 };
 </script>
 
+<style scoped>
+@import '../../../style/index.css';
+@import '../../../style/common.css';
+</style>
 <style lang='css' scoped>
+
+.mint-header {
+  background-color: #2577e3;
+  height: 40px;
+  line-height:40px;
+  font-size: 16px;
+}
 
 </style>

@@ -20,7 +20,7 @@
         <mt-cell class="width" title="举办地址" style="text-align:left;">
               <span style="color:black; font-size:14px;"> {{detail.address}} </span>
         </mt-cell>
-        <mt-cell id="nameN" class="width" title="" >
+        <mt-cell id="nameSpan" class="width" title="" >
               <span class="spanCla">温馨提示：为防讯息临时变动,参会前可联系招聘会举办方确认。</span>
         </mt-cell>
         <newNavbar v-model="active" :titles="navbar"></newNavbar>
@@ -88,4 +88,13 @@ export default {
 </script>
 
 <style lang="css" scoped>
+</style>
+<style lang="css" scoped>
+.mint-header{
+    background-color: #2577e3;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+}
+
 </style>

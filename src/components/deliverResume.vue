@@ -1,7 +1,7 @@
 <template lang='html'>
   <div id="deliverResume">
       <!--@click="deliver(scope.row._id,scope.row.corpid,'jobinfo',scope.row._tenant)"-->
-    <mt-button v-if="titleBtn" class="bgnone"   @click="display()">投简历</mt-button>
+    <mt-button v-if="titleBtn" class="bgnone" style="text-align:right !important;"   @click="display()">投简历</mt-button>
     <mt-button v-if="uri.includes('index')" type="primary" class="btnClass" size='small' @click="display()">
         投简历
     </mt-button>
@@ -13,12 +13,14 @@
     <mt-popup
         v-model="popupVisible"
         position="center"
+        
         :modal="false"
-        style="align:center; overflow-y:scroll;width:80%;height:75%;">
+
+        style="align:center; overflow-y:scroll;width:100%;height:100%;">
         <mt-header title="选择简历模板">
             <mt-button  class="bgnone"  slot="left" @click="popupVisible=false">返回</mt-button>
-            <mt-button class="bgnone"   slot="right" v-if="selectedId==''" disabled>选择</mt-button>
-            <mt-button  class="bgnone"  slot="right" @click="toDeliver()" v-else>投简历</mt-button>
+            <mt-button class="bgnone" style="text-align:right !important;"  slot="right" v-if="selectedId==''" disabled>选择</mt-button>
+            <mt-button  class="bgnone"  style="text-align:right !important;" slot="right" @click="toDeliver()" v-else>投简历</mt-button>
         </mt-header>  
 
         <template>
@@ -144,4 +146,10 @@ export default {
     bottom: 35px;
     border-radius: 0;
   }
+  .mint-header{
+    background-color: #2577e3;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+}
 </style>

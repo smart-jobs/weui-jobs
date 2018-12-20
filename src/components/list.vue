@@ -29,9 +29,9 @@
                     <!--招聘信息-->
                     <deliverResume v-if='selectBtn()==="jobinfoList"&&isDateOff(scope.row.expired)&&checkDisplay("user")' :corpid="scope.row.corpid" :origin="scope.row._id" :_tenant="scope.row._tenant" :type="'0'"></deliverResume>
                     <!--学生简历=>删除-->
-                    <mt-button v-if='selectBtn()==="resumeList"' type='danger' size='small' @click="toDeleteResume(scope.row._id)">删除</mt-button>
+                    <mt-button v-if='selectBtn()==="resumeList"' type='danger' style="bottom: 5px !important;"  class="btnClass" size='small' @click="toDeleteResume(scope.row._id)">删除</mt-button>
                     <!--入场券二维码-->
-                    <mt-button v-if='selectBtn()==="ticketList"' type='primary' size='small' @click='toQrcode(scope.row)' > 二维码 </mt-button>
+                    <mt-button v-if='selectBtn()==="ticketList"' type='primary' class="btnClass" style="bottom: 30px;" size='small' @click='toQrcode(scope.row)' > 二维码 </mt-button>
                     <!-- <qrcode v-if='selectBtn()==="ticketList"' :fair_id='scope.row.fair_id'></qrcode> -->
                   </span>
                 </template>
@@ -101,6 +101,8 @@ export default {
         } else if ((routerPath !== undefined && routerPath.includes('Jobinfo')) || (params.type !== undefined && params.type.includes('jobinfo'))) {
           style = { width: '78%' };
           return style;
+        } else if (routerPath === 'resumeList') { style = { width: '78%' }; return style;
+        } else if (routerPath === 'letterList') { style = { width: '98%' }; return style;
         } else {
           return style;
         }
@@ -350,7 +352,7 @@ export default {
     padding:0; 
     margin-right:0;
     position: absolute; 
-    bottom: 40px;
+    bottom: 29px;
     border-radius: 0;
   }
   

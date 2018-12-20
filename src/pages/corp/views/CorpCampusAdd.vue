@@ -17,7 +17,7 @@
       <mt-popup
           v-model="popupVisible"
           position="center"
-          :modal='false'
+         
           style="width:80%;height:40%;align:center;">
           <mt-header title="添加招聘职位">
               <mt-button   class="bgnone" slot="left" @click="popupVisible=false">返回</mt-button>
@@ -27,7 +27,7 @@
           <mt-field label="需求人数" placeholder="请输入需求人数" v-model="form.count"></mt-field>
           <mt-field label="职位要求" placeholder="请输入职位要求" v-model="form.requirement"></mt-field>
           <br/>
-          <mt-button type="primary" size="large" @click.prevent="operateJobs({type:'add',id:detail.fair_id})">保存职位</mt-button>
+          <mt-button type="primary" size="large"  style="height:35px !important; line-height:35px !important;"  @click.prevent="operateJobs({type:'add',id:detail.fair_id})">保存职位</mt-button>
       </mt-popup>
       <newNavbar v-model="tab" :titles='navbarTitle'></newNavbar>
 
@@ -153,6 +153,7 @@ export default {
     //打开编辑职位弹框
     toOperateJobs() {
       this.popupVisible = true;
+
     },
     //操作职位信息
     operateJobs(data) {
@@ -220,6 +221,18 @@ export default {
 };
 </script>
 
+<style scoped>
+@import '../../../style/index.css';
+@import '../../../style/common.css';
+</style>
 <style lang='css' scoped>
-
+.mint-header {
+  background-color: #2577e3;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+}
+.mint-tab-container {
+    min-height: 160px;
+}
 </style>
