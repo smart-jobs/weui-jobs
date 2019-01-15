@@ -77,7 +77,7 @@ export default {
     },
     //跳转详情页
     toDetail(type, row) {
-      let url = `/${type}.html?id=${row._id}`;
+      let url = `${type}.html?id=${row._id}`;
       if (type === 'jobinfoDetail') url += `&corpid=${row.corpid}`;
       window.location.href = url;
     },

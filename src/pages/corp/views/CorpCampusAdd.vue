@@ -153,7 +153,6 @@ export default {
     //打开编辑职位弹框
     toOperateJobs() {
       this.popupVisible = true;
-
     },
     //操作职位信息
     operateJobs(data) {

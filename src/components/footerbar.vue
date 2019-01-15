@@ -1,13 +1,13 @@
 <template lang='html'>
   <div id="footer">
     <mt-tabbar v-model="selected" fixed>
-  <mt-tab-item id="/index.html">
-    <img v-if="selected=='/index.html'" slot="icon" src="@/assets/img/首页1.png">
+  <mt-tab-item id="index.html">
+    <img v-if="selected.includes('index.html')" slot="icon" src="@/assets/img/首页1.png">
     <img v-else slot="icon" src="@/assets/img/首页.png">
     首页
   </mt-tab-item>
   <mt-tab-item :id="myUrl">
-    <img v-if="selected==myUrl" slot="icon" src="@/assets/img/我的1.png">
+    <img v-if="selected.includes(myUrl)" slot="icon" src="@/assets/img/我的1.png">
     <img v-else slot="icon" src="@/assets/img/我的.png">
     我的
   </mt-tab-item>
@@ -42,11 +42,11 @@ export default {
       get() {
         let role = _.get(this.user, 'role');
         if (role === 'corp') {
-          return '/corp.html';
+          return 'corp.html';
         } else if (role === 'user') {
-          return '/user.html';
+          return 'user.html';
         } else {
-          return '/guest.html';
+          return 'guest.html';
         }
       },
     },

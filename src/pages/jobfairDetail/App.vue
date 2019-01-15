@@ -35,5 +35,4 @@ export default {
 
 <style lang='less' scoped>
 @import '../../style/common.css';
-
 </style>

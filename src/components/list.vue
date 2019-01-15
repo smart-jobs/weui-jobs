@@ -101,8 +101,12 @@ export default {
         } else if ((routerPath !== undefined && routerPath.includes('Jobinfo')) || (params.type !== undefined && params.type.includes('jobinfo'))) {
           style = { width: '78%' };
           return style;
-        } else if (routerPath === 'resumeList') { style = { width: '78%' }; return style;
-        } else if (routerPath === 'letterList') { style = { width: '98%' }; return style;
+        } else if (routerPath === 'resumeList') {
+          style = { width: '78%' };
+          return style;
+        } else if (routerPath === 'letterList') {
+          style = { width: '98%' };
+          return style;
         } else {
           return style;
         }
@@ -307,15 +311,16 @@ export default {
     //查看详情
     toDetail(row) {
       //首页的3个列表是location.herf;其他的跳转应该都是路由改变
+      //this.$emit('toDetail');
       let routerPath = this.$route.name;
       let params = methodsUtil.getParams();
       if (isNullOrUndefined(routerPath)) {
         if (_.get(params, 'type') === 'jobfairList') {
-          window.location.href = `/jobfairDetail.html?id=${row._id}`;
+          window.location.href = `jobfairDetail.html?id=${row._id}`;
         } else if (_.get(params, 'type') === 'campusList') {
-          window.location.href = `/campusDetail.html?id=${row._id}`;
+          window.location.href = `campusDetail.html?id=${row._id}`;
         } else if (_.get(params, 'type') === 'jobinfoList') {
-          window.location.href = `/jobinfoDetail.html?id=${row._id}&corpid=${row.corpid}`;
+          window.location.href = `jobinfoDetail.html?id=${row._id}&corpid=${row.corpid}`;
         } else {
           console.error('跳转出现错误,请调试list.vue组件-toDetail(row)-if部分');
         }

@@ -71,7 +71,7 @@ const router = new Router({
       path: '/corpJobfairDetail',
       name: 'corpJobfairDetail',
       component: corpJobfairDetail,
-      },
+    },
     {
       path: '/corpJobinfoDetail',
       name: 'corpJobinfoDetail',

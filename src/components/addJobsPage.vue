@@ -104,7 +104,7 @@ export default {
     },
     //判断是否是首页和招聘会详情,控制显示用
     forIndexAndDetail() {
-      if (this.uri === '/index.html' || this.uri === '/jobfairDetail.html') return true;
+      if (this.uri.includes('index.html') || this.uri.includes('jobfairDetail.html')) return true;
     },
     //企业申请加入招聘会
     async apply() {
@@ -146,4 +146,3 @@ export default {
   }
 
 </style>
-

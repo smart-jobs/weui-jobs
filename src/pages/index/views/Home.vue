@@ -4,7 +4,7 @@
 
       <mt-swipe :auto="4000">
         <mt-swipe-item>
-            <img style="width:100%; height:100%;"  src="http://static.bibibi.net/frontend/public/images/push/push_3.jpg">
+            <img style="width:100%; height:100%;"  :src="imgs">
         </mt-swipe-item>
       </mt-swipe>
       <newNavbar :titles="navbar" v-model="active"></newNavbar>
@@ -30,11 +30,11 @@
                         type="primary" 
                         size='small' 
                         class="btnClass"
-                        v-if='checkDisplay("user")'
+                        v-if='isDateOff(scope.row.date)&&checkDisplay("user")'
                         @click='apply(scope.row._id)'> 
                         我要报名
                     </mt-button>
-                    <div v-else-if='checkDisplay("corp")'>
+                    <div v-else-if='isDateOff(scope.row.date)&&checkDisplay("corp")'>
                       <div v-if="pageCheckCorp(scope.row.unit)">
                         <addJobsPage btnTitle="申请加入" :fair_id="scope.row._id" ></addJobsPage>
                       </div>  
@@ -44,7 +44,7 @@
               </el-table-column>
             </el-table>
            <!-- <router-link :to="{path:'/'}"  v-if="jobfairList.total>limit"  class="moreA" > -->
-                <p @click="toList('jobfairList')" class="moreA">查看更多</p>
+                <p @click="toList('jobfairList')" class="moreA" v-if="jobfairList.total>limit">查看更多</p>
             <!-- </router-link> -->
           </mt-tab-container-item>
           <!--主页-宣讲会列表-->
@@ -68,7 +68,7 @@
               </el-table-column>
             </el-table>
             <!-- <router-link :to="{path:'/'}"  v-if="campusList.total>limit"  class="moreA" > -->
-                <p @click="toList('campusList')" class="moreA">查看更多</p>
+                <p @click="toList('campusList')" class="moreA" v-if="campusList.total>limit">查看更多</p>
             <!-- </router-link> -->
           </mt-tab-container-item>
           <!--主页-招聘信息列表-->
@@ -97,7 +97,7 @@
                 </el-table-column>
             </el-table>
             <!-- <router-link :to="{path:'/'}"  v-if="jobinfoList.total>limit"  class="moreA" > -->
-                <p @click="toList('jobinfoList')" class="moreA">查看更多</p>
+                <p @click="toList('jobinfoList')" class="moreA" v-if="jobinfoList.total>limit">查看更多</p>
             <!-- </router-link> -->
           </mt-tab-container-item>
 
@@ -128,6 +128,7 @@ export default {
   },
   data() {
     return {
+      imgs: require('@/assets/img/push_3.jpg'),
       //首页列表变量
       jobfairList: [],
       campusList: [],
@@ -210,13 +211,13 @@ export default {
     },
     //跳转详情页
     toDetail(type, row) {
-      let url = `/${type}.html?id=${row._id}`;
+      let url = `${type}.html?id=${row._id}`;
       if (type === 'jobinfoDetail') url += `&corpid=${row.corpid}`;
       window.location.href = url;
     },
     //跳转列表页
     toList(type) {
-      let url = `/indexList.html?type=${type}`;
+      let url = `indexList.html?type=${type}`;
       window.location.href = url;
     },
   },
