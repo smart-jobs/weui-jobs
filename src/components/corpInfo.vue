@@ -1,11 +1,11 @@
 <template lang='html'>
   <div id="corpInfo">
     <!--招聘信息-->
-    <mt-cell v-if="uri.includes('/jobinfoDetail')" class="width" title="企业名称" style="text-align:left;" @click.native="display()">
+    <mt-cell v-if="uri.includes('jobinfoDetail')" class="width" title="企业名称" style="text-align:left;" @click.native="display()">
         <span style="color:black;font-size: 14px; padding: 10px 0; line-height: 20px;"> {{corpName||''}} </span>
     </mt-cell>
     <!--宣讲会显示-->
-    <mt-cell v-else-if="uri.includes('/campusDetail')" class="width" title="企业名称" style="text-align:left;" @click.native="display()">
+    <mt-cell v-else-if="uri.includes('campusDetail')" class="width" title="企业名称" style="text-align:left;" @click.native="display()">
         <span style="color:black;font-size: 14px; padding: 10px 0; line-height: 20px;"> {{corpName||''}} </span>
     </mt-cell>
     <!--招聘会显示-->
@@ -75,9 +75,26 @@
                 <pre style="text-align:left;">{{corpInfo.description}} </pre>
           </mt-cell>
         </span>
-        <!--企业招聘职位-->
-        <span v-if="uri.includes('/jobfairDetail')">
+        <!--企业招聘会招聘职位-->
+        <span v-if="uri.includes('jobfairDetail')">
           <showJobsListCard :list="jobInfoList.jobs" :needBtn="false" ></showJobsListCard>
+        </span>
+        <!--企业招聘的所有职位-->
+        <span v-if="uri.includes('jobinfoDetail')">
+          <span v-for="(item,index) in corpJobInfoList" :key="index" >
+          <el-card class="box-card"><!--v-if="item.status == 1"实际使用需要判断-->
+              <ul style="text-align:left; float:left; width:70%; padding-bottom: 10px; margin-right:10%;" @click="detail(item._id)">
+                  <li slot="header" class="clearfix">
+                      招聘职位:
+                      {{item.title}}
+                  </li>
+                  <li class="text item" >
+                      需求人数:
+                      {{item.count}}
+                  </li>
+              </ul>
+          </el-card>
+          </span>
         </span>
     </mt-popup>
   </div>
@@ -102,12 +119,14 @@ export default {
     origin: { type: String, default: null }, //招聘会/招聘信息id,query部分
     type: { type: String, default: null }, //判断是招聘会还是招聘信息,0:招聘信息;1:招聘会
     titleBtn: { type: Boolean, defalut: true }, //企业详情页在标题框左侧显示投简历
+    fair_id: { type: String, default: null }, //招聘会id
   },
   computed: {
     ...mapState({
       user: state => state.publics.user,
       corpInfo: state => state.self.corpInfo,
       jobInfoList: state => state.self.jobInfoList,
+      corpJobInfoList: state => state.self.corpJobInfoList,
     }),
   },
   data() {
@@ -117,12 +136,15 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['corpInfos', 'jobInfoLists']),
+    ...mapActions(['corpInfos', 'jobInfoLists', 'getCorpJobInfoList']),
     async display() {
-      console.log(this.titleBtn);
       this.popupVisible = true;
       await this.corpInfos({ corpid: this.corpid, _tenant: this._tenant });
-      if (this.fair_id != null) await this.jobInfoLists({ corpid: this.corpid, fair_id: this.origin });
+      if (this.fair_id != null && this.uri.includes('jobfairDetail')) {
+        await this.jobInfoLists({ corpid: this.corpid, fair_id: this.origin });
+      } else if (this.uri.includes('jobinfoDetail')) {
+        await this.getCorpJobInfoList({ corpid: this.corpid, _tenant: this._tenant });
+      }
     },
     //根据角色显示哪个功能按钮
     checkDisplay(type) {
@@ -131,6 +153,12 @@ export default {
       } else {
         return methodsUtil.checkCorp({ role: _.get(this.user, 'role'), displayType: type, userid: _.get(this.user, 'userid') });
       }
+    },
+    //详情
+    detail(id) {
+      let url = `jobinfoDetail.html?id=${id}&corpid=${this.corpid}`;
+      console.log(url);
+      window.location.href = url;
     },
   },
   filters: {

@@ -8,11 +8,13 @@ Vue.use(Vuex);
 const api = {
   jobinfoDetail: '/weixin/api/jobs/jobinfo/fetch',
   corpInfo: '/weixin/api/corp/details',
+  corpJobinfoLists: '/weixin/api/jobs/jobinfo/list',
 };
 
 export const state = () => ({
   detail: {},
   corpInfo: {},
+  corpJobInfoList: [],
 });
 
 export const mutations = {
@@ -21,6 +23,9 @@ export const mutations = {
   },
   [types.CORPINFO](state, payload) {
     state.corpInfo = payload;
+  },
+  [types.CORPJOBINFOLIST](state, payload) {
+    state.corpJobInfoList = payload;
   },
 };
 
@@ -38,5 +43,11 @@ export const actions = {
     const { corpid, _tenant } = payload;
     let result = await this.$axios.$get(api.corpInfo, { corpid: corpid, _tenant: _tenant });
     commit(types.CORPINFO, result);
+  },
+  //查询该企业的招聘信息
+  async getCorpJobInfoList({ commit }, payload) {
+    const { corpid, _tenant } = payload;
+    let result = await this.$axios.$get(api.corpJobinfoLists, { corpid: corpid, skip: 0, limit: 10 });
+    commit(types.CORPJOBINFOLIST, result.data);
   },
 };

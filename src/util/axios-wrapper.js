@@ -58,7 +58,6 @@ export default class AxiosWrapper {
     if (!options) options = {};
     if (options.params) options.params = trimData(options.params);
     const url = AxiosWrapper.merge(uri, options.params);
-
     currentRequests += 1;
     Indicator.open({
       spinnerType: 'fading-circle',

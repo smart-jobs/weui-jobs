@@ -36,7 +36,7 @@
 
             <mt-tab-container-item id="tab2">
                 <span v-for="(item,index) in corpList" :key="index" id="com">
-                    <corpInfo :titleBtn="true" :corpName="item.corpname" :corpid="item.corpid" :_tenant="detail._tenant" :origin="detail._id" :type="'1'"></corpInfo>
+                    <corpInfo :fair_id="detail._id" :titleBtn="true" :corpName="item.corpname" :corpid="item.corpid" :_tenant="detail._tenant" :origin="detail._id" :type="'1'"></corpInfo>
                 </span>
             </mt-tab-container-item>
         </mt-tab-container>
