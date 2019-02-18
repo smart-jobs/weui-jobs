@@ -16,7 +16,7 @@
         style="align:center; overflow-y:scroll;width:100%;height:100%;">
         <mt-header title="企业详情">
             <mt-button  class="bgnone"  slot="left" @click="popupVisible=false">返回</mt-button>
-            <deliverResume v-if="checkDisplay('user')" slot="right"  :titleBtn="titleBtn" :userid="user.userid" :corpid="corpid" :origin="origin" :_tenant="corpInfo._tenant" :type="type" ></deliverResume>
+            <deliverResume v-if="checkDisplay('user')&&isDateOff(expired)" slot="right"  :titleBtn="titleBtn" :userid="user.userid" :corpid="corpid" :origin="origin" :_tenant="corpInfo._tenant" :type="type" ></deliverResume>
         </mt-header>
         <!--企业详情部分-->
         <span id="corpInfo">
@@ -120,6 +120,7 @@ export default {
     type: { type: String, default: null }, //判断是招聘会还是招聘信息,0:招聘信息;1:招聘会
     titleBtn: { type: Boolean, defalut: true }, //企业详情页在标题框左侧显示投简历
     fair_id: { type: String, default: null }, //招聘会id
+    expired: { type: String }, //过期日期
   },
   computed: {
     ...mapState({
@@ -159,6 +160,11 @@ export default {
       let url = `jobinfoDetail.html?id=${id}&corpid=${this.corpid}`;
       console.log(url);
       window.location.href = url;
+    },
+    //判断信息是否过期
+    isDateOff(date) {
+      let result = methodsUtil.isDateOff(date);
+      return result;
     },
   },
   filters: {

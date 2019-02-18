@@ -4,7 +4,7 @@
             <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
         </mt-header> 
         <mt-cell  class="width" :title="detail.subject" id="title"></mt-cell>
-        <corpInfo :titleBtn="false" :corpName="detail.corpname" :corpid="detail.corpid" :_tenant="detail._tenant" ></corpInfo>
+        <corpInfo :titleBtn="false" :corpName="detail.corpname" :corpid="detail.corpid" :_tenant="detail._tenant" :expired="detail.date"></corpInfo>
         <mt-cell class="width" title="分站信息" style="text-align:left;">
               <span style="color:black;"> {{findUnit(detail.unit)}}</span>
         </mt-cell>
