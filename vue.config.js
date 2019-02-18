@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  baseUrl: './',
+  publicPath: './',
   pages: {
     index: 'src/pages/index/main.js',
     jobfairDetail: 'src/pages/jobfairDetail/main.js',
