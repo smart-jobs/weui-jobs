@@ -1,6 +1,6 @@
 <template lang="html">
   <div id="Home">
-      <mt-header title="招聘信息详情">
+      <mt-header :title="isDateOff(detail.expired)?'招聘信息详情':'招聘信息详情(已过期)'">
             <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
         </mt-header>    
         <mt-cell :title="detail.title"  class="width" id="title"></mt-cell>

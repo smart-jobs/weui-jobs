@@ -180,6 +180,9 @@ export default {
       } else if (optionTitle.prop === 'origin') {
         let text = result === 0 ? '本校学生' : '校外学生';
         return `${text}`;
+      } else if (optionTitle.prop === 'date' || optionTitle.prop === 'expired') {
+        let timeResult = this.isDateOff(result) ? '招聘中' : '已过期';
+        return `状态:${timeResult}`;
       } else if (optionTitle.label !== '') {
         return `${optionTitle.label}:${result}`;
       } else {
@@ -192,7 +195,7 @@ export default {
       if (optionTitle.label !== '') {
         let routerPath = this.$route.name;
         let params = methodsUtil.getParams();
-        if (routerPath === 'corpJobinfoList' || (window.location.pathname === '/indexList.html' && params.type === 'jobinfoList')) {
+        if (routerPath === 'corpJobinfoList') {
           return 'txtOne';
         } else {
           return 'txt';

@@ -22,7 +22,7 @@
                     <ul @click="toDetail('jobfairDetail',scope.row)" style="float:left; width:53%; margin-right:2%;">
                         <li class="tit">{{ scope.row.subject }} </li>
                         <li class="txt">举办地址：{{ scope.row.address }}</li>
-                        <li class="txt">举办日期：{{ scope.row.date }}</li>
+                        <li class="txt">举办日期：{{ isDateOff(scope.row.date)?scope.row.date:'已过期' }}</li>
                         <li class="txt" >分站信息：{{findUnit( scope.row.unit )}}</li>
                     </ul>
                     <!--style删掉就能看见按钮了,报名的判断少:isDateOff(scope.row.date)&&,先调样式不加-->
@@ -60,7 +60,7 @@
                   <ul @click="toDetail('campusDetail',scope.row)" style="float:left; width:73%; margin-right:3%;">
                     <li class="tit">{{ scope.row.subject }}</li>
                     <li class="txt">举办地址：{{ scope.row.address }}</li>
-                    <li class="txt mb0">举办日期：{{ scope.row.date }}</li>
+                    <li class="txt mb0">举办日期：{{ isDateOff(scope.row.date)?scope.row.date:'已过期' }}</li>
                     <li class="txt mb0">分站信息：{{ findUnit( scope.row.unit ) }}</li>
                   </ul>
                 </span>
@@ -86,7 +86,8 @@
                       <li class="txtOne">工作性质：{{{data:scope.row,searchItem:'nature.name'}|getName }}</li>
                       <li class="txtOne">薪资待遇：{{{data:scope.row,searchItem:'salary.name'}|getName }}</li>
                       <li class="txtOne">最低学历：{{{data:scope.row,searchItem:'xlreqs.name'}|getName }}</li>
-                      <li class="txt mb0" style="float:left;">所在城市:{{ {data:scope.row,searchItem:'city.name'}|getName }}</li>
+                      <li class="txtOne">所在城市:{{ {data:scope.row,searchItem:'city.name'}|getName }}</li>
+                      <li class="txtOne">状态：{{ isDateOff(scope.row.expired)?'招聘中':'已过期' }}</li>
                       <li style="font-size:12px; color:#888;"> </li>
                     </ul>
                     <span v-if='isDateOff(scope.row.expired)&&checkDisplay("user")'>
@@ -136,12 +137,6 @@ export default {
       //列表选择表头
       navbar: ['招聘会', '宣讲会', '招聘信息'],
       active: 'tab1',
-      listContext: [
-        { prop: 'subject', label: '' },
-        { prop: 'address', label: '举办地址' },
-        { prop: 'date', label: '举办日期' },
-        { prop: 'unit', label: '分站信息' },
-      ],
       api: {
         jobfairList: '/weixin/api/jobs/jobfair/query_g',
         campusList: '/weixin/api/jobs/campus/query_g',
