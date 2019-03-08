@@ -177,10 +177,11 @@ export default {
         id: uri === 'corpJobfairJobUpdate' ? id : this.id,
       });
       this.$checkRes(result, () => {
-        if (uri === 'corpJobfairJobUpdate') {
-          this.load();
-        }
-        this.$router.push({ name: 'corpJobfairList' });
+        // if (uri === 'corpJobfairJobUpdate') {
+        //   this.load();
+        // }
+        // this.$router.push({ name: 'corpJobfairList' });
+        this.load();
       });
     },
     //验证错误
