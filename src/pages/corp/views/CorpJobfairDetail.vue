@@ -49,14 +49,14 @@
             position="center"
             style="width:80%;height:40%;align:center;">
             <mt-header title="添加招聘职位">
-                <mt-button   class="bgnone" slot="left" @click="popupVisible=false">返回</mt-button>
+                <mt-button   class="bgnone" slot="left" @click="popupVisible_edit=false">返回</mt-button>
             </mt-header> 
         
             <mt-field label="职位名称" placeholder="请输入职位名称" v-model="UpdateForm.name"></mt-field>
             <mt-field label="需求人数" placeholder="请输入需求人数,例如:1人或1-5人" v-model="UpdateForm.count"></mt-field>
             <mt-field label="职位要求" placeholder="请输入职位要求" v-model="UpdateForm.requirement"></mt-field>
             <br/>
-            <mt-button type="primary"  style="height:35px !important;line-height:35px !important;"  size="large" @click.prevent="operateJobs({type:'add',id:detail.fair_id})">保存职位</mt-button>
+            <mt-button type="primary"  style="height:35px !important;line-height:35px !important;"  size="large" @click.prevent="operateJobs({type:'update',id:UpdateForm._id})">保存职位</mt-button>
         </mt-popup>
         <newNavbar v-model="tab" :titles='navbarTitle'></newNavbar>
         <mt-tab-container v-model="tab">
@@ -65,7 +65,7 @@
           </mt-tab-container-item>
 
           <mt-tab-container-item id="tab2" >
-              <showJobsListCard :list='jobs' :needBtn='true' :needEdit="true" @operation='operateJobs'></showJobsListCard>
+              <showJobsListCard :list='jobs' :needBtn='true' :needEdit="true" @operation='operateJobs' @update="toUpdate"></showJobsListCard>
           </mt-tab-container-item>
 
         </mt-tab-container>
@@ -108,10 +108,7 @@ export default {
     };
   },
   async created() {
-    let result = await this.loadDetail({ uri: 'corpJobfairDetail', id: this.id, corpid: this.user.corpid });
-    this.$checkRes(result, () => {
-      this.$set(this, 'jobs', result.jobs);
-    });
+    this.load();
   },
   computed: {
     ...mapState({
@@ -142,6 +139,13 @@ export default {
   },
   methods: {
     ...mapActions(['loadDetail', 'operateDetail']),
+    //load
+    async load() {
+      let result = await this.loadDetail({ uri: 'corpJobfairDetail', id: this.id, corpid: this.user.corpid });
+      this.$checkRes(result, () => {
+        this.$set(this, 'jobs', result.jobs);
+      });
+    },
     //职位操作
     operateJobs(data) {
       const { type, id } = data;
@@ -155,14 +159,27 @@ export default {
       } else if (type === 'delete') {
         return this.handleSuccess({ uri: 'corpJobfairJobDelete', id: id });
       } else if (type === 'update') {
-        return this.handleSuccess({ uri: 'corpJobfairJobUpdate', id: id });
+        this.jobsValidator.validate(this.UpdateForm, (errors, fields) => {
+          if (errors) {
+            return this.handleErrors(errors, fields);
+          }
+          return this.handleSuccess({ uri: 'corpJobfairJobUpdate', id: id });
+        });
       }
     },
     //验证正确=>提交
     async handleSuccess(data) {
       const { uri, id } = data;
-      let result = await this.operateDetail({ uri: uri, data: this.form, corpid: this.user.corpid, id: this.id });
+      let result = await this.operateDetail({
+        uri: uri,
+        data: uri === 'corpJobfairJobUpdate' ? this.UpdateForm : this.form,
+        corpid: this.user.corpid,
+        id: uri === 'corpJobfairJobUpdate' ? id : this.id,
+      });
       this.$checkRes(result, () => {
+        if (uri === 'corpJobfairJobUpdate') {
+          this.load();
+        }
         this.$router.push({ name: 'corpJobfairList' });
       });
     },
@@ -176,6 +193,12 @@ export default {
       }, {});
       // eslint-disable-next-line no-console
       console.debug(errors, fields);
+    },
+    //打开修改框
+    toUpdate(data) {
+      const { job_info } = data;
+      this.popupVisible_edit = true;
+      this.UpdateForm = JSON.parse(JSON.stringify(job_info));
     },
   },
 };

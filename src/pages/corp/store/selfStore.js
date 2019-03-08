@@ -107,8 +107,10 @@ export const actions = {
       result = this.$axios.$post(_.get(api, uri), data, { corpid: corpid });
     } else if (uri === 'corpJobfairJobAdd') {
       result = this.$axios.$post(_.get(api, uri), data, { fair_id: id, corpid: corpid });
-    } else if (uri === 'corpJobfairJobDelete' || uri === 'corpJobfairJobUpdate') {
+    } else if (uri === 'corpJobfairJobDelete') {
       result = this.$axios.$post(_.get(api, uri), {}, { job_id: id, corpid: corpid });
+    } else if (uri === 'corpJobfairJobUpdate') {
+      result = this.$axios.$post(_.get(api, uri), data, { job_id: id, corpid: corpid });
     } else if (uri === 'corpCampusCreate') {
       result = this.$axios.$post(_.get(api, uri), data, { corpid: corpid, _tenant: _tenant });
     } else if (uri === 'corpCampusUpdate') {

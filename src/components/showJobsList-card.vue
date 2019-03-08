@@ -50,7 +50,7 @@ export default {
       }
     },
     toEdit(item) {
-      console.log(item);
+      this.$emit('update', { job_info: item });
     },
   },
 };
