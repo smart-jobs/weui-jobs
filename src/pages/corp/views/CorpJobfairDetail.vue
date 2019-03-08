@@ -24,7 +24,7 @@
         </mt-cell>
         <mt-cell id="xiugai">
           <!--如果看不见按钮:v-if中加个!号就能看见了-->
-            <mt-button type="primary" @click.native="popupVisible=true" v-if="!canUpdateStatus">招聘职位修改</mt-button>
+            <mt-button type="primary" @click.native="popupVisible=true" v-if="!canUpdateStatus">添加招聘职位</mt-button>
         </mt-cell>
 
         <!--编辑职位框-->
@@ -49,7 +49,7 @@
           </mt-tab-container-item>
 
           <mt-tab-container-item id="tab2" >
-              <showJobsListCard :list='jobs' :needBtn='!canUpdateStatus' @operation='operateJobs'></showJobsListCard>
+              <showJobsListCard :list='jobs' :needBtn='true' :needEdit="true" @operation='operateJobs'></showJobsListCard>
           </mt-tab-container-item>
 
         </mt-tab-container>
