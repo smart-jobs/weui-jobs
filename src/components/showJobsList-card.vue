@@ -15,9 +15,9 @@
                   {{item.requirement}}
               </li>
           </ul>
+          <mt-button v-if="needEdit"  type="primary" class="bnClass" style="text-align:center !important;" @click="toEdit(item)"> 修改</mt-button>
           <mt-button v-if="needBtn&&withApi"  type="danger" class="bnClass" style="text-align:center !important;" @click="operation(item)"> {{btnTitle}}</mt-button>
           <mt-button v-else-if='needBtn&&withApi===false' style="text-align:center !important;"  type="danger" class="bnClass" @click="operation(index)"> {{btnTitle}}</mt-button>
-          <mt-button v-if="needEdit"  type="primary" class="bnClass" style="text-align:center !important;" @click="toEdit(item)"> 修改</mt-button>
       </el-card>
 
   </div>
@@ -30,7 +30,7 @@ export default {
     list: { type: Array },
     needBtn: { type: Boolean, default: false },
     btnTitle: { type: String, default: '删除' },
-    withApi: { type: Boolean, default: true },
+    withApi: { type: Boolean, default: true }, //是不是走接口,不走接口就在组件使用的时候给false
     needEdit: { type: Boolean, default: false },
   },
   data() {

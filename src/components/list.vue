@@ -180,7 +180,10 @@ export default {
       } else if (optionTitle.prop === 'origin') {
         let text = result === 0 ? '本校学生' : '校外学生';
         return `${text}`;
-      } else if (optionTitle.prop === 'date' || optionTitle.prop === 'expired') {
+      } else if (optionTitle.prop === 'date') {
+        let timeResult = this.isDateOff(result) ? '未过期' : '已过期';
+        return `状态:${timeResult}`;
+      } else if (optionTitle.prop === 'expired') {
         let timeResult = this.isDateOff(result) ? '招聘中' : '已过期';
         return `状态:${timeResult}`;
       } else if (optionTitle.label !== '') {

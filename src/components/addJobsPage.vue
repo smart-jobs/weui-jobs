@@ -22,7 +22,7 @@
         <br/>
         <mt-button type="primary" size="large" style="height:35px !important;line-height:35px !important;" @click.prevent="saveJobs()">保存职位</mt-button>
       <div v-if="forIndexAndDetail()" >
-        <showJobsListCard :list="jobsList" :needBtn="true" :btnTitle="'删除'" :listTitle="listTitle"></showJobsListCard>
+        <showJobsListCard :list="jobsList" :needBtn="true" :btnTitle="'删除'" :listTitle="listTitle" :withApi="false" @operation="jobsDelete"></showJobsListCard>
       </div>
     </mt-popup>
   </div>
@@ -62,7 +62,7 @@ export default {
       get() {
         let style = { width: '80%', height: '40%' };
         if (this.uri.includes('index') || this.uri.includes('jobfairDetail')) {
-          style = { width: '80%', height: '40%' };
+          style = { width: '80%', height: '80%' };
         }
         return style;
       },
@@ -97,7 +97,7 @@ export default {
       console.debug(errors, fields);
     },
     //删除添加的职位信息
-    jobsDelte(index) {
+    jobsDelete(index) {
       this.jobsList.splice(index, 1);
     },
     //判断是否是首页和招聘会详情,控制显示用
@@ -108,6 +108,7 @@ export default {
     async apply() {
       let result = await this.corpApply({ fair_id: this.fair_id, jobs: this.jobsList });
       this.$checkRes(result, () => {
+        this.$message.success('申请成功,请等待审核');
         this.popupVisible = false;
       });
     },

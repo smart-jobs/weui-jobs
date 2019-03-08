@@ -7,7 +7,7 @@ export default {
   isDateOff(dataDate) {
     const now = new Date();
     dataDate = new Date(dataDate);
-    return dataDate > now;
+    return dataDate >= now;
   },
   //判断企业是否可以执行此动作/显示
   checkCorp(data) {

@@ -172,14 +172,20 @@ export default {
       const { uri, id } = data;
       let result = await this.operateDetail({
         uri: uri,
-        data: uri === 'corpJobfairJobUpdate' ? this.UpdateForm : this.form,
+        data: uri === 'corpJobfairJobUpdate' ? this.UpdateForm : uri === 'corpJobfairJobDelete' ? {} : this.form,
         corpid: this.user.corpid,
-        id: uri === 'corpJobfairJobUpdate' ? id : this.id,
+        id: uri === 'corpJobfairJobUpdate' || uri === 'corpJobfairJobDelete' ? id : this.id,
       });
       this.$checkRes(result, () => {
-        // if (uri === 'corpJobfairJobUpdate') {
-        //   this.load();
-        // }
+        if (uri === 'corpJobfairJobUpdate') {
+          this.$message.success('修改成功');
+          this.popupVisible_edit = false;
+        } else if (uri === 'corpJobfairJobAdd') {
+          this.$message.success('添加成功');
+          this.form = {};
+        } else if (uri === 'corpJobfairJobDelete') {
+          this.$message.success('删除成功');
+        }
         // this.$router.push({ name: 'corpJobfairList' });
         this.load();
       });
