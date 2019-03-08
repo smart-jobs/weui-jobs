@@ -12,6 +12,7 @@ const api = {
   corpJobfairDetail: '/weixin/api/jobs/jobfair/fetch', //query:id
   corpJobfairJobList: '/weixin/api/jobs/jobfair/corp/fetch', //query:fair_id,corpid
   corpJobfairJobAdd: '/weixin/api/jobs/jobfair/corp/job/add', //query:corpid,fair_id
+  corpJobfairJobUpdate: '/weixin/api/jobs/jobfair/corp/job/update', //query:corpid,job_id
   corpJobfairJobDelete: '/weixin/api/jobs/jobfair/corp/job/delete', //query:corpid,job_id
   //企业宣讲会
   corpCampusList: '/weixin/api/jobs/campus/list', //query:corpid
@@ -106,7 +107,7 @@ export const actions = {
       result = this.$axios.$post(_.get(api, uri), data, { corpid: corpid });
     } else if (uri === 'corpJobfairJobAdd') {
       result = this.$axios.$post(_.get(api, uri), data, { fair_id: id, corpid: corpid });
-    } else if (uri === 'corpJobfairJobDelete') {
+    } else if (uri === 'corpJobfairJobDelete' || uri === 'corpJobfairJobUpdate') {
       result = this.$axios.$post(_.get(api, uri), {}, { job_id: id, corpid: corpid });
     } else if (uri === 'corpCampusCreate') {
       result = this.$axios.$post(_.get(api, uri), data, { corpid: corpid, _tenant: _tenant });

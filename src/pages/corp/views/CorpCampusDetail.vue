@@ -172,9 +172,10 @@ export default {
     },
     //打开编辑职位弹框
     toOperateJobs() {
-      if (this.canEdit) {
-        this.popupVisible = true;
-      }
+      this.popupVisible = true;
+      // if (this.canEdit) {
+      //   this.popupVisible = true;
+      // }
     },
     //操作职位信息
     operateJobs(data) {
@@ -228,6 +229,13 @@ export default {
       }, {});
       // eslint-disable-next-line no-console
       console.debug(errors, fields);
+    },
+    //滑动穿屏问题
+    closeTouch() {
+      document.getElementsByTagName('body')[0].addEventListener('touchmove', this.handler, { passive: false }); //阻止默认事件
+    },
+    openTouch() {
+      document.getElementsByTagName('body')[0].removeEventListener('touchmove', this.handler, { passive: false }); //打开默认事件
     },
   },
 };

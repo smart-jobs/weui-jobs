@@ -19,6 +19,7 @@
           <mt-button v-else-if='needBtn&&withApi===false' style="text-align:center !important;"  type="danger" class="btnClass" @click="operation(index)"> {{btnTitle}}</mt-button>
           <mt-button v-if="needEdit"  type="primary" class="btnClass" style="text-align:center !important;" @click="toEdit(item)"> 修改</mt-button>
       </el-card>
+
   </div>
 </template>
 
@@ -32,8 +33,16 @@ export default {
     withApi: { type: Boolean, default: true },
     needEdit: { type: Boolean, default: false },
   },
+  data() {
+    return {
+      popupVisible: false,
+      form: {},
+      operaId: '',
+    };
+  },
   methods: {
     operation(data) {
+      const { type, id } = data;
       if (this.withApi) {
         this.$emit('operation', { type: 'delete', id: data._id });
       } else {

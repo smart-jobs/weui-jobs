@@ -27,7 +27,7 @@
             <mt-button type="primary" @click.native="popupVisible=true" v-if="!canUpdateStatus">添加招聘职位</mt-button>
         </mt-cell>
 
-        <!--编辑职位框-->
+        <!--添加职位框-->
         <mt-popup
             v-model="popupVisible"
             position="center"
@@ -39,6 +39,22 @@
             <mt-field label="职位名称" placeholder="请输入职位名称" v-model="form.name"></mt-field>
             <mt-field label="需求人数" placeholder="请输入需求人数,例如:1人或1-5人" v-model="form.count"></mt-field>
             <mt-field label="职位要求" placeholder="请输入职位要求" v-model="form.requirement"></mt-field>
+            <br/>
+            <mt-button type="primary"  style="height:35px !important;line-height:35px !important;"  size="large" @click.prevent="operateJobs({type:'add',id:detail.fair_id})">保存职位</mt-button>
+        </mt-popup>
+
+        <!--修改职位框-->
+        <mt-popup
+            v-model="popupVisible_edit"
+            position="center"
+            style="width:80%;height:40%;align:center;">
+            <mt-header title="添加招聘职位">
+                <mt-button   class="bgnone" slot="left" @click="popupVisible=false">返回</mt-button>
+            </mt-header> 
+        
+            <mt-field label="职位名称" placeholder="请输入职位名称" v-model="UpdateForm.name"></mt-field>
+            <mt-field label="需求人数" placeholder="请输入需求人数,例如:1人或1-5人" v-model="UpdateForm.count"></mt-field>
+            <mt-field label="职位要求" placeholder="请输入职位要求" v-model="UpdateForm.requirement"></mt-field>
             <br/>
             <mt-button type="primary"  style="height:35px !important;line-height:35px !important;"  size="large" @click.prevent="operateJobs({type:'add',id:detail.fair_id})">保存职位</mt-button>
         </mt-popup>
@@ -73,6 +89,7 @@ export default {
       id: this.$route.query.id,
       jobs: [],
       form: {},
+      UpdateForm: {},
       jobsValidator: new Validator({
         //职位验证
         form: {
@@ -86,6 +103,7 @@ export default {
         },
       }),
       popupVisible: false,
+      popupVisible_edit: false,
       tab: 'tab1',
     };
   },
@@ -136,6 +154,8 @@ export default {
         });
       } else if (type === 'delete') {
         return this.handleSuccess({ uri: 'corpJobfairJobDelete', id: id });
+      } else if (type === 'update') {
+        return this.handleSuccess({ uri: 'corpJobfairJobUpdate', id: id });
       }
     },
     //验证正确=>提交
