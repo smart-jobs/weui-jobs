@@ -12,7 +12,12 @@
         <span style="font-size:14px;" :style="selectColor">{{detail.date||'请选择举办日期'}}</span>
       </mt-cell>
       <newSelect type='unit' title="选择分站" v-model="detail.unit" placeholder='请选择分站'></newSelect>
-      <mt-cell  id="zhiwei" title="招聘职位" label="点击此处为宣讲会添加招聘信息" @click.native="toOperateJobs()"></mt-cell>
+
+      <mt-cell id="xiugai">
+        <mt-button type="primary" @click.native="toOperateJobs()">添加招聘职位</mt-button>
+      </mt-cell>
+
+      <!-- <mt-cell  id="zhiwei" title="招聘职位" label="点击此处为宣1讲会添加招聘信息" @click.native="toOperateJobs()"></mt-cell> -->
       <!--编辑职位框-->
       <mt-popup
           v-model="popupVisible"
@@ -41,7 +46,7 @@
           </mt-tab-container-item>
 
       </mt-tab-container>
-      <mt-button style="height:35px !important; line-height:35px !important;"  type="primary" size="large" @click.prevent="toApplyCampus()">申请宣讲会</mt-button>
+      <mt-button style="height:35px !important; line-height:35px !important; margin-top: 20px !important;"  type="primary" size="large" @click.prevent="toApplyCampus()">申请宣讲会</mt-button>
 
       <!--时间弹框部分-->
       <mt-datetime-picker
@@ -119,9 +124,9 @@ export default {
       get() {
         let result;
         if (_.get(this.detail, 'status') === '0') {
-          result = ['招聘会详情', '已申请的职位'];
+          result = ['宣讲会详情', '已申请的职位'];
         } else {
-          result = ['招聘会详情', '申请中的职位'];
+          result = ['宣讲会详情', '申请中的职位'];
         }
         return result;
       },

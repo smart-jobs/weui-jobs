@@ -15,9 +15,9 @@
                   {{item.requirement}}
               </li>
           </ul>
-          <mt-button v-if="needBtn&&withApi"  type="danger" class="btnClass" style="text-align:center !important;" @click="operation(item)"> {{btnTitle}}</mt-button>
-          <mt-button v-else-if='needBtn&&withApi===false' style="text-align:center !important;"  type="danger" class="btnClass" @click="operation(index)"> {{btnTitle}}</mt-button>
-          <mt-button v-if="needEdit"  type="primary" class="btnClass" style="text-align:center !important;" @click="toEdit(item)"> 修改</mt-button>
+          <mt-button v-if="needBtn&&withApi"  type="danger" class="bnClass" style="text-align:center !important;" @click="operation(item)"> {{btnTitle}}</mt-button>
+          <mt-button v-else-if='needBtn&&withApi===false' style="text-align:center !important;"  type="danger" class="bnClass" @click="operation(index)"> {{btnTitle}}</mt-button>
+          <mt-button v-if="needEdit"  type="primary" class="bnClass" style="text-align:center !important;" @click="toEdit(item)"> 修改</mt-button>
       </el-card>
 
   </div>
@@ -57,13 +57,23 @@ export default {
 </script>
 
 <style lang='css' scoped>
-.btnClass{
-    float:left; 
-    width:17%; 
-    padding:0; 
-    margin-right:0;
-    margin-top: 30px;
-    font-size: 12px;
-    border-radius: 0;
+.btnClass {
+  float:left;
+  width:17%;
+  padding:0;
+  margin-right:0;
+  margin-top: 30px;
+  font-size: 12px;
+  border-radius: 0;
+}
+.bnClass {
+  /* float:left; */
+  width:17%;
+  padding:0;
+  margin-right:0;
+  margin-bottom: 7px;
+  font-size: 12px;
+  border-radius: 0;
+  text-align:center;
 }
 </style>

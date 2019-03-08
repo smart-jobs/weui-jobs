@@ -21,8 +21,6 @@
         <mt-field label="职位要求" placeholder="请输入职位要求" v-model="jobs.requirement"></mt-field>
         <br/>
         <mt-button type="primary" size="large" style="height:35px !important;line-height:35px !important;" @click.prevent="saveJobs()">保存职位</mt-button>
-    
-
       <div v-if="forIndexAndDetail()" >
         <showJobsListCard :list="jobsList" :needBtn="true" :btnTitle="'删除'" :listTitle="listTitle"></showJobsListCard>
       </div>
