@@ -126,9 +126,9 @@ export default {
       get() {
         let result;
         if (_.get(this.info, 'status') === '0') {
-          result = ['招聘会详情', '已申请的职位'];
+          result = ['宣讲会详情', '已申请的职位'];
         } else {
-          result = ['招聘会详情', '申请中的职位'];
+          result = ['宣讲会详情', '申请中的职位'];
         }
         return result;
       },
