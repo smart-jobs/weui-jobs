@@ -12,7 +12,11 @@
         <span style="font-size:14px;" :style="selectColor">{{info.date||'请选择举办日期'}}</span>
       </mt-cell>
       <newSelect type='unit' title="选择分站" v-model="info.unit" :originalValue='info.unit' :canEdit='canEdit' placeholder='请选择分站'></newSelect>
-      <mt-cell  id="zhiwei" title="招聘职位" label="点击此处为宣讲会添加招聘信息" @click.native="toOperateJobs()"></mt-cell>
+
+      <mt-cell id="xiugai">
+        <mt-button type="primary"  @click.native="toOperateJobs()">添加招聘职位</mt-button>
+      </mt-cell>
+      <!-- <mt-cell  id="zhiwei" title="添加招聘职位" label="点击此处2为宣讲会添加招聘信息" @click.native="toOperateJobs()"></mt-cell> -->
       <!--编辑职位框-->
       <mt-popup
           v-model="popupVisible"
