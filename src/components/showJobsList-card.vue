@@ -17,6 +17,7 @@
           </ul>
           <mt-button v-if="needBtn&&withApi"  type="danger" class="btnClass" style="text-align:center !important;" @click="operation(item)"> {{btnTitle}}</mt-button>
           <mt-button v-else-if='needBtn&&withApi===false' style="text-align:center !important;"  type="danger" class="btnClass" @click="operation(index)"> {{btnTitle}}</mt-button>
+          <mt-button v-if="needEdit"  type="primary" class="btnClass" style="text-align:center !important;" @click="toEdit(item)"> 修改</mt-button>
       </el-card>
   </div>
 </template>
@@ -29,6 +30,7 @@ export default {
     needBtn: { type: Boolean, default: false },
     btnTitle: { type: String, default: '删除' },
     withApi: { type: Boolean, default: true },
+    needEdit: { type: Boolean, default: false },
   },
   methods: {
     operation(data) {
@@ -37,6 +39,9 @@ export default {
       } else {
         this.$emit('operation', { type: 'delete', id: data });
       }
+    },
+    toEdit(item) {
+      console.log(item);
     },
   },
 };
