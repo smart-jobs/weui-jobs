@@ -1,7 +1,7 @@
 <template lang='html'>
   <div id="CorpLetterList">
       <mt-header title="企业求职信">
-        <mt-button  class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
+        <mt-button  class="bgnone" slot="left" @click="$router.push({path: '/'})">返回</mt-button>
       </mt-header>
       <newNavbar :titles='["招聘会求职信","招聘信息求职信"]' v-model="active"></newNavbar>
       <template>

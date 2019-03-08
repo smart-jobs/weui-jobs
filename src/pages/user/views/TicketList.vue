@@ -1,7 +1,7 @@
 <template lang='html'>
   <div id="TicketList">
       <mt-header title="我的入场券">
-        <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
+        <mt-button   class="bgnone" slot="left" @click="$router.push({path: '/'})">返回</mt-button>
       </mt-header>
       <list :type='type' :needBtn='true'></list>
   </div>

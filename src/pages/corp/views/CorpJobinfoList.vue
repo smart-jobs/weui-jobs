@@ -1,7 +1,7 @@
 <template lang='html'>
   <div id="CorpJobinfoList">
       <mt-header title="企业招聘信息">
-        <mt-button  class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
+        <mt-button  class="bgnone" slot="left" @click="$router.push({path: '/'})">返回</mt-button>
         <mt-button  class="bgnone" style="text-align:right !important;" slot="right" @click="$router.push({path:'/corpJobinfoAdd'})">添加</mt-button>
       </mt-header>
       <list :type='type' :needBtn='false'></list>

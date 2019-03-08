@@ -1,7 +1,7 @@
 <template lang='html'>
   <div id="LetterList">
       <mt-header title="我的求职信">
-        <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
+        <mt-button   class="bgnone" slot="left" @click="$router.push({path: '/'})">返回</mt-button>
       </mt-header>
       <list :type='type' :needBtn='false'></list>
   </div>
