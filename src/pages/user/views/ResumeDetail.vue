@@ -101,7 +101,7 @@ export default {
         month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1,
         day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
       let dateStr = year + '-' + month + '-' + day;
-      this.$set(this.form, 'csrq', dateStr);
+      this.$set(this.form.info, 'csrq', dateStr);
     },
     //选择日期组件开关
     openDate() {
