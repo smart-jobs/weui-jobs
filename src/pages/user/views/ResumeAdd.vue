@@ -117,7 +117,7 @@ export default {
         month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1,
         day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
       let dateStr = year + '-' + month + '-' + day;
-      this.$set(this.detail, 'date', dateStr);
+      this.$set(this.detail, 'csrq', dateStr);
     },
     //新建简历
     addResume() {
