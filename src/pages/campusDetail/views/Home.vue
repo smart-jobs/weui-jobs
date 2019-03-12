@@ -1,6 +1,6 @@
 <template lang="html">
   <div id="Home">
-      <mt-header :title="isDateOff(detail.expired)?'宣讲会详情':'宣讲会详情(已过期)'">
+      <mt-header :title="isDateOff(detail.date)?'宣讲会详情':'宣讲会详情(已过期)'">
             <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
         </mt-header> 
         <mt-cell  class="width" :title="detail.subject" id="title"></mt-cell>
@@ -86,7 +86,9 @@ export default {
     },
     //判断信息是否过期
     isDateOff(date) {
+      console.log(date);
       let result = methodsUtil.isDateOff(date);
+      console.log(result);
       return result;
     },
   },
