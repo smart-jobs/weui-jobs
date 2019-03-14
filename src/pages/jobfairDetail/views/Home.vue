@@ -1,6 +1,6 @@
 <template lang="html">
   <div id="Home">
-      <mt-header :title="isDateOff(detail.expired)?'招聘会详情':'招聘会详情(已过期)'">
+      <mt-header :title="isDateOff(detail.date)?'招聘会详情':'招聘会详情(已过期)'">
             <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
         </mt-header>    
         <mt-cell ref="title" id="title" class="width"  :title="detail.subject">
@@ -24,7 +24,7 @@
         <mt-cell id="nameSpan" class="width" title="" >
               <span class="spanCla">温馨提示：为防讯息临时变动,参会前可联系招聘会举办方确认。</span>
         </mt-cell>
-         <mt-cell>
+         <mt-cell style="height:60px;">
             <mt-button style="position: absolute !important; left: 42% !important;" type="primary" v-if='isDateOff(detail.date)&&checkDisplay("user")' @click="apply('user')">我要报名</mt-button>
             <addJobsPage btnTitle="申请加入" :fair_id="detail._id" v-if='isDateOff(detail.date)&&checkDisplay("corp")&&pageCheckCorp(detail.unit)'></addJobsPage>
         </mt-cell> 
@@ -83,7 +83,7 @@ export default {
     }),
   },
   methods: {
-    ...mapActions(['jobfairDetail', 'getCorpInfo']),
+    ...mapActions(['jobfairDetail', 'getCorpInfo', 'userApply']),
     //筛选分站信息
     findUnit(unit) {
       let result;
@@ -108,6 +108,13 @@ export default {
       } else {
         return methodsUtil.checkCorp({ role: _.get(this.user, 'role'), displayType: type, userid: _.get(this.user, 'userid') });
       }
+    },
+    //申请加入/我要门票
+    async apply(fair_id) {
+      let result = await this.userApply({ fair_id: this.detail._id });
+      this.$checkRes(result, () => {
+        this.$message.success('申请成功');
+      });
     },
   },
 };

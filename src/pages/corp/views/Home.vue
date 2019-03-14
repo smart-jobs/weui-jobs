@@ -12,11 +12,11 @@
           </a>
       </span>
       <span v-else>
-        <mt-cell id="nameM" title="修改申请参加的招聘会的职位信息" @click.native="toList('corpJobfairList')"></mt-cell>
+        <mt-cell id="nameM" title="修改招聘会的职位信息" @click.native="toList('corpJobfairList')"></mt-cell>
         <mt-cell id="nameN" title="企业宣讲会" @click.native="toList('corpCampusList')"></mt-cell>
         <mt-cell id="nameN" title="企业的招聘信息" @click.native="toList('corpJobinfoList')"></mt-cell>
         <mt-cell id="nameN" title="企业求职信" @click.native="toList('corpLetterList')"></mt-cell>
-        <mt-cell id="nameN" title="我的二维码" @click.native="toQrcode()"></mt-cell>
+        <mt-cell id="nameN" title="企业二维码" @click.native="toQrcode()"></mt-cell>
       </span>
   </div>
 </template>

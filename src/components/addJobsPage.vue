@@ -3,7 +3,7 @@
     <mt-button v-if="uri.includes('/index.html')" class="btnClass" type="primary" size='small' @click="popupVisible=true">
        {{btnTitle}}
     </mt-button>
-    <mt-button v-else class="btnClass"  type="primary" @click="popupVisible=true">
+    <mt-button v-else class="btnClass" style="position: absolute !important; left: 42% !important;"  type="primary" @click="popupVisible=true">
       {{btnTitle}}
     </mt-button>
 
@@ -110,6 +110,7 @@ export default {
       this.$checkRes(result, () => {
         this.$message.success('申请成功,请等待审核');
         this.popupVisible = false;
+        this.jobsList.splice(0, this.jobsList.length);
       });
     },
   },

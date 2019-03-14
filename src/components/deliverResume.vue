@@ -42,10 +42,12 @@
                     </template>
                     </el-table-column>
                     <template slot="empty">
-                    <ul>
-                      <li class="tit" @click="$router.push({path:'/wechatMyInfo',query:{type:'resumeAdd'}})">
+                    <ul><!-- @click="$router.push({path:'/wechatMyInfo',query:{type:'resumeAdd'}})" -->
+                      <a href="user.html#/resumeAdd">
+                      <li class="tit">
                         您没有简历,点击添加简历
                       </li>
+                      </a>
                     </ul>
                   </template>
                 </el-table>
@@ -121,8 +123,8 @@ export default {
     async toDeliver() {
       const data = { corpid: this.corpid, resumeid: this.selectedId, type: this.type, origin: this.origin };
       let result = await this.deliver({ data: data, _tenant: this._tenant });
-      console.log(this.$checkRes(result, () => {}));
       this.$checkRes(result, () => {
+        this.$message.success('投递简历成功');
         this.popupVisible = false;
       });
       this.selectedId = '';

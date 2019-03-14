@@ -1,7 +1,7 @@
 <template lang='html'>
   <div id="CorpCampusAdd">
       <mt-header title="宣讲会">
-          <mt-button   class="bgnone"  slot="left" @click="$router.go(-1)">返回</mt-button>
+          <mt-button   class="bgnone"  slot="left" @click="$router.push({path: '/corpCampusList'})">返回</mt-button>
       </mt-header> 
       <mt-field label="宣讲会标题" placeholder="请输入宣讲会标题" v-model="detail.subject" ></mt-field>
       <mt-field label="举办地址" placeholder="请输入举办地址" v-model="detail.address" ></mt-field>
@@ -175,8 +175,6 @@ export default {
     },
     //验证宣讲会内容
     toApplyCampus() {
-      console.log(this.detail.date);
-      console.log(typeof this.detail.date);
       this.campusValidator.validate(this.detail, (errors, fields) => {
         if (errors) {
           return this.handleErrors(errors, fields);
@@ -191,8 +189,10 @@ export default {
         if (type === 'add') {
           this.detail.jobs.push(this.form);
           this.form = {};
+          this.$message.success('职位添加成功');
         } else {
           this.detail.jobs.splice(id, 1);
+          this.$message.success('职位删除成功');
         }
       } else {
         let result = await this.operateDetail({ uri: 'corpCampusCreate', corpid: this.user.corpid, _tenant: this.detail.unit, data: this.detail });

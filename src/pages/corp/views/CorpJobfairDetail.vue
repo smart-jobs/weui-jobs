@@ -1,7 +1,7 @@
 <template lang='html'>
   <div id="CorpJobfairDetail">
-      <mt-header title="招聘会详情">
-            <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
+      <mt-header :title="jobfair_corp_status === '0' ? '招聘会详情(审核通过)' : jobfair_corp_status === '1' ? '招聘会详情(未审核)' : '招聘会详情(审核失败)'">
+            <mt-button   class="bgnone" slot="left" @click="$router.push({path: '/corpJobfairList'})">返回</mt-button>
         </mt-header>    
         <mt-cell :title="detail.subject" id="title"></mt-cell>
         <mt-cell  class="width" title="招聘会类型" style="text-align:left;">
@@ -24,7 +24,7 @@
         </mt-cell>
         <mt-cell id="xiugai">
           <!--如果看不见按钮:v-if中加个!号就能看见了-->
-            <mt-button type="primary" @click.native="popupVisible=true" v-if="!canUpdateStatus">添加招聘职位</mt-button>
+            <mt-button type="primary" @click.native="popupVisible=true" v-if="canUpdateStatus">添加招聘职位</mt-button>
         </mt-cell>
 
         <!--添加职位框-->
@@ -65,7 +65,7 @@
           </mt-tab-container-item>
 
           <mt-tab-container-item id="tab2" >
-              <showJobsListCard :list='jobs' :needBtn='true' :needEdit="true" @operation='operateJobs' @update="toUpdate"></showJobsListCard>
+              <showJobsListCard :list='jobs' :needBtn='canUpdateStatus' :needEdit="canUpdateStatus" @operation='operateJobs' @update="toUpdate"></showJobsListCard>
           </mt-tab-container-item>
 
         </mt-tab-container>
@@ -105,6 +105,7 @@ export default {
       popupVisible: false,
       popupVisible_edit: false,
       tab: 'tab1',
+      jobfair_corp_status: '',
     };
   },
   async created() {
@@ -143,6 +144,7 @@ export default {
     async load() {
       let result = await this.loadDetail({ uri: 'corpJobfairDetail', id: this.id, corpid: this.user.corpid });
       this.$checkRes(result, () => {
+        this.$set(this, 'jobfair_corp_status', result.status);
         this.$set(this, 'jobs', result.jobs);
       });
     },

@@ -1,7 +1,7 @@
 <template lang='html'>
   <div id="ResumeAdd">
       <mt-header title="简历详情">
-          <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
+          <mt-button   class="bgnone" slot="left"  @click="$router.push({ path:'/resumeList' })">返回</mt-button>
       </mt-header>
         <mt-field label="模板标题" placeholder="请输入模板标题" v-model="detail.title"></mt-field>
         <mt-field label="学历"  v-model="detail.info.xl" readonly></mt-field>
@@ -118,7 +118,6 @@ export default {
         day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
       let dateStr = year + '-' + month + '-' + day;
       this.$set(this.detail.info, 'csrq', dateStr);
-      console.log(this.detail);
     },
     //新建简历
     addResume() {
@@ -132,9 +131,9 @@ export default {
     //验证正确=>提交
     async handleSuccess() {
       let result = await this.operateDetail({ uri: 'createResume', data: this.detail, userid: this.user.userid });
-      console.log(result);
       this.$checkRes(result, () => {
-        this.$router.go(-1);
+        this.$message.success('新建简历成功');
+        this.$router.push({ path: '/resumeList' });
       });
     },
     //验证错误

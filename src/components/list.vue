@@ -24,7 +24,7 @@
                       <mt-button type="primary" size='small' class="btnClass" v-if='checkDisplay("user")' @click='apply(scope.row._id)'> 
                           我要报名
                       </mt-button>
-                      <addJobsPage v-if='checkDisplay("corp")&&pageCheckCorp(scope.row.unit)' btnTitle="申请加入" :fair_id="scope.row._id"></addJobsPage>
+                      <!-- <addJobsPage v-if='checkDisplay("corp")&&pageCheckCorp(scope.row.unit)' btnTitle="申请加入" :fair_id="scope.row._id"></addJobsPage> -->
                     </span>
                     <!--招聘信息-->
                     <deliverResume v-if='selectBtn()==="jobinfoList"&&isDateOff(scope.row.expired)&&checkDisplay("user")' :corpid="scope.row.corpid" :origin="scope.row._id" :_tenant="scope.row._tenant" :type="'0'"></deliverResume>
@@ -64,7 +64,7 @@ export default {
     listOptions,
     calendar,
     deliverResume,
-    addJobsPage,
+    // addJobsPage,
   },
   props: {
     needBtn: { type: Boolean, default: false },
@@ -175,8 +175,16 @@ export default {
           return `${text}`;
         }
       } else if (optionTitle.prop === 'status') {
-        let text = result === 0 ? '已接收' : result === 1 ? '已接受' : '已拒绝';
-        return `状态:${text}`;
+        let routerPath = this.$route.name;
+        if ((routerPath !== undefined && routerPath.includes('CampusList')) || (routerPath !== undefined && routerPath.includes('campusList'))) {
+          let text = result === '0' ? '审核成功' : result === '1' ? '未审核' : '审核失败';
+          return `审核状态:${text}`;
+        } else if (routerPath === undefined) {
+          return;
+        } else {
+          let text = result === 0 ? '已接收' : result === 1 ? '已接受' : '已拒绝';
+          return `状态:${text}`;
+        }
       } else if (optionTitle.prop === 'origin') {
         let text = result === 0 ? '本校学生' : '校外学生';
         return `${text}`;
@@ -250,13 +258,16 @@ export default {
     //申请加入/我要门票
     async apply(fair_id) {
       let result = await this.userApply({ fair_id: fair_id });
-      this.$checkRes(result, () => {});
+      this.$checkRes(result, () => {
+        this.$message.success('申请成功');
+      });
     },
     //删除简历
     async toDeleteResume(resumeid) {
       console.log(resumeid, this.user.userid);
       let result = await this.deleteResume({ resumeid: resumeid, userid: this.user.userid });
       this.$checkRes(result, () => {
+        this.$message.success('删除简历成功');
         this.getData();
       });
     },
@@ -357,14 +368,13 @@ export default {
 </style>
 
 <style lang='css' scoped>
-.btnClass{
-    float:left; 
-    width:17%; 
-    padding:0; 
-    margin-right:0;
-    position: absolute; 
-    bottom: 29px;
-    border-radius: 0;
-  }
-  
+.btnClass {
+  float: left;
+  width: 17%;
+  padding: 0;
+  margin-right: 0;
+  position: absolute;
+  bottom: 29px;
+  border-radius: 0;
+}
 </style>

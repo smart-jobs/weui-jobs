@@ -1,7 +1,7 @@
 <template lang='html'>
   <div id="CorpLetterDetail">
       <mt-header title="求职信详情">
-            <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
+            <mt-button   class="bgnone" slot="left" @click="$router.push({path: '/corpLetterList'})">返回</mt-button>
         </mt-header>
           <mt-cell id="nameN" :title="{data: info, searchItem: 'info.xm'}|getName" style="text-align:center;">
         </mt-cell>
@@ -64,6 +64,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import Validator from 'async-validator';
+import { MessageBox } from 'mint-ui';
 export default {
   name: 'CorpLetterDetail',
   metaInfo: {
@@ -110,7 +111,9 @@ export default {
     async handleSuccess() {
       let result = await this.operateDetail({ uri: 'corpLetterReply', data: this.form, corpid: this.user.corpid, id: this.id });
       this.$checkRes(result, () => {
-        this.$router.push({ name: 'corpLetterList' });
+        MessageBox.alert('求职信回复成功').then(() => {
+          this.$router.push({ name: 'corpLetterList' });
+        });
       });
     },
     //验证错误

@@ -1,7 +1,7 @@
 <template lang='html'>
   <div id="CorpCampusDetail">
-      <mt-header title="修改宣讲会">
-          <mt-button   class="bgnone"  slot="left" @click="$router.go(-1)">返回</mt-button>
+      <mt-header :title="info.status === '1' ? '宣讲会详情(未审核)' : info.status === '0' ? '宣讲会详情(已发布)' : '宣讲会详情(审核失败)'">
+          <mt-button   class="bgnone"  slot="left" @click="$router.push({path: '/corpCampusList'})">返回</mt-button>
       </mt-header> 
       <mt-field label="宣讲会标题" placeholder="请输入宣讲会标题" v-model="info.subject" :disabled='canEdit'></mt-field>
       <mt-field label="举办地址" placeholder="请输入举办地址" v-model="info.address" :disabled='canEdit'></mt-field>
@@ -14,7 +14,7 @@
       <newSelect type='unit' title="选择分站" v-model="info.unit" :originalValue='info.unit' :canEdit='canEdit' placeholder='请选择分站'></newSelect>
 
       <mt-cell id="xiugai">
-        <mt-button type="primary"  @click.native="toOperateJobs()">添加招聘职位</mt-button>
+        <mt-button type="primary" v-if="!canEdit"  @click.native="toOperateJobs()">添加招聘职位</mt-button>
       </mt-cell>
       <!-- <mt-cell  id="zhiwei" title="添加招聘职位" label="点击此处2为宣讲会添加招聘信息" @click.native="toOperateJobs()"></mt-cell> -->
       <!--编辑职位框-->
@@ -125,7 +125,7 @@ export default {
     navbarTitle: {
       get() {
         let result;
-        if (_.get(this.info, 'status') === '0') {
+        if (_.get(this.info, 'status') !== '1') {
           result = ['宣讲会详情', '已申请的职位'];
         } else {
           result = ['宣讲会详情', '申请中的职位'];
@@ -135,7 +135,7 @@ export default {
     },
     canEdit: {
       get() {
-        if (this.info.status === '0' || this.detail.status === '0') {
+        if (this.info.status !== '1') {
           return true;
         } else {
           return false;
@@ -211,8 +211,10 @@ export default {
         if (type === 'add') {
           this.info.jobs.push(this.form);
           this.form = {};
+          this.$message.success('职位添加成功');
         } else {
           this.info.jobs.splice(id, 1);
+          this.$message.success('职位删除成功');
         }
       } else {
         let result = await this.operateDetail({ uri: 'corpCampusUpdate', corpid: this.user.corpid, _tenant: this.info.unit, data: this.info, id: this.id });

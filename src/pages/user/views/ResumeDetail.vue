@@ -1,7 +1,7 @@
 <template lang='html'>
   <div id="ResumeDetail">
       <mt-header title="简历详情">
-          <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
+          <mt-button   class="bgnone" slot="left" @click="$router.push({ path:'/resumeList' })">返回</mt-button>
         </mt-header>
         <mt-field label="模板标题" placeholder="请输入模板标题" v-model="form.title"></mt-field>
         <mt-field label="学历"  v-model="form.info.xl" disabled></mt-field>
@@ -25,7 +25,6 @@
                   date-format="{value} 日"
                   @confirm="selectDate">
             </mt-datetime-picker>
-            <mt-button @click="test()">数据测试</mt-button>
   </div>
 </template>
 
@@ -120,7 +119,8 @@ export default {
     async handleSuccess() {
       let result = await this.operateDetail({ uri: 'updateResume', data: this.form, userid: this.user.userid, id: this.id });
       this.$checkRes(result, () => {
-        this.$router.go(-1);
+        this.$message.success('修改简历成功');
+        this.$router.push({ path: '/resumeList' });
       });
     },
     //验证错误

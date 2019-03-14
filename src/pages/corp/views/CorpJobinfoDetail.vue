@@ -1,23 +1,23 @@
 <template lang='html'>
   <div id="CorpLetterDetail">
-      <mt-header title="招聘信息详情">
-          <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
+      <mt-header :title="detail.status === '1' ? '招聘信息详情(未审核)' : detail.status === '0' ? '招聘信息详情(已发布)' : '招聘信息详情(审核失败)'">
+          <mt-button   class="bgnone" slot="left" @click="$router.push({path: '/corpJobinfoList'})">返回</mt-button>
       </mt-header>
-        <mt-field label="标  题" placeholder="请输入标题" v-model="info.title" ></mt-field>
-        <newSelect type='city' title='所在城市' placeholder="请选择所在城市" v-model='info.city' mode='both' :originalValue='info.city'></newSelect>
-        <mt-field label="需求人数" placeholder="请输入需求人数,例如:1人或1-5人" v-model="info.count"></mt-field>
-        <mt-field label="职位描述" placeholder="请输入职位描述" v-model="info.jobdesc" ></mt-field>
-        <newSelect type='jobcat' title='职位类别' placeholder="请输入职位类别" v-model='info.jobcat' mode='both' :originalValue='info.jobcat'></newSelect>
-        <newSelect type='nature' title='工作性质' placeholder="请选择工作性质" v-model='info.nature' mode='both' :originalValue='info.nature'></newSelect>
-        <newSelect type='salary' title='薪资待遇' placeholder="请输入薪资待遇" v-model='info.salary' mode='both' :originalValue='info.salary'></newSelect>
-        <newSelect type='xlreqs' title='学历层次' placeholder="请选择学历层次" v-model='info.xlreqs' mode='both' :originalValue='info.xlreqs'></newSelect>
-        <mt-field label="专业要求" placeholder="请选择专业要求" v-model="info.zyreqs" ></mt-field>
+        <mt-field label="标  题" placeholder="请输入标题" v-model="info.title" :disabled="detail.status !== '1'"></mt-field>
+        <newSelect type='city' title='所在城市' placeholder="请选择所在城市" v-model='info.city' mode='both' :originalValue='info.city' :canEdit="detail.status === '1'"></newSelect>
+        <mt-field label="需求人数" placeholder="请输入需求人数,例如:1人或1-5人" v-model="info.count" :disabled="detail.status !== '1'"></mt-field>
+        <mt-field label="职位描述" placeholder="请输入职位描述" v-model="info.jobdesc" :disabled="detail.status !== '1'"></mt-field>
+        <newSelect type='jobcat' title='职位类别' placeholder="请输入职位类别" v-model='info.jobcat' mode='both' :originalValue='info.jobcat' :canEdit="detail.status === '1'"></newSelect>
+        <newSelect type='nature' title='工作性质' placeholder="请选择工作性质" v-model='info.nature' mode='both' :originalValue='info.nature' :canEdit="detail.status === '1'"></newSelect>
+        <newSelect type='salary' title='薪资待遇' placeholder="请输入薪资待遇" v-model='info.salary' mode='both' :originalValue='info.salary' :canEdit="detail.status === '1'"></newSelect>
+        <newSelect type='xlreqs' title='学历层次' placeholder="请选择学历层次" v-model='info.xlreqs' mode='both' :originalValue='info.xlreqs' :canEdit="detail.status === '1'"></newSelect>
+        <mt-field label="专业要求" placeholder="请选择专业要求" v-model="info.zyreqs" :disabled="detail.status !== '1'"></mt-field>
         <mt-cell title="失效日期"  @click.native="openDate()" >
           <span style="font-size:14px;" :style="selectColor">{{info.expired||'失效日期默认为创建两周后'}}</span>
         </mt-cell>
-        <newSelect type='unit' title="选择分站" v-model="info.unit" placeholder='请选择分站' :originalValue='info.unit'></newSelect>
-        <mt-field label="信息内容" id="neirong" placeholder="请输入信息内容" v-model="info.content" type="textarea" rows="5" ></mt-field>
-        <mt-button style="height:35px !important; margin-top: 20px !important; line-height:35px !important;"  type="primary" size="large" @click.prevent="toUpdateJobinfo()">修改招聘信息</mt-button>
+        <newSelect type='unit' title="选择分站" v-model="info.unit" placeholder='请选择分站' :originalValue='info.unit' :canEdit="detail.status === '1'"></newSelect>
+        <mt-field label="信息内容" id="neirong" placeholder="请输入信息内容" v-model="info.content" type="textarea" rows="5" :disabled="detail.status !== '1'"></mt-field>
+        <mt-button v-if="detail.status === '1'" style="height:35px !important; margin-top: 20px !important; line-height:35px !important;"  type="primary" size="large" @click.prevent="toUpdateJobinfo()">修改招聘信息</mt-button>
         
         <!--时间弹框部分-->
         <mt-datetime-picker
@@ -107,7 +107,7 @@ export default {
     ...mapActions(['loadDetail', 'operateDetail']),
     //选择日期组件开关
     openDate() {
-      this.$refs.picker.open();
+      if (this.detail.status === '1') this.$refs.picker.open();
     },
     //选择框的日期整理后赋给detail中
     selectDate(date) {
@@ -129,7 +129,9 @@ export default {
     async handleSuccess() {
       let result = await this.operateDetail({ uri: 'corpJobinfoUpdate', data: this.info, corpid: this.user.corpid, id: this.id, _tenant: this.info.unit });
       this.$checkRes(result, () => {
-        this.$router.push({ name: 'corpJobinfoList' });
+        MessageBox.alert('修改招聘信息成功').then(() => {
+          this.$router.push({ name: 'corpJobinfoList' });
+        });
       });
     },
     //验证错误
@@ -159,12 +161,10 @@ export default {
 @import '../../../style/common.css';
 </style>
 <style lang='css' scoped>
-
 .mint-header {
   background-color: #2577e3;
   height: 40px;
   line-height: 40px;
   font-size: 16px;
 }
-
 </style>

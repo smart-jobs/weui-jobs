@@ -8,6 +8,7 @@ export const JOBFAIR_TITLE = [
 export const CAMPUS_TITLE = [
   { prop: 'subject', label: '' },
   { prop: 'address', label: '举办地址' },
+  { prop: 'status', label: '审核状态' },
   { prop: 'date', label: '举办日期' },
   { prop: 'unit', label: '分站信息' },
 ];
@@ -19,7 +20,7 @@ export const JOBINFO_TITLE = [
   { prop: 'salary.name', label: '薪资待遇' },
   { prop: 'xlreqs.name', label: '最低学历' },
   { prop: 'city.name', label: '所在城市' },
-  { prop: 'expired', label: '状态' },
+  // { prop: 'expired', label: '状态' },
 ];
 
 export const RESUME_TITLE = [{ prop: 'title', label: '' }];

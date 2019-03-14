@@ -1,7 +1,7 @@
 <template lang='html'>
   <div id="CorpJobinfoAdd">
       <mt-header title="添加招聘信息">
-            <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
+            <mt-button   class="bgnone" slot="left" @click="$router.push({path: '/corpJobinfoList'})">返回</mt-button>
         </mt-header>
         <mt-field label="标  题" placeholder="请输入标题" v-model="detail.title" ></mt-field>
         <newSelect type='city' title='所在城市' placeholder="请选择所在城市" v-model='detail.city' mode='both' ></newSelect>

@@ -25,6 +25,7 @@ export default {
     return {};
   },
   async created() {
+    console.log(this.$route);
     if (_.get(this.user, 'role') === 'corp') {
       await this.getCorpInfo();
     }

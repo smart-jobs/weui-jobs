@@ -160,7 +160,7 @@ export default {
   },
   methods: {
     //获取首页列表;学生申请门票
-    ...mapActions(['loadIndexList', 'userApply', 'getCorpInfo', 'userApply', 'corpApply']),
+    ...mapActions(['loadIndexList', 'userApply', 'getCorpInfo', 'corpApply']),
     //获取首页的招聘会,宣讲会,招聘信息列表
     async getData() {
       const { jobfairList, campusList, jobinfoList } = await this.loadIndexList();
@@ -202,7 +202,9 @@ export default {
     //申请加入/我要门票
     async apply(fair_id) {
       let result = await this.userApply({ fair_id: fair_id });
-      this.$checkRes(result, () => {});
+      this.$checkRes(result, () => {
+        this.$message.success('申请成功');
+      });
     },
     //跳转详情页
     toDetail(type, row) {
