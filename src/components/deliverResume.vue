@@ -5,9 +5,8 @@
     <mt-button v-if="uri.includes('index')" type="primary" class="btnClass" size='small' @click="display()">
         投简历
     </mt-button>
-
-    <mt-button v-if="uri.includes('jobinfoDetail')&&titleBtn==false" style="position: absolute ; left: 42% ;" type="primary"  @click="display()">
-        投简历
+    <mt-button v-if="uri.includes('jobinfoDetail')&&titleBtn==false" style="position: absolute ; left: 42% ; top: 5px; text-align: center !important; padding-left: 0 !important;" type="primary"  @click="display()">
+    投简历
     </mt-button>
 
     <mt-popup
@@ -37,7 +36,7 @@
                     <el-table-column>
                     <template slot-scope="scope">
                         <ul>
-                            <li class="tit">{{ scope.row.title }}</li>
+                            <li class="tit" style="line-height:40px;">{{ scope.row.title }}</li>
                         </ul>
                     </template>
                     </el-table-column>
