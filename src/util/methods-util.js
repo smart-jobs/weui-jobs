@@ -5,9 +5,10 @@ const { isNullOrUndefined } = Util;
 export default {
   //判断信息是否过期
   isDateOff(dataDate) {
-    const now = new Date();
+    console.log(dataDate);
+    const now = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
     dataDate = new Date(dataDate);
-    return dataDate >= now;
+    return now.getTime() <= dataDate.getTime();
   },
   //判断企业是否可以执行此动作/显示
   checkCorp(data) {

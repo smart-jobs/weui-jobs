@@ -1,6 +1,6 @@
 <template lang='html'>
   <div id="CorpJobfairDetail">
-      <mt-header :title="jobfair_corp_status === '0' ? '招聘会详情(审核通过)' : jobfair_corp_status === '1' ? '招聘会详情(未审核)' : '招聘会详情(审核失败)'">
+      <mt-header title="招聘会详情">
             <mt-button   class="bgnone" slot="left" @click="$router.push({path: '/corpJobfairList'})">返回</mt-button>
         </mt-header>    
         <mt-cell :title="detail.subject" id="title"></mt-cell>
@@ -105,7 +105,6 @@ export default {
       popupVisible: false,
       popupVisible_edit: false,
       tab: 'tab1',
-      jobfair_corp_status: '',
     };
   },
   async created() {
@@ -144,7 +143,6 @@ export default {
     async load() {
       let result = await this.loadDetail({ uri: 'corpJobfairDetail', id: this.id, corpid: this.user.corpid });
       this.$checkRes(result, () => {
-        this.$set(this, 'jobfair_corp_status', result.status);
         this.$set(this, 'jobs', result.jobs);
       });
     },

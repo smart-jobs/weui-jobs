@@ -182,7 +182,7 @@ export default {
         } else if (routerPath === undefined) {
           return;
         } else {
-          let text = result === 0 ? '已接收' : result === 1 ? '已接受' : '已拒绝';
+          let text = result === '0' ? '已接收' : result === '1' ? '已接受' : '已拒绝';
           return `状态:${text}`;
         }
       } else if (optionTitle.prop === 'origin') {
