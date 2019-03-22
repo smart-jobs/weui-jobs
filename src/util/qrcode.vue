@@ -8,7 +8,7 @@
             <li class="txtQr">门票类型：{{ ticketType }}</li>
         </span>
         <div id="qrcode" style='display:flex;justify-content:center;align-items:center;' :style='newHeight'  ref='qrcode'>
-          <canvas id="canvas" style="display:-webkit-inline-box;width: 4rem !important;height:4rem !important;"></canvas>
+          <canvas id="canvas" style="display:-webkit-inline-box;width: 4rem !important;height:4rem !important;margin-top: 200px;"></canvas>
         </div>
         
           
