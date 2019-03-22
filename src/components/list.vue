@@ -171,7 +171,7 @@ export default {
           let text = result === 0 ? '招聘信息' : '招聘会';
           return `类型:${text}`;
         } else if (routerPath === 'ticketList') {
-          let text = result === 0 ? '受限票' : '普通票';
+          let text = result === '0' ? '受限票' : '普通票';
           return `${text}`;
         }
       } else if (optionTitle.prop === 'status') {
@@ -186,7 +186,7 @@ export default {
           return `状态:${text}`;
         }
       } else if (optionTitle.prop === 'origin') {
-        let text = result === 0 ? '本校学生' : '校外学生';
+        let text = result === '0' ? '本校学生' : '校外学生';
         return `${text}`;
       } else if (optionTitle.prop === 'date') {
         let timeResult = this.isDateOff(result) ? '未过期' : '已过期';

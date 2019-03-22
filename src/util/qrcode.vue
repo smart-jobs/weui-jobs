@@ -1,5 +1,5 @@
 <template lang='html'>
-  <div id="qrcodes" style="width:100%">
+  <div id="qrcodes" style="width:100%;">
         <mt-header title="二维码">
             <mt-button  class="bgnone"  slot="left" @click="$router.go(-1)">返回</mt-button>
         </mt-header>
@@ -8,8 +8,9 @@
             <li class="txtQr">门票类型：{{ ticketType }}</li>
         </span>
         <div id="qrcode" style='display:flex;justify-content:center;align-items:center;' :style='newHeight'  ref='qrcode'>
-          <canvas id="canvas" style="display:-webkit-inline-box;width: 256px !important;height:256px !important;"></canvas>
+          <canvas id="canvas" style="display:-webkit-inline-box;width: 4rem !important;height:4rem !important;"></canvas>
         </div>
+        
           
   </div>
 </template>
@@ -51,7 +52,11 @@ export default {
   methods: {
     async initQrcode() {
       if (!this.booForQrcode) {
-        await QRCode.toCanvas(document.getElementById('canvas'), this.id);
+        await QRCode.toCanvas(document.getElementById('canvas'), this.id, {
+          width: 300,
+          margin: 0,
+          color: { dark: this.$route.query.type === '0' ? '#00ff14' : '#ffff00' },
+        });
       }
     },
   },
