@@ -3,21 +3,22 @@
     <mt-header :title="isDateOff(detail.date) ? '招聘会详情' : '招聘会详情(已过期)'">
       <mt-button class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
     </mt-header>
-    <mt-cell ref="title" id="title" class="width" :title="detail.subject"> </mt-cell>
-    <mt-cell class="width" title="招聘会类型" style="text-align:left; ">
+    <div>
+      <p class="title">{{ detail.subject }}</p>
+    </div>
+
+    <!-- <mt-cell ref="title" id="title" class="width" :title="detail.subject"> </mt-cell> -->
+    <!-- <mt-cell class="width" title="招聘会类型" style="text-align:left; ">
       <span style="color:black;  font-size:14px;"> {{ detail.type }} </span>
-    </mt-cell>
-    <mt-cell class="width" title="举办时间" style="text-align:left;">
-      <span style="color:black;  font-size:14px;"> {{ detail.date }} </span>
-    </mt-cell>
-    <mt-cell class="width" title="举办城市" style="text-align:left;">
-      <span style="color:black;  font-size:14px;"> {{ { data: detail, searchItem: 'city.name' } | getName }} </span>
+    </mt-cell> -->
+    <mt-cell class="width" title="举办学校" style="text-align:left;">
+      <span class="schoolCla">{{ findUnit(detail.unit) }}</span>
     </mt-cell>
     <mt-cell class="width" title="举办地址" style="text-align:left;">
       <span style="color:black;  font-size:14px;"> {{ detail.address }} </span>
     </mt-cell>
-    <mt-cell class="width" title="分校信息" style="text-align:left;">
-      <span class="schoolCla">{{ findUnit(detail.unit) }}</span>
+    <mt-cell class="width" title="举办时间" style="text-align:left;">
+      <span style="color:black;  font-size:14px;"> {{ detail.date }} {{ detail.time }}</span>
     </mt-cell>
     <mt-cell id="nameSpan" class="width" title="">
       <span class="spanCla">温馨提示：为防讯息临时变动,参会前可联系招聘会举办方确认。</span>
@@ -35,7 +36,7 @@
     <newNavbar v-model="active" :titles="navbar"></newNavbar>
     <mt-tab-container v-model="active">
       <mt-tab-container-item id="tab1">
-        <pre style="text-align:left;">{{ detail.content }}</pre>
+        <div class="details" v-html="detail.content"></div>
       </mt-tab-container-item>
 
       <mt-tab-container-item id="tab2">
@@ -139,18 +140,26 @@ export default {
 </style>
 
 <style lang="css" scoped>
-.mint-header{
-    background-color: #2577e3;
-    height: 40px;
-    line-height: 40px;
-    font-size: 16px;
+.mint-header {
+  background-color: #2577e3;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
 }
-  .mint-cell-title{
-    width: 80px !important;
-    padding-left: 25px !important;
-    -webkit-box-flex: 0 !important;
-    -ms-flex: none !important;
-    flex: none !important;
-    text-align: left !important;
-  }
+.mint-cell-title {
+  width: 80px !important;
+  padding-left: 25px !important;
+  -webkit-box-flex: 0 !important;
+  -ms-flex: none !important;
+  flex: none !important;
+  text-align: left !important;
+}
+.title {
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 20px;
+}
+.details {
+  padding: 10px;
+}
 </style>
