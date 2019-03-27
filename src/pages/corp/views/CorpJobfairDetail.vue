@@ -1,74 +1,79 @@
-<template lang='html'>
+<template lang="html">
   <div id="CorpJobfairDetail">
-      <mt-header :title="detail.status === '0'? '招聘会详情(开放申请)' : detail.status === '1' ? '招聘会详情(关闭申请)': '招聘会详情(进行中)'">
-            <mt-button   class="bgnone" slot="left" @click="$router.push({path: '/corpJobfairList'})">返回</mt-button>
-        </mt-header>    
-        <mt-cell :title="detail.subject" id="title"></mt-cell>
-        <mt-cell  class="width" title="招聘会类型" style="text-align:left;">
-              <span style="color:black; font-size:14px;"> {{detail.type}} </span>
-        </mt-cell>
-        <mt-cell class="width" title="举办日期" style="text-align:left;">
-              <span style="color:black; font-size:14px;"> {{detail.date}} </span>
-        </mt-cell>
-        <mt-cell class="width" title="举办时间" style="text-align:left;">
-              <span style="color:black; font-size:14px;"> {{detail.time}} </span>
-        </mt-cell>
-        <mt-cell  class="width" title="举办城市" style="text-align:left;">
-              <span style="color:black; font-size:14px;"> {{{data: detail,searchItem:'city.name'}|getName}} </span>
-        </mt-cell>
-        <mt-cell class="width" title="举办地址" style="text-align:left;">
-              <span style="color:black; font-size:14px;"> {{detail.address}} </span>
-        </mt-cell>
-        <mt-cell id="nameSpan" class="width" title="" >
-              <span class="spanCla">温馨提示：为防讯息临时变动,参会前可联系招聘会举办方确认。</span>
-        </mt-cell>
-        <mt-cell id="xiugai">
-          <!--如果看不见按钮:v-if中加个!号就能看见了-->
-            <mt-button type="primary" @click.native="popupVisible=true" v-if="canUpdateStatus">添加招聘职位</mt-button>
-        </mt-cell>
+    <mt-header :title="detail.status === '0' ? '招聘会详情(开放申请)' : detail.status === '1' ? '招聘会详情(关闭申请)' : '招聘会详情(进行中)'">
+      <mt-button class="bgnone" slot="left" @click="$router.push({ path: '/corpJobfairList' })">返回</mt-button>
+    </mt-header>
+    <mt-cell :title="detail.subject" id="title"></mt-cell>
+    <mt-cell class="width" title="招聘会类型" style="text-align:left;">
+      <span style="color:black; font-size:14px;"> {{ detail.type }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="举办日期" style="text-align:left;">
+      <span style="color:black; font-size:14px;"> {{ detail.date }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="举办时间" style="text-align:left;">
+      <span style="color:black; font-size:14px;"> {{ detail.time }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="举办城市" style="text-align:left;">
+      <span style="color:black; font-size:14px;"> {{ { data: detail, searchItem: 'city.name' } | getName }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="举办地址" style="text-align:left;">
+      <span style="color:black; font-size:14px;"> {{ detail.address }} </span>
+    </mt-cell>
+    <mt-cell id="nameSpan" class="width" title="">
+      <span class="spanCla">温馨提示：为防讯息临时变动,参会前可联系招聘会举办方确认。</span>
+    </mt-cell>
+    <mt-cell id="xiugai">
+      <!--如果看不见按钮:v-if中加个!号就能看见了-->
+      <mt-button type="primary" @click.native="popupVisible = true" v-if="canUpdateStatus">添加招聘职位</mt-button>
+    </mt-cell>
 
-        <!--添加职位框-->
-        <mt-popup
-            v-model="popupVisible"
-            position="center"
-            style="width:80%;height:40%;align:center;">
-            <mt-header title="添加招聘职位">
-                <mt-button   class="bgnone" slot="left" @click="popupVisible=false">返回</mt-button>
-            </mt-header> 
-        
-            <mt-field label="职位名称" placeholder="请输入职位名称" v-model="form.name"></mt-field>
-            <mt-field label="需求人数" placeholder="请输入需求人数,例如:1人或1-5人" v-model="form.count"></mt-field>
-            <mt-field label="职位要求" placeholder="请输入职位要求" v-model="form.requirement"></mt-field>
-            <br/>
-            <mt-button type="primary"  style="height:35px !important;line-height:35px !important;"  size="large" @click.prevent="operateJobs({type:'add',id:detail.fair_id})">保存职位</mt-button>
-        </mt-popup>
+    <!--添加职位框-->
+    <mt-popup v-model="popupVisible" position="center" style="width:80%;height:40%;align:center;">
+      <mt-header title="添加招聘职位">
+        <mt-button class="bgnone" slot="left" @click="popupVisible = false">返回</mt-button>
+      </mt-header>
 
-        <!--修改职位框-->
-        <mt-popup
-            v-model="popupVisible_edit"
-            position="center"
-            style="width:80%;height:40%;align:center;">
-            <mt-header title="添加招聘职位">
-                <mt-button   class="bgnone" slot="left" @click="popupVisible_edit=false">返回</mt-button>
-            </mt-header> 
-        
-            <mt-field label="职位名称" placeholder="请输入职位名称" v-model="UpdateForm.name"></mt-field>
-            <mt-field label="需求人数" placeholder="请输入需求人数,例如:1人或1-5人" v-model="UpdateForm.count"></mt-field>
-            <mt-field label="职位要求" placeholder="请输入职位要求" v-model="UpdateForm.requirement"></mt-field>
-            <br/>
-            <mt-button type="primary"  style="height:35px !important;line-height:35px !important;"  size="large" @click.prevent="operateJobs({type:'update',id:UpdateForm._id})">保存职位</mt-button>
-        </mt-popup>
-        <newNavbar v-model="tab" :titles='navbarTitle'></newNavbar>
-        <mt-tab-container v-model="tab">
-          <mt-tab-container-item id="tab1" >
-              <pre style="text-align:left;">{{detail.content}}</pre>
-          </mt-tab-container-item>
+      <mt-field label="职位名称" placeholder="请输入职位名称" v-model="form.name"></mt-field>
+      <mt-field label="需求人数" placeholder="请输入需求人数,例如:1人或1-5人" v-model="form.count"></mt-field>
+      <mt-field label="职位要求" placeholder="请输入职位要求" v-model="form.requirement"></mt-field>
+      <br />
+      <mt-button
+        type="primary"
+        style="height:35px !important;line-height:35px !important;"
+        size="large"
+        @click.prevent="operateJobs({ type: 'add', id: detail.fair_id })"
+        >保存职位</mt-button
+      >
+    </mt-popup>
 
-          <mt-tab-container-item id="tab2" >
-              <showJobsListCard :list='jobs' :needBtn='canUpdateStatus' :needEdit="canUpdateStatus" @operation='operateJobs' @update="toUpdate"></showJobsListCard>
-          </mt-tab-container-item>
+    <!--修改职位框-->
+    <mt-popup v-model="popupVisible_edit" position="center" style="width:80%;height:40%;align:center;">
+      <mt-header title="添加招聘职位">
+        <mt-button class="bgnone" slot="left" @click="popupVisible_edit = false">返回</mt-button>
+      </mt-header>
 
-        </mt-tab-container>
+      <mt-field label="职位名称" placeholder="请输入职位名称" v-model="UpdateForm.name"></mt-field>
+      <mt-field label="需求人数" placeholder="请输入需求人数,例如:1人或1-5人" v-model="UpdateForm.count"></mt-field>
+      <mt-field label="职位要求" placeholder="请输入职位要求" v-model="UpdateForm.requirement"></mt-field>
+      <br />
+      <mt-button
+        type="primary"
+        style="height:35px !important;line-height:35px !important;"
+        size="large"
+        @click.prevent="operateJobs({ type: 'update', id: UpdateForm._id })"
+        >保存职位</mt-button
+      >
+    </mt-popup>
+    <newNavbar v-model="tab" :titles="navbarTitle"></newNavbar>
+    <mt-tab-container v-model="tab">
+      <mt-tab-container-item id="tab1">
+        <pre style="text-align:left;">{{ detail.content }}</pre>
+      </mt-tab-container-item>
+
+      <mt-tab-container-item id="tab2">
+        <showJobsListCard :list="jobs" :needBtn="canUpdateStatus" :needEdit="canUpdateStatus" @operation="operateJobs" @update="toUpdate"></showJobsListCard>
+      </mt-tab-container-item>
+    </mt-tab-container>
   </div>
 </template>
 
@@ -217,7 +222,7 @@ export default {
 @import '../../../style/common.css';
 @import '../../../style/jobFair.less';
 </style>
-<style lang='css' scoped>
+<style lang="css" scoped>
 
 .mint-header {
   background-color: #2577e3;
@@ -225,5 +230,4 @@ export default {
   line-height: 40px;
   font-size: 16px;
 }
-
 </style>

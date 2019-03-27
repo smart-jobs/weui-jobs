@@ -1,10 +1,10 @@
-<template lang='html'>
+<template lang="html">
   <div id="CorpCampusList">
-      <mt-header title="企业宣讲会">
-        <mt-button   class="bgnone" slot="left" @click="$router.push({path: '/'})">返回</mt-button>
-        <mt-button   class="bgnone" style="text-align:right !important;" slot="right" @click="$router.push({path:'/corpCampusAdd'})">添加</mt-button>
-      </mt-header>
-      <list :type='type' :needBtn='false'></list>
+    <mt-header title="企业宣讲会">
+      <mt-button class="bgnone" slot="left" @click="$router.push({ path: '/' })">返回</mt-button>
+      <mt-button class="bgnone" style="text-align:right !important;" slot="right" @click="$router.push({ path: '/corpCampusAdd' })">添加</mt-button>
+    </mt-header>
+    <list :type="type" :needBtn="false"></list>
   </div>
 </template>
 
@@ -34,7 +34,7 @@ export default {
 @import '../../../style/index.css';
 @import '../../../style/common.css';
 </style>
-<style lang='css' scoped>
+<style lang="css" scoped>
 
 .mint-header {
   background-color: #2577e3;
@@ -42,5 +42,4 @@ export default {
   line-height: 40px;
   font-size: 16px;
 }
-
 </style>

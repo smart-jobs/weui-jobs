@@ -1,64 +1,74 @@
-<template lang='html'>
+<template lang="html">
   <div id="CorpCampusDetail">
-      <mt-header :title="info.status === '1' ? '宣讲会详情(未审核)' : info.status === '0' ? '宣讲会详情(已发布)' : '宣讲会详情(审核失败)'">
-          <mt-button   class="bgnone"  slot="left" @click="$router.push({path: '/corpCampusList'})">返回</mt-button>
-      </mt-header> 
-      <mt-field label="宣讲会标题" placeholder="请输入宣讲会标题" v-model="info.subject" :disabled='canEdit'></mt-field>
-      <mt-field label="举办地址" placeholder="请输入举办地址" v-model="info.address" :disabled='canEdit'></mt-field>
-      <mt-field label="举办时间" placeholder="请输入举办时间" type="time" v-model="info.time" :disabled='canEdit'></mt-field>
-      <mt-field label="电子邮箱" placeholder="请输入电子邮箱" v-model="info.email" :disabled='canEdit'></mt-field>
-      <mt-field label="联系电话" placeholder="请输入联系电话" v-model="info.contact" :disabled='canEdit'></mt-field>
-      <mt-cell title="举办日期"  @click.native="openDate()" >
-        <span style="font-size:14px;" :style="selectColor">{{info.date||'请选择举办日期'}}</span>
-      </mt-cell>
-      <newSelect type='unit' title="选择分站" v-model="info.unit" :originalValue='info.unit' :canEdit='canEdit' placeholder='请选择分站'></newSelect>
+    <mt-header :title="info.status === '1' ? '宣讲会详情(未审核)' : info.status === '0' ? '宣讲会详情(已发布)' : '宣讲会详情(审核失败)'">
+      <mt-button class="bgnone" slot="left" @click="$router.push({ path: '/corpCampusList' })">返回</mt-button>
+    </mt-header>
+    <mt-field label="宣讲会标题" placeholder="请输入宣讲会标题" v-model="info.subject" :disabled="canEdit"></mt-field>
+    <mt-field label="举办地址" placeholder="请输入举办地址" v-model="info.address" :disabled="canEdit"></mt-field>
+    <mt-field label="举办时间" placeholder="请输入举办时间" type="time" v-model="info.time" :disabled="canEdit"></mt-field>
+    <mt-field label="电子邮箱" placeholder="请输入电子邮箱" v-model="info.email" :disabled="canEdit"></mt-field>
+    <mt-field label="联系电话" placeholder="请输入联系电话" v-model="info.contact" :disabled="canEdit"></mt-field>
+    <mt-cell title="举办日期" @click.native="openDate()">
+      <span style="font-size:14px;" :style="selectColor">{{ info.date || '请选择举办日期' }}</span>
+    </mt-cell>
+    <newSelect type="unit" title="选择分站" v-model="info.unit" :originalValue="info.unit" :canEdit="canEdit" placeholder="请选择分站"></newSelect>
 
-      <mt-cell id="xiugai">
-        <mt-button type="primary" v-if="!canEdit"  @click.native="toOperateJobs()">添加招聘职位</mt-button>
-      </mt-cell>
-      <!-- <mt-cell  id="zhiwei" title="添加招聘职位" label="点击此处2为宣讲会添加招聘信息" @click.native="toOperateJobs()"></mt-cell> -->
-      <!--编辑职位框-->
-      <mt-popup
-          v-model="popupVisible"
-          position="center"
-         
-          style="width:80%;height:40%;align:center;">
-          <mt-header title="添加招聘职位">
-              <mt-button   class="bgnone" slot="left" @click="popupVisible=false">返回</mt-button>
-          </mt-header> 
-      
-          <mt-field label="职位名称" placeholder="请输入职位名称" v-model="form.name"></mt-field>
-          <mt-field label="需求人数" placeholder="请输入需求人数" v-model="form.count"></mt-field>
-          <mt-field label="职位要求" placeholder="请输入职位要求" v-model="form.requirement"></mt-field>
-          <br/>
-          <mt-button type="primary" size="large" style="height:35px !important; line-height:35px !important;" @click.prevent="operateJobs({type:'add',id:info.fair_id})">保存职位</mt-button>
-      </mt-popup>
-      <newNavbar v-model="tab" :titles='navbarTitle'></newNavbar>
+    <mt-cell id="xiugai">
+      <mt-button type="primary" v-if="!canEdit" @click.native="toOperateJobs()">添加招聘职位</mt-button>
+    </mt-cell>
+    <!-- <mt-cell  id="zhiwei" title="添加招聘职位" label="点击此处2为宣讲会添加招聘信息" @click.native="toOperateJobs()"></mt-cell> -->
+    <!--编辑职位框-->
+    <mt-popup v-model="popupVisible" position="center" style="width:80%;height:40%;align:center;">
+      <mt-header title="添加招聘职位">
+        <mt-button class="bgnone" slot="left" @click="popupVisible = false">返回</mt-button>
+      </mt-header>
 
-      <mt-tab-container v-model="tab">
-          <mt-tab-container-item id="tab1" >
-              <mt-field v-if='!canEdit' label="宣讲会内容" id="neirong" placeholder="请输入宣讲会内容" type="textarea" v-model="info.content" rows="5" ></mt-field>
-              <pre v-else >{{info.content}} </pre>
-          </mt-tab-container-item>
+      <mt-field label="职位名称" placeholder="请输入职位名称" v-model="form.name"></mt-field>
+      <mt-field label="需求人数" placeholder="请输入需求人数" v-model="form.count"></mt-field>
+      <mt-field label="职位要求" placeholder="请输入职位要求" v-model="form.requirement"></mt-field>
+      <br />
+      <mt-button
+        type="primary"
+        size="large"
+        style="height:35px !important; line-height:35px !important;"
+        @click.prevent="operateJobs({ type: 'add', id: info.fair_id })"
+        >保存职位</mt-button
+      >
+    </mt-popup>
+    <newNavbar v-model="tab" :titles="navbarTitle"></newNavbar>
 
-          <mt-tab-container-item id="tab2" >
-              <showJobsListCard :list='info.jobs' :needBtn='!canEdit' @operation='operateJobs' :withApi='false'></showJobsListCard>
-          </mt-tab-container-item>
+    <mt-tab-container v-model="tab">
+      <mt-tab-container-item id="tab1">
+        <mt-field v-if="!canEdit" label="宣讲会内容" id="neirong" placeholder="请输入宣讲会内容" type="textarea" v-model="info.content" rows="5"></mt-field>
+        <pre v-else>{{ info.content }} </pre>
+      </mt-tab-container-item>
 
-      </mt-tab-container>
-      <mt-button v-if='!canEdit' class='lastbtn' style="height:35px !important; line-height:35px !important;"  type="primary" size="large" @click.prevent="toUpdateCampus()">修改宣讲会</mt-button>
+      <mt-tab-container-item id="tab2">
+        <showJobsListCard :list="info.jobs" :needBtn="!canEdit" @operation="operateJobs" :withApi="false"></showJobsListCard>
+      </mt-tab-container-item>
+    </mt-tab-container>
+    <mt-button
+      v-if="!canEdit"
+      class="lastbtn"
+      style="height:35px !important; line-height:35px !important;"
+      type="primary"
+      size="large"
+      @click.prevent="toUpdateCampus()"
+      >修改宣讲会</mt-button
+    >
 
-      <!--弹框部分-->
-      <mt-datetime-picker
-            ref="picker"
-            v-model="dateSelect"
-            type="date"
-            :start-date="starttime"
-            year-format="{value} 年"
-            month-format="{value} 月"
-            date-format="{value} 日"
-            @confirm="selectDate">
-      </mt-datetime-picker>
+    <!--弹框部分-->
+    <mt-datetime-picker
+      ref="picker"
+      v-model="dateSelect"
+      type="date"
+      :start-date="starttime"
+      year-format="{value} 年"
+      month-format="{value} 月"
+      date-format="{value} 日"
+      @confirm="selectDate"
+    >
+    </mt-datetime-picker>
   </div>
 </template>
 
@@ -252,7 +262,7 @@ export default {
 @import '../../../style/common.css';
 @import '../../../style/jobFair.less';
 </style>
-<style lang='css' scoped>
+<style lang="css" scoped>
 .mint-header {
   background-color: #2577e3;
   height: 40px;

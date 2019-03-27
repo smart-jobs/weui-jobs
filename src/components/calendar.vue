@@ -1,10 +1,10 @@
-<template lang='html'>
+<template lang="html">
   <div id="calendar">
-      <div>
-          <div class="claTop">{{ time | yearMonth }}</div>
-          <div class="claCenter">{{ time | monthDay }}</div>
-          <div class="calBottom">{{ time | weekDay }}</div>
-      </div>
+    <div>
+      <div class="claTop">{{ time | yearMonth }}</div>
+      <div class="claCenter">{{ time | monthDay }}</div>
+      <div class="calBottom">{{ time | weekDay }}</div>
+    </div>
   </div>
 </template>
 
@@ -39,7 +39,7 @@ export default {
 };
 </script>
 
-<style lang='css' scoped>
+<style lang="css" scoped>
 .cla {
   float: left;
   width: 20%;

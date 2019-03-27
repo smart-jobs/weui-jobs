@@ -1,17 +1,17 @@
-<template lang='html'>
+<template lang="html">
   <div id="Home">
-      <mt-header title="我    的"></mt-header>
-      <span v-if="check()">
-          <a href="/weixin/ui/center/index.html">
-            <mt-cell  id="nameM"  title="您当前没有绑定学籍,此处绑定学籍"  style="background-color:red;color:yellow;" icon="field-warning"></mt-cell>
-          </a>
-      </span>
-      <span v-else>
-        <!--:to="{name:'wechatPersonalList',query:{type:'resumeList'}}"-->
-          <mt-cell id="nameM"  title="我的简历" @click.native="toList('resumeList')"></mt-cell>
-          <mt-cell id="nameN"  title="我的求职信" @click.native="toList('letterList')"></mt-cell>
-          <mt-cell id="nameN"  title="我的入场卷" @click.native="toList('ticketList')"></mt-cell>
-      </span>
+    <mt-header title="我    的"></mt-header>
+    <span v-if="check()">
+      <a href="/weixin/ui/center/index.html">
+        <mt-cell id="nameM" title="您当前没有绑定学籍,此处绑定学籍" style="background-color:red;color:yellow;" icon="field-warning"></mt-cell>
+      </a>
+    </span>
+    <span v-else>
+      <!--:to="{name:'wechatPersonalList',query:{type:'resumeList'}}"-->
+      <mt-cell id="nameM" title="我的简历" @click.native="toList('resumeList')"></mt-cell>
+      <mt-cell id="nameN" title="我的求职信" @click.native="toList('letterList')"></mt-cell>
+      <mt-cell id="nameN" title="我的入场卷" @click.native="toList('ticketList')"></mt-cell>
+    </span>
   </div>
 </template>
 
@@ -48,7 +48,7 @@ export default {
 };
 </script>
 
-<style lang='css' scoped>
+<style lang="css" scoped>
     .mint-header{
       background-color: #2577e3;
       height:40px;
@@ -59,5 +59,4 @@ export default {
     border-top: 2px solid #f4f4f4;
     margin-top: 50px;
 }
-
 </style>

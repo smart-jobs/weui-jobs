@@ -3,31 +3,31 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
   },
-  extends: ["plugin:vue/essential", "@vue/prettier"],
-  plugins: ["vue"],
+  extends: ['plugin:vue/essential', '@vue/prettier'],
+  plugins: ['vue'],
   rules: {
-    "max-len": [
-      "warn",
+    'max-len': [
+      'warn',
       {
-        code: 250
-      }
+        code: 250,
+      },
     ],
-    "no-unused-vars": "off",
-    "no-console": "off",
-    "prettier/prettier": [
-      "warn",
+    'no-unused-vars': 'off',
+    'no-console': 'off',
+    'prettier/prettier': [
+      'warn',
       {
         singleQuote: true,
-        trailingComma: "es5",
+        trailingComma: 'es5',
         bracketSpacing: true,
         jsxBracketSameLine: true,
-        printWidth: 160
-      }
-    ]
+        printWidth: 160,
+      },
+    ],
   },
   parserOptions: {
-    parser: "babel-eslint"
-  }
+    parser: 'babel-eslint',
+  },
 };

@@ -1,6 +1,6 @@
-<template lang='html'>
+<template lang="html">
   <div id="listOptions">
-      <li :class="selectClass">{{content}} </li>
+    <li :class="selectClass">{{ content }}</li>
   </div>
 </template>
 
@@ -19,8 +19,8 @@ export default {
 };
 </script>
 
-<style lang='css' scoped>
- .listOpt li{
-   /* line-height:40px; */
- }
+<style lang="css" scoped>
+.listOpt li{
+  /* line-height:40px; */
+}
 </style>

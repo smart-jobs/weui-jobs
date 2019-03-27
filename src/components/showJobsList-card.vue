@@ -1,25 +1,28 @@
-<template lang='html'>
+<template lang="html">
   <div id="showList-card">
-      <el-card class="box-card" v-for="(item,index) in list" :key="index" >
-          <ul style="text-align:left; float:left; width:70%; padding-bottom: 10px; margin-right:10%;">
-              <li slot="header" class="clearfix">
-                  招聘职位:
-                  {{item.name}}
-              </li>
-              <li class="text item" >
-                  需求人数:
-                  {{item.count}}
-              </li>
-              <li class="text item">
-                  职位要求:
-                  {{item.requirement}}
-              </li>
-          </ul>
-          <mt-button v-if="needEdit"  type="primary" class="bnClass" style="text-align:center !important;" @click="toEdit(item)"> 修改</mt-button>
-          <mt-button v-if="needBtn&&withApi"  type="danger" class="bnClass" style="text-align:center !important;" @click="operation(item)"> {{btnTitle}}</mt-button>
-          <mt-button v-else-if='needBtn&&withApi===false' style="text-align:center !important;"  type="danger" class="bnClass" @click="operation(index)"> {{btnTitle}}</mt-button>
-      </el-card>
-
+    <el-card class="box-card" v-for="(item, index) in list" :key="index">
+      <ul style="text-align:left; float:left; width:70%; padding-bottom: 10px; margin-right:10%;">
+        <li slot="header" class="clearfix">
+          招聘职位:
+          {{ item.name }}
+        </li>
+        <li class="text item">
+          需求人数:
+          {{ item.count }}
+        </li>
+        <li class="text item">
+          职位要求:
+          {{ item.requirement }}
+        </li>
+      </ul>
+      <mt-button v-if="needEdit" type="primary" class="bnClass" style="text-align:center !important;" @click="toEdit(item)"> 修改</mt-button>
+      <mt-button v-if="needBtn && withApi" type="danger" class="bnClass" style="text-align:center !important;" @click="operation(item)">
+        {{ btnTitle }}</mt-button
+      >
+      <mt-button v-else-if="needBtn && withApi === false" style="text-align:center !important;" type="danger" class="bnClass" @click="operation(index)">
+        {{ btnTitle }}</mt-button
+      >
+    </el-card>
   </div>
 </template>
 
@@ -56,7 +59,7 @@ export default {
 };
 </script>
 
-<style lang='css' scoped>
+<style lang="css" scoped>
 .btnClass {
   float:left;
   width:17%;

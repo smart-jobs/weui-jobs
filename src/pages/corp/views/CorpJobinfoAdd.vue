@@ -1,35 +1,42 @@
-<template lang='html'>
+<template lang="html">
   <div id="CorpJobinfoAdd">
-      <mt-header title="添加招聘信息">
-            <mt-button   class="bgnone" slot="left" @click="$router.push({path: '/corpJobinfoList'})">返回</mt-button>
-        </mt-header>
-        <mt-field label="标  题" placeholder="请输入标题" v-model="detail.title" ></mt-field>
-        <newSelect type='city' title='所在城市' placeholder="请选择所在城市" v-model='detail.city' mode='both' ></newSelect>
-        <mt-field label="需求人数" placeholder="请输入需求人数,例如:1人或1-5人" v-model="detail.count"></mt-field>
-        <mt-field label="职位描述" placeholder="请输入职位描述" v-model="detail.jobdesc" ></mt-field>
-        <newSelect type='jobcat' title='职位类别' placeholder="请输入职位类别" v-model='detail.jobcat' mode='both' ></newSelect>
-        <newSelect type='nature' title='工作性质' placeholder="请选择工作性质" v-model='detail.nature' mode='both' ></newSelect>
-        <newSelect type='salary' title='薪资待遇' placeholder="请输入薪资待遇" v-model='detail.salary' mode='both' ></newSelect>
-        <newSelect type='xlreqs' title='学历层次' placeholder="请选择学历层次" v-model='detail.xlreqs' mode='both' ></newSelect>
-        <mt-field label="专业要求" placeholder="请选择专业要求" v-model="detail.zyreqs" ></mt-field>
-        <mt-cell title="失效日期"  @click.native="openDate()" >
-          <span style="font-size:14px;" :style="selectColor">{{detail.expired||'失效日期默认为创建两周后'}}</span>
-        </mt-cell>
-        <newSelect type='unit' title="选择分站" v-model="detail.unit" placeholder='请选择分站'></newSelect>
-        <mt-field label="信息内容" id="neirong" placeholder="请输入信息内容" v-model="detail.content" type="textarea" rows="5" ></mt-field>
-        <mt-button style="height:35px !important; line-height:35px !important;margin-top: 20px !important; "  type="primary" size="large" @click.prevent="toApplyJobinfo()">发布招聘信息</mt-button>
-        
-        <!--时间弹框部分-->
-        <mt-datetime-picker
-              ref="picker"
-              v-model="dateSelect"
-              type="date"
-              :start-date="starttime"
-              year-format="{value} 年"
-              month-format="{value} 月"
-              date-format="{value} 日"
-              @confirm="selectDate">
-        </mt-datetime-picker>
+    <mt-header title="添加招聘信息">
+      <mt-button class="bgnone" slot="left" @click="$router.push({ path: '/corpJobinfoList' })">返回</mt-button>
+    </mt-header>
+    <mt-field label="标  题" placeholder="请输入标题" v-model="detail.title"></mt-field>
+    <newSelect type="city" title="所在城市" placeholder="请选择所在城市" v-model="detail.city" mode="both"></newSelect>
+    <mt-field label="需求人数" placeholder="请输入需求人数,例如:1人或1-5人" v-model="detail.count"></mt-field>
+    <mt-field label="职位描述" placeholder="请输入职位描述" v-model="detail.jobdesc"></mt-field>
+    <newSelect type="jobcat" title="职位类别" placeholder="请输入职位类别" v-model="detail.jobcat" mode="both"></newSelect>
+    <newSelect type="nature" title="工作性质" placeholder="请选择工作性质" v-model="detail.nature" mode="both"></newSelect>
+    <newSelect type="salary" title="薪资待遇" placeholder="请输入薪资待遇" v-model="detail.salary" mode="both"></newSelect>
+    <newSelect type="xlreqs" title="学历层次" placeholder="请选择学历层次" v-model="detail.xlreqs" mode="both"></newSelect>
+    <mt-field label="专业要求" placeholder="请选择专业要求" v-model="detail.zyreqs"></mt-field>
+    <mt-cell title="失效日期" @click.native="openDate()">
+      <span style="font-size:14px;" :style="selectColor">{{ detail.expired || '失效日期默认为创建两周后' }}</span>
+    </mt-cell>
+    <newSelect type="unit" title="选择分站" v-model="detail.unit" placeholder="请选择分站"></newSelect>
+    <mt-field label="信息内容" id="neirong" placeholder="请输入信息内容" v-model="detail.content" type="textarea" rows="5"></mt-field>
+    <mt-button
+      style="height:35px !important; line-height:35px !important;margin-top: 20px !important; "
+      type="primary"
+      size="large"
+      @click.prevent="toApplyJobinfo()"
+      >发布招聘信息</mt-button
+    >
+
+    <!--时间弹框部分-->
+    <mt-datetime-picker
+      ref="picker"
+      v-model="dateSelect"
+      type="date"
+      :start-date="starttime"
+      year-format="{value} 年"
+      month-format="{value} 月"
+      date-format="{value} 日"
+      @confirm="selectDate"
+    >
+    </mt-datetime-picker>
   </div>
 </template>
 
@@ -153,7 +160,7 @@ export default {
 @import '../../../style/index.css';
 @import '../../../style/common.css';
 </style>
-<style lang='css' scoped>
+<style lang="css" scoped>
 
 .mint-header {
   background-color: #2577e3;
@@ -161,5 +168,4 @@ export default {
   line-height:40px;
   font-size: 16px;
 }
-
 </style>

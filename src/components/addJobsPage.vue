@@ -1,28 +1,31 @@
-<template lang='html'>
-  <div id="addJobsPage" >
-    <mt-button v-if="uri.includes('/index.html')" class="btnClass" type="primary" size='small' @click="popupVisible=true">
-       {{btnTitle}}
+<template lang="html">
+  <div id="addJobsPage">
+    <mt-button v-if="uri.includes('/index.html')" class="btnClass" type="primary" size="small" @click="popupVisible = true">
+      {{ btnTitle }}
     </mt-button>
-    <mt-button v-else class="btnClass" style="position: absolute !important; left: 42% !important;"  type="primary" @click="popupVisible=true">
-      {{btnTitle}}
+    <mt-button v-else class="btnClass" style="position: absolute !important; left: 42% !important;" type="primary" @click="popupVisible = true">
+      {{ btnTitle }}
     </mt-button>
 
-    <mt-popup
-        v-model="popupVisible"
-        position="center"
-        style="align:center; overflow-y:scroll;"
-        :style="selectStyle">
-        <mt-header id="com" title="添加招聘职位">
-          <mt-button   class="bgnone" slot="left" @click="popupVisible=false">返回</mt-button>
-          <mt-button v-if="forIndexAndDetail()"   class="bgnone" slot="right" @click="apply()">申请加入</mt-button>
-        </mt-header>
-        <mt-field label="职位名称" placeholder="请输入职位名称" v-model="jobs.name"></mt-field>
-        <mt-field label="需求人数" placeholder="请输入需求人数" v-model="jobs.count"></mt-field>
-        <mt-field label="职位要求" placeholder="请输入职位要求" v-model="jobs.requirement"></mt-field>
-        <br/>
-        <mt-button type="primary" size="large" style="height:35px !important;line-height:35px !important;" @click.prevent="saveJobs()">保存职位</mt-button>
-      <div v-if="forIndexAndDetail()" >
-        <showJobsListCard :list="jobsList" :needBtn="true" :btnTitle="'删除'" :listTitle="listTitle" :withApi="false" @operation="jobsDelete"></showJobsListCard>
+    <mt-popup v-model="popupVisible" position="center" style="align:center; overflow-y:scroll;" :style="selectStyle">
+      <mt-header id="com" title="添加招聘职位">
+        <mt-button class="bgnone" slot="left" @click="popupVisible = false">返回</mt-button>
+        <mt-button v-if="forIndexAndDetail()" class="bgnone" slot="right" @click="apply()">申请加入</mt-button>
+      </mt-header>
+      <mt-field label="职位名称" placeholder="请输入职位名称" v-model="jobs.name"></mt-field>
+      <mt-field label="需求人数" placeholder="请输入需求人数" v-model="jobs.count"></mt-field>
+      <mt-field label="职位要求" placeholder="请输入职位要求" v-model="jobs.requirement"></mt-field>
+      <br />
+      <mt-button type="primary" size="large" style="height:35px !important;line-height:35px !important;" @click.prevent="saveJobs()">保存职位</mt-button>
+      <div v-if="forIndexAndDetail()">
+        <showJobsListCard
+          :list="jobsList"
+          :needBtn="true"
+          :btnTitle="'删除'"
+          :listTitle="listTitle"
+          :withApi="false"
+          @operation="jobsDelete"
+        ></showJobsListCard>
       </div>
     </mt-popup>
   </div>
@@ -122,7 +125,7 @@ export default {
 @import '../style/common.css';
 @import '../style/jobFair.less';
 </style>
-<style lang='css' scoped>
+<style lang="css" scoped>
 .mint-header {
   background-color: #2577e3;
   height: 40px;
@@ -136,13 +139,12 @@ export default {
 }
 
 .btnClass{
-    float:left; 
-    width:17%; 
-    padding:0; 
+    float:left;
+    width:17%;
+    padding:0;
     margin-right:0;
-    position: absolute; 
+    position: absolute;
     bottom:30px;
     border-radius: 0;
   }
-
 </style>

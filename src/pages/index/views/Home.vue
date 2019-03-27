@@ -1,109 +1,93 @@
 <template lang="html">
   <div id="Home">
-      <mt-header title="智慧就业"></mt-header>
+    <mt-header title="智慧就业"></mt-header>
 
-      <mt-swipe :auto="4000">
-        <mt-swipe-item>
-            <img style="width:100%; height:100%;"  :src="imgs">
-        </mt-swipe-item>
-      </mt-swipe>
-      <newNavbar :titles="navbar" v-model="active"></newNavbar>
-      <mt-tab-container v-model="active" style="width:100%; padding:0;">
-        <!--主页-招聘会列表-->
-          <mt-tab-container-item id="tab1" style="width:100%; padding:0;">
-            <el-table
-              label="招聘会"
-              :data="jobfairList.data"
-              style="width: 100%;">
-              <el-table-column >
-                <template slot-scope="scope">
-                  <!-- <span> -->
-                    <calendar :time="scope.row.date" class="cla" style="margin-top: 10px;"></calendar>
-                    <ul @click="toDetail('jobfairDetail',scope.row)" style="float:left; width:53%; margin-right:2%;">
-                        <li class="tit">{{ scope.row.subject }} </li>
-                        <li class="txt">举办地址：{{ scope.row.address }}</li>
-                        <li class="txt">举办日期：{{ isDateOff(scope.row.date)?scope.row.date:'已过期' }}</li>
-                        <li class="txt" >分站信息：{{findUnit( scope.row.unit )}}</li>
-                    </ul>
-                    <!--style删掉就能看见按钮了,报名的判断少:isDateOff(scope.row.date)&&,先调样式不加-->
-                    <mt-button 
-                        type="primary" 
-                        size='small' 
-                        class="btnClass"
-                        v-if='isDateOff(scope.row.date)&&checkDisplay("user")'
-                        @click='apply(scope.row._id)'> 
-                        我要报名
-                    </mt-button>
-                    <div v-else-if='isDateOff(scope.row.date)&&checkDisplay("corp")'>
-                      <div v-if="pageCheckCorp(scope.row.unit)">
-                        <addJobsPage btnTitle="申请加入" :fair_id="scope.row._id" ></addJobsPage>
-                      </div>  
-                    </div> 
-                  <!-- </span> -->
-                </template>
-              </el-table-column>
-            </el-table>
-           <!-- <router-link :to="{path:'/'}"  v-if="jobfairList.total>limit"  class="moreA" > -->
-                <p @click="toList('jobfairList')" class="moreA" v-if="jobfairList.total>limit">查看更多</p>
-            <!-- </router-link> -->
-          </mt-tab-container-item>
-          <!--主页-宣讲会列表-->
-          <mt-tab-container-item id="tab2" style="width:100%; padding:0;">
-            <el-table
-              label="宣讲会"
-              :data="campusList.data"
-              style="width: 100%">
-              <el-table-column>
-              <template slot-scope="scope">
-                <span>
-                  <calendar :time="scope.row.date" class="cla" style="margin-top: 10px;"></calendar>
-                  <ul @click="toDetail('campusDetail',scope.row)" style="float:left; width:73%; margin-right:3%;">
-                    <li class="tit">{{ scope.row.subject }}</li>
-                    <li class="txt">举办地址：{{ scope.row.address }}</li>
-                    <li class="txt mb0">举办日期：{{ isDateOff(scope.row.date)?scope.row.date:'已过期' }}</li>
-                    <li class="txt mb0">分站信息：{{ findUnit( scope.row.unit ) }}</li>
-                  </ul>
+    <mt-swipe :auto="4000">
+      <mt-swipe-item>
+        <img style="width:100%; height:100%;" :src="imgs" />
+      </mt-swipe-item>
+    </mt-swipe>
+    <newNavbar :titles="navbar" v-model="active"></newNavbar>
+    <mt-tab-container v-model="active" style="width:100%; padding:0;">
+      <!--主页-招聘会列表-->
+      <mt-tab-container-item id="tab1" style="width:100%; padding:0;">
+        <el-table label="招聘会" :data="jobfairList.data" style="width: 100%;">
+          <el-table-column>
+            <template slot-scope="scope">
+              <!-- <span> -->
+              <calendar :time="scope.row.date" class="cla" style="margin-top: 10px;"></calendar>
+              <ul @click="toDetail('jobfairDetail', scope.row)" style="float:left; width:53%; margin-right:2%;">
+                <li class="tit">{{ scope.row.subject }}</li>
+                <li class="txt">举办地址：{{ scope.row.address }}</li>
+                <li class="txt">举办日期：{{ isDateOff(scope.row.date) ? scope.row.date : '已过期' }}</li>
+                <li class="txt">分站信息：{{ findUnit(scope.row.unit) }}</li>
+              </ul>
+              <!--style删掉就能看见按钮了,报名的判断少:isDateOff(scope.row.date)&&,先调样式不加-->
+              <mt-button type="primary" size="small" class="btnClass" v-if="isDateOff(scope.row.date) && checkDisplay('user')" @click="apply(scope.row._id)">
+                我要报名
+              </mt-button>
+              <div v-else-if="isDateOff(scope.row.date) && checkDisplay('corp')">
+                <div v-if="pageCheckCorp(scope.row.unit)">
+                  <addJobsPage btnTitle="申请加入" :fair_id="scope.row._id"></addJobsPage>
+                </div>
+              </div>
+              <!-- </span> -->
+            </template>
+          </el-table-column>
+        </el-table>
+        <!-- <router-link :to="{path:'/'}"  v-if="jobfairList.total>limit"  class="moreA" > -->
+        <p @click="toList('jobfairList')" class="moreA" v-if="jobfairList.total > limit">查看更多</p>
+        <!-- </router-link> -->
+      </mt-tab-container-item>
+      <!--主页-宣讲会列表-->
+      <mt-tab-container-item id="tab2" style="width:100%; padding:0;">
+        <el-table label="宣讲会" :data="campusList.data" style="width: 100%">
+          <el-table-column>
+            <template slot-scope="scope">
+              <span>
+                <calendar :time="scope.row.date" class="cla" style="margin-top: 10px;"></calendar>
+                <ul @click="toDetail('campusDetail', scope.row)" style="float:left; width:73%; margin-right:3%;">
+                  <li class="tit">{{ scope.row.subject }}</li>
+                  <li class="txt">举办地址：{{ scope.row.address }}</li>
+                  <li class="txt mb0">举办日期：{{ isDateOff(scope.row.date) ? scope.row.date : '已过期' }}</li>
+                  <li class="txt mb0">分站信息：{{ findUnit(scope.row.unit) }}</li>
+                </ul>
+              </span>
+            </template>
+          </el-table-column>
+        </el-table>
+        <!-- <router-link :to="{path:'/'}"  v-if="campusList.total>limit"  class="moreA" > -->
+        <p @click="toList('campusList')" class="moreA" v-if="campusList.total > limit">查看更多</p>
+        <!-- </router-link> -->
+      </mt-tab-container-item>
+      <!--主页-招聘信息列表-->
+      <mt-tab-container-item id="tab3" style="width:100% !important; padding:0 !important;">
+        <el-table label="招聘信息" :data="jobinfoList.data" style="width: 100%">
+          <el-table-column>
+            <template slot-scope="scope">
+              <span>
+                <ul @click="toDetail('jobinfoDetail', scope.row)" style="float:left; width:78%; margin-right:2%;">
+                  <li class="tit">{{ scope.row.title }}</li>
+                  <li class="txtOne">需求人数：{{ scope.row.count }}</li>
+                  <li class="txtOne">工作性质：{{ { data: scope.row, searchItem: 'nature.name' } | getName }}</li>
+                  <li class="txtOne">薪资待遇：{{ { data: scope.row, searchItem: 'salary.name' } | getName }}</li>
+                  <li class="txtOne">最低学历：{{ { data: scope.row, searchItem: 'xlreqs.name' } | getName }}</li>
+                  <li class="txtOne">所在城市:{{ { data: scope.row, searchItem: 'city.name' } | getName }}</li>
+                  <li class="txtOne">状态：{{ isDateOff(scope.row.expired) ? '招聘中' : '已过期' }}</li>
+                  <li style="font-size:12px; color:#888;"></li>
+                </ul>
+                <span v-if="isDateOff(scope.row.expired) && checkDisplay('user')">
+                  <deliverResume :corpid="scope.row.corpid" :origin="scope.row._id" :_tenant="scope.row._tenant" :type="'0'"></deliverResume>
                 </span>
-              </template>
-              </el-table-column>
-            </el-table>
-            <!-- <router-link :to="{path:'/'}"  v-if="campusList.total>limit"  class="moreA" > -->
-                <p @click="toList('campusList')" class="moreA" v-if="campusList.total>limit">查看更多</p>
-            <!-- </router-link> -->
-          </mt-tab-container-item>
-          <!--主页-招聘信息列表-->
-          <mt-tab-container-item id="tab3" style="width:100% !important; padding:0 !important;">
-            <el-table
-                label="招聘信息"
-                :data="jobinfoList.data"
-                style="width: 100%">
-                <el-table-column>
-                <template slot-scope="scope">
-                  <span>
-                    <ul @click="toDetail('jobinfoDetail',scope.row)" style="float:left; width:78%; margin-right:2%;">
-                      <li class="tit">{{ scope.row.title }}</li>
-                      <li class="txtOne">需求人数：{{ scope.row.count }}</li>
-                      <li class="txtOne">工作性质：{{{data:scope.row,searchItem:'nature.name'}|getName }}</li>
-                      <li class="txtOne">薪资待遇：{{{data:scope.row,searchItem:'salary.name'}|getName }}</li>
-                      <li class="txtOne">最低学历：{{{data:scope.row,searchItem:'xlreqs.name'}|getName }}</li>
-                      <li class="txtOne">所在城市:{{ {data:scope.row,searchItem:'city.name'}|getName }}</li>
-                      <li class="txtOne">状态：{{ isDateOff(scope.row.expired)?'招聘中':'已过期' }}</li>
-                      <li style="font-size:12px; color:#888;"> </li>
-                    </ul>
-                    <span v-if='isDateOff(scope.row.expired)&&checkDisplay("user")'>
-                      <deliverResume :corpid="scope.row.corpid" :origin="scope.row._id" :_tenant="scope.row._tenant" :type="'0'"></deliverResume>
-                    </span>
-                  </span>
-                </template>
-                </el-table-column>
-            </el-table>
-            <!-- <router-link :to="{path:'/'}"  v-if="jobinfoList.total>limit"  class="moreA" > -->
-                <p @click="toList('jobinfoList')" class="moreA" v-if="jobinfoList.total>limit">查看更多</p>
-            <!-- </router-link> -->
-          </mt-tab-container-item>
-
-      </mt-tab-container>
-      
+              </span>
+            </template>
+          </el-table-column>
+        </el-table>
+        <!-- <router-link :to="{path:'/'}"  v-if="jobinfoList.total>limit"  class="moreA" > -->
+        <p @click="toList('jobinfoList')" class="moreA" v-if="jobinfoList.total > limit">查看更多</p>
+        <!-- </router-link> -->
+      </mt-tab-container-item>
+    </mt-tab-container>
   </div>
 </template>
 
@@ -237,11 +221,11 @@ export default {
   font-size: 16px;
 }
 .btnClass{
-    float:left; 
-    width:17%; 
-    padding:0; 
+    float:left;
+    width:17%;
+    padding:0;
     margin-right:0;
-    position: absolute; 
+    position: absolute;
     bottom: 29px;
     border-radius: 0;
   }

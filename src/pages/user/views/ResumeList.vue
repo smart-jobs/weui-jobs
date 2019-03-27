@@ -1,10 +1,10 @@
-<template lang='html'>
+<template lang="html">
   <div id="ResumeList">
-      <mt-header title="我的简历">
-        <mt-button   class="bgnone" slot="left" @click="$router.push({path: '/'})">返回</mt-button>
-        <mt-button   class="bgnone" slot="right" @click="$router.push({ path:'/resumeAdd' })">添加简历</mt-button>
-      </mt-header>
-      <list :type='type' :needBtn='true'></list>
+    <mt-header title="我的简历">
+      <mt-button class="bgnone" slot="left" @click="$router.push({ path: '/' })">返回</mt-button>
+      <mt-button class="bgnone" slot="right" @click="$router.push({ path: '/resumeAdd' })">添加简历</mt-button>
+    </mt-header>
+    <list :type="type" :needBtn="true"></list>
   </div>
 </template>
 
@@ -32,12 +32,11 @@ export default {
 };
 </script>
 
-<style lang='css' scoped>
-    .mint-header{
-      background-color: #2577e3;
-      height: 40px;
-      line-height: 40px;
-      font-size: 16px;
-  }
-
+<style lang="css" scoped>
+  .mint-header{
+    background-color: #2577e3;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+}
 </style>

@@ -65,5 +65,5 @@ export default {
   },
   saveUserInfo(userInfo) {
     sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
-  }
+  },
 };

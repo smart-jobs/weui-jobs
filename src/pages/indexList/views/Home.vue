@@ -1,10 +1,10 @@
 <template lang="html">
   <div id="Home">
-      <mt-header title="智慧就业">
-        <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
-      </mt-header>
+    <mt-header title="智慧就业">
+      <mt-button class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
+    </mt-header>
 
-          <list :type='type' :needBtn='true'> </list>
+    <list :type="type" :needBtn="true"> </list>
   </div>
 </template>
 
@@ -130,9 +130,9 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  
+
   .txt{
-   
+
     font-size: 14px;
     margin-bottom: 1px;
     white-space: nowrap;

@@ -1,30 +1,31 @@
-<template lang='html'>
+<template lang="html">
   <div id="ResumeAdd">
-      <mt-header title="简历详情">
-          <mt-button   class="bgnone" slot="left"  @click="$router.push({ path:'/resumeList' })">返回</mt-button>
-      </mt-header>
-        <mt-field label="模板标题" placeholder="请输入模板标题" v-model="detail.title"></mt-field>
-        <mt-field label="学历"  v-model="detail.info.xl" readonly></mt-field>
-        <mt-field label="性别" id="sex" v-model="detail.info.xb" readonly></mt-field>
-        <mt-field label="毕业院校" v-model="detail.info.yxmc" readonly></mt-field>
-        <mt-field label="专业名称" v-model="detail.info.zymc" readonly></mt-field>
-        <mt-cell title="出生日期"  v-model="detail.info.csrq" @click.native="openDate()">
-            <span style="font-size:14px;" :style="selectColor">{{(detail.info&&detail.info.csrq)||'请选择出生日期'}}</span>
-        </mt-cell>
-        <mt-field label="联系电话" placeholder="请输入联系电话" v-model="detail.contact.mobile"></mt-field>
-        <mt-field label="电子邮箱" placeholder="请输入电子邮箱" v-model="detail.contact.email"></mt-field>
-        <mt-field label="自我介绍" placeholder="请输入自我介绍" id="neirong" v-model="detail.content" type="textarea" rows="5"></mt-field>
-        <mt-button type="primary" size="large" style="margin-top:30px !important; height:35px !important; line-height:35px;" @click="addResume()">新建</mt-button>
-            <mt-datetime-picker
-                  ref="picker"
-                  v-model="dateSelect"
-                  type="date"
-                  :start-date="starttime"
-                  year-format="{value} 年"
-                  month-format="{value} 月"
-                  date-format="{value} 日"
-                  @confirm="selectDate">
-            </mt-datetime-picker>
+    <mt-header title="简历详情">
+      <mt-button class="bgnone" slot="left" @click="$router.push({ path: '/resumeList' })">返回</mt-button>
+    </mt-header>
+    <mt-field label="模板标题" placeholder="请输入模板标题" v-model="detail.title"></mt-field>
+    <mt-field label="学历" v-model="detail.info.xl" readonly></mt-field>
+    <mt-field label="性别" id="sex" v-model="detail.info.xb" readonly></mt-field>
+    <mt-field label="毕业院校" v-model="detail.info.yxmc" readonly></mt-field>
+    <mt-field label="专业名称" v-model="detail.info.zymc" readonly></mt-field>
+    <mt-cell title="出生日期" v-model="detail.info.csrq" @click.native="openDate()">
+      <span style="font-size:14px;" :style="selectColor">{{ (detail.info && detail.info.csrq) || '请选择出生日期' }}</span>
+    </mt-cell>
+    <mt-field label="联系电话" placeholder="请输入联系电话" v-model="detail.contact.mobile"></mt-field>
+    <mt-field label="电子邮箱" placeholder="请输入电子邮箱" v-model="detail.contact.email"></mt-field>
+    <mt-field label="自我介绍" placeholder="请输入自我介绍" id="neirong" v-model="detail.content" type="textarea" rows="5"></mt-field>
+    <mt-button type="primary" size="large" style="margin-top:30px !important; height:35px !important; line-height:35px;" @click="addResume()">新建</mt-button>
+    <mt-datetime-picker
+      ref="picker"
+      v-model="dateSelect"
+      type="date"
+      :start-date="starttime"
+      year-format="{value} 年"
+      month-format="{value} 月"
+      date-format="{value} 日"
+      @confirm="selectDate"
+    >
+    </mt-datetime-picker>
   </div>
 </template>
 
@@ -151,12 +152,12 @@ export default {
 };
 </script>
 
-<style lang='css' scoped>
-    .mint-header{
-      background-color: #2577e3;
-      height: 40px;
-      line-height: 40px;
-      font-size: 16px;
-    
-  }
+<style lang="css" scoped>
+  .mint-header{
+    background-color: #2577e3;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+
+}
 </style>

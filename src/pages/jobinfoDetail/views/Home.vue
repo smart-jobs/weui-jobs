@@ -1,46 +1,52 @@
 <template lang="html">
   <div id="Home">
-      <mt-header :title="isDateOff(detail.expired)?'招聘信息详情':'招聘信息详情(已过期)'">
-            <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
-        </mt-header>    
-        <mt-cell :title="detail.title"  class="width" id="title"></mt-cell>
-        <corpInfo :titleBtn="true" :corpName="detail.corpname" :corpid="detail.corpid" :_tenant="detail._tenant" :origin="detail._id" :type="'0'"></corpInfo>
-        <mt-cell class="width"  title="工作位置" style="text-align:left;">
-              <span style="color:black;font-size: 14px;"> {{{data:detail,searchItem:"city.name"}|getName}} </span>
-        </mt-cell>
-        <mt-cell class="width"  title="薪资待遇" style="text-align:left;">
-              <span style="color:black;font-size: 14px;"> {{{data:detail,searchItem:"salary.name"}|getName}} </span>
-        </mt-cell>
-        <mt-cell class="width"  title="招聘人数" style="text-align:left;">
-              <span style="color:black;font-size: 14px;"> {{detail.count}} </span>
-        </mt-cell>
-        <mt-cell class="width"  title="工作性质" style="text-align:left;">
-              <span style="color:black;font-size: 14px;"> {{{data:detail,searchItem:"nature.name"}|getName}} </span>
-        </mt-cell>
-        <mt-cell class="width"  title="工作类型" style="text-align:left;">
-              <span style="color:black;font-size: 14px;"> {{{data:detail,searchItem:"jobcat.name"}|getName}} </span>
-        </mt-cell>
-        <mt-cell class="width"  title="工作简述" style="text-align:left;">
-              <span style="color:black;font-size: 14px;"> {{detail.jobdesc}} </span>
-        </mt-cell>
-        <mt-cell class="width"  title="学历要求" style="text-align:left;">
-              <span style="color:black;font-size: 14px;"> {{{data:detail,searchItem:"xlreqs.name"}|getName}} </span>
-        </mt-cell>
-        <mt-cell class="width"  title="专业要求" style="text-align:left;">
-              <span style="color:black;font-size: 14px; padding: 10px 0; line-height: 20px;"> {{detail.zyreqs}} </span>
-        </mt-cell>
-        <mt-cell class="width"  title="分站信息" style="text-align:left;">
-              <span style="color:black;font-size: 14px;"> {{findUnit(detail.unit)}} </span>
-        </mt-cell>
-         <mt-cell>
-              <deliverResume v-if='isDateOff(detail.expired)&&checkDisplay("user")' :userid="user.userid" :corpid="detail.corpid" :origin="detail._id" :_tenant="detail._tenant" :type="'0'"></deliverResume>
-        </mt-cell> 
-        <mt-tab-container v-model="active">
-            <mt-tab-container-item id="tab0" >
-                <pre  style="text-align:left;">{{detail.content}}</pre>
-            </mt-tab-container-item>
-        </mt-tab-container>
-
+    <mt-header :title="isDateOff(detail.expired) ? '招聘信息详情' : '招聘信息详情(已过期)'">
+      <mt-button class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
+    </mt-header>
+    <mt-cell :title="detail.title" class="width" id="title"></mt-cell>
+    <corpInfo :titleBtn="true" :corpName="detail.corpname" :corpid="detail.corpid" :_tenant="detail._tenant" :origin="detail._id" :type="'0'"></corpInfo>
+    <mt-cell class="width" title="工作位置" style="text-align:left;">
+      <span style="color:black;font-size: 14px;"> {{ { data: detail, searchItem: 'city.name' } | getName }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="薪资待遇" style="text-align:left;">
+      <span style="color:black;font-size: 14px;"> {{ { data: detail, searchItem: 'salary.name' } | getName }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="招聘人数" style="text-align:left;">
+      <span style="color:black;font-size: 14px;"> {{ detail.count }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="工作性质" style="text-align:left;">
+      <span style="color:black;font-size: 14px;"> {{ { data: detail, searchItem: 'nature.name' } | getName }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="工作类型" style="text-align:left;">
+      <span style="color:black;font-size: 14px;"> {{ { data: detail, searchItem: 'jobcat.name' } | getName }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="工作简述" style="text-align:left;">
+      <span style="color:black;font-size: 14px;"> {{ detail.jobdesc }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="学历要求" style="text-align:left;">
+      <span style="color:black;font-size: 14px;"> {{ { data: detail, searchItem: 'xlreqs.name' } | getName }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="专业要求" style="text-align:left;">
+      <span style="color:black;font-size: 14px; padding: 10px 0; line-height: 20px;"> {{ detail.zyreqs }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="分站信息" style="text-align:left;">
+      <span style="color:black;font-size: 14px;"> {{ findUnit(detail.unit) }} </span>
+    </mt-cell>
+    <mt-cell>
+      <deliverResume
+        v-if="isDateOff(detail.expired) && checkDisplay('user')"
+        :userid="user.userid"
+        :corpid="detail.corpid"
+        :origin="detail._id"
+        :_tenant="detail._tenant"
+        :type="'0'"
+      ></deliverResume>
+    </mt-cell>
+    <mt-tab-container v-model="active">
+      <mt-tab-container-item id="tab0">
+        <pre style="text-align:left;">{{ detail.content }}</pre>
+      </mt-tab-container-item>
+    </mt-tab-container>
   </div>
 </template>
 

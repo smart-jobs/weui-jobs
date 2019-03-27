@@ -1,7 +1,7 @@
-<template lang='html'>
+<template lang="html">
   <div id="newInput">
     <!--做个可以根据isDisabled判断是否可编辑的组件-->
-      <mt-field label="专业名称" v-model="detail.info.zymc" disabled></mt-field>
+    <mt-field label="专业名称" v-model="detail.info.zymc" disabled></mt-field>
   </div>
 </template>
 
@@ -20,6 +20,4 @@ export default {
 };
 </script>
 
-<style lang='css' scoped>
-
-</style>
+<style lang="css" scoped></style>

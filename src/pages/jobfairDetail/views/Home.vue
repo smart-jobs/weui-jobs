@@ -1,46 +1,58 @@
 <template lang="html">
   <div id="Home">
-      <mt-header :title="isDateOff(detail.date)?'招聘会详情':'招聘会详情(已过期)'">
-            <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
-        </mt-header>    
-        <mt-cell ref="title" id="title" class="width"  :title="detail.subject">
-           
-        </mt-cell>
-        <mt-cell class="width" title="招聘会类型" style="text-align:left; ">
-              <span style="color:black;  font-size:14px;"> {{detail.type}} </span>
-        </mt-cell>
-        <mt-cell class="width" title="举办时间" style="text-align:left;">
-              <span style="color:black;  font-size:14px;"> {{detail.date}} </span>
-        </mt-cell>
-        <mt-cell class="width" title="举办城市" style="text-align:left;">
-              <span style="color:black;  font-size:14px;"> {{{data:detail,searchItem:"city.name"}|getName}} </span>
-        </mt-cell>
-        <mt-cell class="width" title="举办地址" style="text-align:left;">
-              <span style="color:black;  font-size:14px;"> {{detail.address}} </span>
-        </mt-cell>
-        <mt-cell class="width" title="分校信息" style="text-align:left;">
-               <span class="schoolCla">{{ findUnit( detail.unit ) }}</span>
-        </mt-cell>
-        <mt-cell id="nameSpan" class="width" title="" >
-              <span class="spanCla">温馨提示：为防讯息临时变动,参会前可联系招聘会举办方确认。</span>
-        </mt-cell>
-         <mt-cell style="height:60px;">
-            <mt-button style="position: absolute !important; left: 42% !important;" type="primary" v-if='isDateOff(detail.date)&&checkDisplay("user")' @click="apply('user')">我要报名</mt-button>
-            <addJobsPage btnTitle="申请加入" :fair_id="detail._id" v-if='isDateOff(detail.date)&&checkDisplay("corp")&&pageCheckCorp(detail.unit)'></addJobsPage>
-        </mt-cell> 
-        <newNavbar v-model="active" :titles="navbar"></newNavbar>
-        <mt-tab-container v-model="active">
-            <mt-tab-container-item id="tab1" >
-                <pre  style="text-align:left;">{{detail.content}}</pre>
-            </mt-tab-container-item>
+    <mt-header :title="isDateOff(detail.date) ? '招聘会详情' : '招聘会详情(已过期)'">
+      <mt-button class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
+    </mt-header>
+    <mt-cell ref="title" id="title" class="width" :title="detail.subject"> </mt-cell>
+    <mt-cell class="width" title="招聘会类型" style="text-align:left; ">
+      <span style="color:black;  font-size:14px;"> {{ detail.type }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="举办时间" style="text-align:left;">
+      <span style="color:black;  font-size:14px;"> {{ detail.date }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="举办城市" style="text-align:left;">
+      <span style="color:black;  font-size:14px;"> {{ { data: detail, searchItem: 'city.name' } | getName }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="举办地址" style="text-align:left;">
+      <span style="color:black;  font-size:14px;"> {{ detail.address }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="分校信息" style="text-align:left;">
+      <span class="schoolCla">{{ findUnit(detail.unit) }}</span>
+    </mt-cell>
+    <mt-cell id="nameSpan" class="width" title="">
+      <span class="spanCla">温馨提示：为防讯息临时变动,参会前可联系招聘会举办方确认。</span>
+    </mt-cell>
+    <mt-cell style="height:60px;">
+      <mt-button
+        style="position: absolute !important; left: 42% !important;"
+        type="primary"
+        v-if="isDateOff(detail.date) && checkDisplay('user')"
+        @click="apply('user')"
+        >我要报名</mt-button
+      >
+      <addJobsPage btnTitle="申请加入" :fair_id="detail._id" v-if="isDateOff(detail.date) && checkDisplay('corp') && pageCheckCorp(detail.unit)"></addJobsPage>
+    </mt-cell>
+    <newNavbar v-model="active" :titles="navbar"></newNavbar>
+    <mt-tab-container v-model="active">
+      <mt-tab-container-item id="tab1">
+        <pre style="text-align:left;">{{ detail.content }}</pre>
+      </mt-tab-container-item>
 
-            <mt-tab-container-item id="tab2">
-                <span v-for="(item,index) in corpList" :key="index" id="com">
-                    <corpInfo :fair_id="detail._id" :titleBtn="true" :corpName="item.corpname" :corpid="item.corpid" :_tenant="detail._tenant" :origin="detail._id" :type="'1'" :expired="detail.date"></corpInfo>
-                </span>
-            </mt-tab-container-item>
-        </mt-tab-container>
-
+      <mt-tab-container-item id="tab2">
+        <span v-for="(item, index) in corpList" :key="index" id="com">
+          <corpInfo
+            :fair_id="detail._id"
+            :titleBtn="true"
+            :corpName="item.corpname"
+            :corpid="item.corpid"
+            :_tenant="detail._tenant"
+            :origin="detail._id"
+            :type="'1'"
+            :expired="detail.date"
+          ></corpInfo>
+        </span>
+      </mt-tab-container-item>
+    </mt-tab-container>
   </div>
 </template>
 
@@ -140,7 +152,5 @@ export default {
     -ms-flex: none !important;
     flex: none !important;
     text-align: left !important;
-  } 
-
-
+  }
 </style>

@@ -1,58 +1,54 @@
-<template lang='html'>
+<template lang="html">
   <div id="CorpLetterList">
-      <mt-header title="企业求职信">
-        <mt-button  class="bgnone" slot="left" @click="$router.push({path: '/'})">返回</mt-button>
-      </mt-header>
-      <newNavbar :titles='["招聘会求职信","招聘信息求职信"]' v-model="active"></newNavbar>
-      <template>
-        <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="loadMore" :auto-fill="false" ref="loadmore">
-            <div slot="top" class="mint-loadmore-top">
-                <span style="padding: 7px 0; display: block; font-size: 14px;">刷新中...</span>
-            </div>
-            <mt-tab-container v-model="active">
-              <mt-tab-container-item id="tab1">
-                <el-table
-                  :data="fromJobfairList"
-                  style="width: 100%;">
-                  <el-table-column>
-                    <template slot-scope="scope">
-                      <ul @click="toDetail(scope.row)" style="float:left; width:100%; ">
-                        <li class="txtOne">姓名:{{{data:scope.row, searchItem: 'info.xm'}|getName}} </li>
-                        <li class="txtOne">性别:{{{data:scope.row, searchItem: 'info.xb'}|getName}} </li>
-                        <li class="txtOne">学历:{{{data:scope.row, searchItem: 'info.xl'}|getName}} </li>
-                        <li class="txtOne">毕业院校:{{{data:scope.row, searchItem: 'info.yxmc'}|getName}} </li>
-                        <li class="txtOne">专业:{{{data:scope.row, searchItem: 'info.zymc'}|getName}} </li>
-                        <li class="txtOne">状态:{{ scope.row.status==0?"已接收":(scope.row.status==1?"已接受":"已拒绝") }}</li>
-                      </ul>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </mt-tab-container-item>
-              <mt-tab-container-item id="tab2">
-                <el-table
-                  :data="fromJobinfoList"
-                  style="width: 100%;">
-                  <el-table-column>
-                    <template slot-scope="scope">
-                      <ul @click="toDetail(scope.row)" style="float:left; width:100%; ">
-                        <li class="txtOne">姓名:{{{data:scope.row, searchItem: 'info.xm'}|getName}} </li>
-                        <li class="txtOne">性别:{{{data:scope.row, searchItem: 'info.xb'}|getName}} </li>
-                        <li class="txtOne">学历:{{{data:scope.row, searchItem: 'info.xl'}|getName}} </li>
-                        <li class="txtOne">毕业院校:{{{data:scope.row, searchItem: 'info.yxmc'}|getName}} </li>
-                        <li class="txtOne">专业:{{{data:scope.row, searchItem: 'info.zymc'}|getName}} </li>
-                        <li class="txtOne">状态:{{ scope.row.status==0?"已接收":(scope.row.status==1?"已接受":"已拒绝") }}</li>
-                      </ul>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </mt-tab-container-item>
-            </mt-tab-container>
-            <span  style="padding: 7px 0; display: block; text-align:center; font-size: 14px;" v-if="loadMore">没有可加载的数据了</span>
-            <div slot="bottom" class="mint-loadmore-bottom">
-                <span  style="padding: 7px 0; display: block;  text-align:center;  font-size: 14px;" v-if="loadMore==false">正在加载...</span>
-            </div>
-        </mt-loadmore>
-      </template>
+    <mt-header title="企业求职信">
+      <mt-button class="bgnone" slot="left" @click="$router.push({ path: '/' })">返回</mt-button>
+    </mt-header>
+    <newNavbar :titles="['招聘会求职信', '招聘信息求职信']" v-model="active"></newNavbar>
+    <template>
+      <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="loadMore" :auto-fill="false" ref="loadmore">
+        <div slot="top" class="mint-loadmore-top">
+          <span style="padding: 7px 0; display: block; font-size: 14px;">刷新中...</span>
+        </div>
+        <mt-tab-container v-model="active">
+          <mt-tab-container-item id="tab1">
+            <el-table :data="fromJobfairList" style="width: 100%;">
+              <el-table-column>
+                <template slot-scope="scope">
+                  <ul @click="toDetail(scope.row)" style="float:left; width:100%; ">
+                    <li class="txtOne">姓名:{{ { data: scope.row, searchItem: 'info.xm' } | getName }}</li>
+                    <li class="txtOne">性别:{{ { data: scope.row, searchItem: 'info.xb' } | getName }}</li>
+                    <li class="txtOne">学历:{{ { data: scope.row, searchItem: 'info.xl' } | getName }}</li>
+                    <li class="txtOne">毕业院校:{{ { data: scope.row, searchItem: 'info.yxmc' } | getName }}</li>
+                    <li class="txtOne">专业:{{ { data: scope.row, searchItem: 'info.zymc' } | getName }}</li>
+                    <li class="txtOne">状态:{{ scope.row.status == 0 ? '已接收' : scope.row.status == 1 ? '已接受' : '已拒绝' }}</li>
+                  </ul>
+                </template>
+              </el-table-column>
+            </el-table>
+          </mt-tab-container-item>
+          <mt-tab-container-item id="tab2">
+            <el-table :data="fromJobinfoList" style="width: 100%;">
+              <el-table-column>
+                <template slot-scope="scope">
+                  <ul @click="toDetail(scope.row)" style="float:left; width:100%; ">
+                    <li class="txtOne">姓名:{{ { data: scope.row, searchItem: 'info.xm' } | getName }}</li>
+                    <li class="txtOne">性别:{{ { data: scope.row, searchItem: 'info.xb' } | getName }}</li>
+                    <li class="txtOne">学历:{{ { data: scope.row, searchItem: 'info.xl' } | getName }}</li>
+                    <li class="txtOne">毕业院校:{{ { data: scope.row, searchItem: 'info.yxmc' } | getName }}</li>
+                    <li class="txtOne">专业:{{ { data: scope.row, searchItem: 'info.zymc' } | getName }}</li>
+                    <li class="txtOne">状态:{{ scope.row.status == 0 ? '已接收' : scope.row.status == 1 ? '已接受' : '已拒绝' }}</li>
+                  </ul>
+                </template>
+              </el-table-column>
+            </el-table>
+          </mt-tab-container-item>
+        </mt-tab-container>
+        <span style="padding: 7px 0; display: block; text-align:center; font-size: 14px;" v-if="loadMore">没有可加载的数据了</span>
+        <div slot="bottom" class="mint-loadmore-bottom">
+          <span style="padding: 7px 0; display: block;  text-align:center;  font-size: 14px;" v-if="loadMore == false">正在加载...</span>
+        </div>
+      </mt-loadmore>
+    </template>
   </div>
 </template>
 
@@ -203,7 +199,7 @@ export default {
 @import '../../../style/index.css';
 @import '../../../style/common.css';
 </style>
-<style lang='css' scoped>
+<style lang="css" scoped>
 
 .mint-header {
   background-color: #2577e3;
@@ -211,5 +207,4 @@ export default {
   line-height:40px;
   font-size: 16px;
 }
-
 </style>

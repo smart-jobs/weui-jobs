@@ -1,7 +1,7 @@
 <template lang="html">
   <div id="Home">
-      <mt-header title="您当前是游客"></mt-header>
-      <mt-cell style="marign-top:50px !important;" id="nameM" title="前往个人中心注册或完善企业信息" @click.native='turnTo()'></mt-cell>
+    <mt-header title="您当前是游客"></mt-header>
+    <mt-cell style="marign-top:50px !important;" id="nameM" title="前往个人中心注册或完善企业信息" @click.native="turnTo()"></mt-cell>
   </div>
 </template>
 

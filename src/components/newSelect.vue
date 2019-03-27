@@ -1,45 +1,29 @@
-<template lang='html'>
+<template lang="html">
   <div id="newSelect">
-      <mt-cell :title='title' @click.native="openPopup()">
-        <span style="font-size:14px;" :style="selectColor">{{name||placeholder}}</span>
-      </mt-cell>
+    <mt-cell :title="title" @click.native="openPopup()">
+      <span style="font-size:14px;" :style="selectColor">{{ name || placeholder }}</span>
+    </mt-cell>
 
-      <mt-popup
-          v-model="popupVisible"
-          position="right"
-          id="xingb"
-          style="width:100%;height:100%;">
-          <mt-index-list>
-          <mt-header title="请选择" >
-              <mt-button  class="bgnone" slot="left" @click="closePopup()">返回</mt-button>
-              <mt-button  class="bgnone" style="text-align:right !important;" slot="right" @click="choose()">选择</mt-button>
-          </mt-header>
-          <mt-radio
-          id="xingbie"
-          v-model="selected"
-          :options="list">
-          </mt-radio>
-          </mt-index-list>
-      </mt-popup>
+    <mt-popup v-model="popupVisible" position="right" id="xingb" style="width:100%;height:100%;">
+      <mt-index-list>
+        <mt-header title="请选择">
+          <mt-button class="bgnone" slot="left" @click="closePopup()">返回</mt-button>
+          <mt-button class="bgnone" style="text-align:right !important;" slot="right" @click="choose()">选择</mt-button>
+        </mt-header>
+        <mt-radio id="xingbie" v-model="selected" :options="list"> </mt-radio>
+      </mt-index-list>
+    </mt-popup>
 
-      <!--二级选择-->
-      <mt-popup
-          v-model="popupVisible2"
-          position="right"
-          id="xingb"
-          style="width:100%;height:100%;">
-          <mt-index-list>
-          <mt-header title="请选择" >
-              <mt-button  class="bgnone" slot="left" @click="popupVisible2=false">返回</mt-button>
-              <mt-button  class="bgnone" slot="right" @click="chooseCity()">选择</mt-button>
-          </mt-header>
-          <mt-radio
-          id="xingbie"
-          v-model="citySelected"
-          :options="cityList">
-          </mt-radio>
-          </mt-index-list>
-      </mt-popup>
+    <!--二级选择-->
+    <mt-popup v-model="popupVisible2" position="right" id="xingb" style="width:100%;height:100%;">
+      <mt-index-list>
+        <mt-header title="请选择">
+          <mt-button class="bgnone" slot="left" @click="popupVisible2 = false">返回</mt-button>
+          <mt-button class="bgnone" slot="right" @click="chooseCity()">选择</mt-button>
+        </mt-header>
+        <mt-radio id="xingbie" v-model="citySelected" :options="cityList"> </mt-radio>
+      </mt-index-list>
+    </mt-popup>
   </div>
 </template>
 
@@ -242,7 +226,7 @@ export default {
 @import '../style/common.css';
 @import '../style/jobFair.less';
 </style>
-<style lang='css' scoped>
+<style lang="css" scoped>
 .mint-header {
   background-color: #2577e3;
   height: 40px;

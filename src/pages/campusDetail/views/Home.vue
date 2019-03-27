@@ -1,39 +1,38 @@
 <template lang="html">
   <div id="Home">
-      <mt-header :title="isDateOff(detail.date)?'宣讲会详情':'宣讲会详情(已过期)'">
-            <mt-button   class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
-        </mt-header> 
-        <mt-cell  class="width" :title="detail.subject" id="title"></mt-cell>
-        <corpInfo :titleBtn="false" :corpName="detail.corpname" :corpid="detail.corpid" :_tenant="detail._tenant" :expired="detail.date"></corpInfo>
-        <mt-cell class="width" title="分站信息" style="text-align:left;">
-              <span style="color:black;"> {{findUnit(detail.unit)}}</span>
-        </mt-cell>
-        <mt-cell class="width" title="举办时间" style="text-align:left;">
-              <span style="color:black; font-size:14px;"> {{detail.date}} {{detail.time}} </span>
-        </mt-cell>
-        <mt-cell class="width" title="联系电话" style="text-align:left;">
-              <span style="color:black; font-size:14px;"> {{detail.contact}} </span>
-        </mt-cell>
-        <mt-cell class="width" title="电子邮箱" style="text-align:left;">
-              <span style="color:black; font-size:14px;"> {{detail.email}} </span>
-        </mt-cell>
-        <mt-cell class="width" title="举办地址" style="text-align:left;">
-              <span style="color:black; font-size:14px;"> {{detail.address}} </span>
-        </mt-cell>
-        <mt-cell id="nameSpan" class="width" title="" >
-              <span class="spanCla">温馨提示：为防讯息临时变动,参会前可联系招聘会举办方确认。</span>
-        </mt-cell>
-        <newNavbar v-model="active" :titles="navbar"></newNavbar>
-        <mt-tab-container v-model="active">
-            <mt-tab-container-item id="tab1" >
-                <pre  style="text-align:left;">{{detail.content}}</pre>
-            </mt-tab-container-item>
+    <mt-header :title="isDateOff(detail.date) ? '宣讲会详情' : '宣讲会详情(已过期)'">
+      <mt-button class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
+    </mt-header>
+    <mt-cell class="width" :title="detail.subject" id="title"></mt-cell>
+    <corpInfo :titleBtn="false" :corpName="detail.corpname" :corpid="detail.corpid" :_tenant="detail._tenant" :expired="detail.date"></corpInfo>
+    <mt-cell class="width" title="分站信息" style="text-align:left;">
+      <span style="color:black;"> {{ findUnit(detail.unit) }}</span>
+    </mt-cell>
+    <mt-cell class="width" title="举办时间" style="text-align:left;">
+      <span style="color:black; font-size:14px;"> {{ detail.date }} {{ detail.time }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="联系电话" style="text-align:left;">
+      <span style="color:black; font-size:14px;"> {{ detail.contact }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="电子邮箱" style="text-align:left;">
+      <span style="color:black; font-size:14px;"> {{ detail.email }} </span>
+    </mt-cell>
+    <mt-cell class="width" title="举办地址" style="text-align:left;">
+      <span style="color:black; font-size:14px;"> {{ detail.address }} </span>
+    </mt-cell>
+    <mt-cell id="nameSpan" class="width" title="">
+      <span class="spanCla">温馨提示：为防讯息临时变动,参会前可联系招聘会举办方确认。</span>
+    </mt-cell>
+    <newNavbar v-model="active" :titles="navbar"></newNavbar>
+    <mt-tab-container v-model="active">
+      <mt-tab-container-item id="tab1">
+        <pre style="text-align:left;">{{ detail.content }}</pre>
+      </mt-tab-container-item>
 
-            <mt-tab-container-item id="tab2">
-                <jobsList :list="detail.jobs" :needBtn="false"></jobsList>
-            </mt-tab-container-item>
-        </mt-tab-container>
-
+      <mt-tab-container-item id="tab2">
+        <jobsList :list="detail.jobs" :needBtn="false"></jobsList>
+      </mt-tab-container-item>
+    </mt-tab-container>
   </div>
 </template>
 
@@ -95,8 +94,7 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-</style>
+<style lang="css" scoped></style>
 <style lang="css" scoped>
 .mint-header{
     background-color: #2577e3;
@@ -104,5 +102,4 @@ export default {
     line-height: 40px;
     font-size: 16px;
 }
-
 </style>

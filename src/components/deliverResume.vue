@@ -1,61 +1,56 @@
-<template lang='html'>
+<template lang="html">
   <div id="deliverResume">
-      <!--@click="deliver(scope.row._id,scope.row.corpid,'jobinfo',scope.row._tenant)"-->
-    <mt-button v-if="titleBtn" class="bgnone" style="text-align:right !important;"   @click="display()">投简历</mt-button>
-    <mt-button v-if="uri.includes('index')" type="primary" class="btnClass" size='small' @click="display()">
-        投简历
+    <!--@click="deliver(scope.row._id,scope.row.corpid,'jobinfo',scope.row._tenant)"-->
+    <mt-button v-if="titleBtn" class="bgnone" style="text-align:right !important;" @click="display()">投简历</mt-button>
+    <mt-button v-if="uri.includes('index')" type="primary" class="btnClass" size="small" @click="display()">
+      投简历
     </mt-button>
-    <mt-button v-if="uri.includes('jobinfoDetail')&&titleBtn==false" style="position: absolute ; left: 42% ; top: 5px; text-align: center !important; padding-left: 0 !important;" type="primary"  @click="display()">
-    投简历
+    <mt-button
+      v-if="uri.includes('jobinfoDetail') && titleBtn == false"
+      style="position: absolute ; left: 42% ; top: 5px; text-align: center !important; padding-left: 0 !important;"
+      type="primary"
+      @click="display()"
+    >
+      投简历
     </mt-button>
 
-    <mt-popup
-        v-model="popupVisible"
-        position="center"
-        
-        :modal="false"
+    <mt-popup v-model="popupVisible" position="center" :modal="false" style="align:center; overflow-y:scroll;width:100%;height:100%;">
+      <mt-header title="选择简历模板">
+        <mt-button class="bgnone" slot="left" @click="popupVisible = false">返回</mt-button>
+        <mt-button class="bgnone" style="text-align:right !important;" slot="right" v-if="selectedId == ''" disabled>选择</mt-button>
+        <mt-button class="bgnone" style="text-align:right !important;" slot="right" @click="toDeliver()" v-else>投简历</mt-button>
+      </mt-header>
 
-        style="align:center; overflow-y:scroll;width:100%;height:100%;">
-        <mt-header title="选择简历模板">
-            <mt-button  class="bgnone"  slot="left" @click="popupVisible=false">返回</mt-button>
-            <mt-button class="bgnone" style="text-align:right !important;"  slot="right" v-if="selectedId==''" disabled>选择</mt-button>
-            <mt-button  class="bgnone"  style="text-align:right !important;" slot="right" @click="toDeliver()" v-else>投简历</mt-button>
-        </mt-header>  
-
-        <template>
-            <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="canLoadMore" :auto-fill="false" ref="loadmore">
-                <div slot="top" class="mint-loadmore-top">
-                    <span style="padding: 7px 0; display: block; font-size: 14px;">刷新中...</span>
-                </div>
-                <el-table
-                    label="我的简历"
-                    highlight-current-row
-                    @current-change="select"
-                    :data="resumeList"
-                    style="width: 100%">
-                    <el-table-column>
-                    <template slot-scope="scope">
-                        <ul>
-                            <li class="tit" style="line-height:40px;">{{ scope.row.title }}</li>
-                        </ul>
-                    </template>
-                    </el-table-column>
-                    <template slot="empty">
-                    <ul><!-- @click="$router.push({path:'/wechatMyInfo',query:{type:'resumeAdd'}})" -->
-                      <a href="user.html#/resumeAdd">
-                      <li class="tit">
-                        您没有简历,点击添加简历
-                      </li>
-                      </a>
-                    </ul>
-                  </template>
-                </el-table>
-                <span v-if="canLoadMore" style="padding: 7px; display: block; font-size: 14px;">没有可加载的数据了</span>
-                <div slot="bottom" class="mint-loadmore-bottom">
-                    <span  style="padding: 7px 0; display: block; font-size: 14px;" v-if="canLoadMore==false">正在加载...</span>
-                </div>
-            </mt-loadmore>
-        </template>
+      <template>
+        <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="canLoadMore" :auto-fill="false" ref="loadmore">
+          <div slot="top" class="mint-loadmore-top">
+            <span style="padding: 7px 0; display: block; font-size: 14px;">刷新中...</span>
+          </div>
+          <el-table label="我的简历" highlight-current-row @current-change="select" :data="resumeList" style="width: 100%">
+            <el-table-column>
+              <template slot-scope="scope">
+                <ul>
+                  <li class="tit" style="line-height:40px;">{{ scope.row.title }}</li>
+                </ul>
+              </template>
+            </el-table-column>
+            <template slot="empty">
+              <ul>
+                <!-- @click="$router.push({path:'/wechatMyInfo',query:{type:'resumeAdd'}})" -->
+                <a href="user.html#/resumeAdd">
+                  <li class="tit">
+                    您没有简历,点击添加简历
+                  </li>
+                </a>
+              </ul>
+            </template>
+          </el-table>
+          <span v-if="canLoadMore" style="padding: 7px; display: block; font-size: 14px;">没有可加载的数据了</span>
+          <div slot="bottom" class="mint-loadmore-bottom">
+            <span style="padding: 7px 0; display: block; font-size: 14px;" v-if="canLoadMore == false">正在加载...</span>
+          </div>
+        </mt-loadmore>
+      </template>
     </mt-popup>
   </div>
 </template>
@@ -137,13 +132,13 @@ export default {
 };
 </script>
 
-<style lang='css' scoped>
+<style lang="css" scoped>
 .btnClass{
-    float:left; 
-    width:17%; 
-    padding:0; 
+    float:left;
+    width:17%;
+    padding:0;
     margin-right:0;
-    position: absolute; 
+    position: absolute;
     bottom: 35px;
     border-radius: 0;
   }

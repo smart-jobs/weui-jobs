@@ -1,101 +1,107 @@
-<template lang='html'>
+<template lang="html">
   <div id="corpInfo">
     <!--招聘信息-->
     <mt-cell v-if="uri.includes('jobinfoDetail')" class="width" title="企业名称" style="text-align:left;" @click.native="display()">
-        <span style="color:black;font-size: 14px; padding: 10px 0; line-height: 20px;"> {{corpName||''}} </span>
+      <span style="color:black;font-size: 14px; padding: 10px 0; line-height: 20px;"> {{ corpName || '' }} </span>
     </mt-cell>
     <!--宣讲会显示-->
     <mt-cell v-else-if="uri.includes('campusDetail')" class="width" title="企业名称" style="text-align:left;" @click.native="display()">
-        <span style="color:black;font-size: 14px; padding: 10px 0; line-height: 20px;"> {{corpName||''}} </span>
+      <span style="color:black;font-size: 14px; padding: 10px 0; line-height: 20px;"> {{ corpName || '' }} </span>
     </mt-cell>
     <!--招聘会显示-->
-    <div style="height:38px; line-height:38px; width:96%; margin:0 2%; border-bottom:2px solid #f4f4f4;" v-else  @click="display()">{{corpName}}</div>
-    <mt-popup
-        v-model="popupVisible"
-        position="center"
-        style="align:center; overflow-y:scroll;width:100%;height:100%;">
-        <mt-header title="企业详情">
-            <mt-button  class="bgnone"  slot="left" @click="popupVisible=false">返回</mt-button>
-            <deliverResume v-if="checkDisplay('user')&&isDateOff(expired)" slot="right"  :titleBtn="titleBtn" :userid="user.userid" :corpid="corpid" :origin="origin" :_tenant="corpInfo._tenant" :type="type" ></deliverResume>
-        </mt-header>
-        <!--企业详情部分-->
-        <span id="corpInfo">
+    <div style="height:38px; line-height:38px; width:96%; margin:0 2%; border-bottom:2px solid #f4f4f4;" v-else @click="display()">{{ corpName }}</div>
+    <mt-popup v-model="popupVisible" position="center" style="align:center; overflow-y:scroll;width:100%;height:100%;">
+      <mt-header title="企业详情">
+        <mt-button class="bgnone" slot="left" @click="popupVisible = false">返回</mt-button>
+        <deliverResume
+          v-if="checkDisplay('user') && isDateOff(expired)"
+          slot="right"
+          :titleBtn="titleBtn"
+          :userid="user.userid"
+          :corpid="corpid"
+          :origin="origin"
+          :_tenant="corpInfo._tenant"
+          :type="type"
+        ></deliverResume>
+      </mt-header>
+      <!--企业详情部分-->
+      <span id="corpInfo">
+        <mt-cell title="企业名称" style="text-align:left;">
+          <span style="color:black;font-size: 14px; padding: 10px 0; line-height: 20px;"> {{ corpInfo.corpname }} </span>
+        </mt-cell>
 
-          <mt-cell title="企业名称" style="text-align:left;">
-                <span style="color:black;font-size: 14px; padding: 10px 0; line-height: 20px;"> {{corpInfo.corpname}} </span>
-          </mt-cell>
+        <mt-cell title="法人" style="text-align:left;">
+          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.legalPerson' } | getName }} </span>
+        </mt-cell>
 
-           <mt-cell title="法人" style="text-align:left;">
-                <span style="color:black;"> {{{data:corpInfo,searchItem:"info.legalPerson"}|getName}} </span>
-          </mt-cell>
+        <mt-cell title="组织机构代码类型" style="text-align:left;">
+          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.corptype' } | getName }} </span>
+        </mt-cell>
 
-          <mt-cell title="组织机构代码类型" style="text-align:left;">
-                <span style="color:black;"> {{{data:corpInfo,searchItem:"info.corptype"}|getName}} </span>
-          </mt-cell>
+        <mt-cell title="组织机构代码" style="text-align:left;">
+          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.corpcode' } | getName }} </span>
+        </mt-cell>
 
-           <mt-cell title="组织机构代码" style="text-align:left;">
-                <span style="color:black;"> {{{data:corpInfo,searchItem:"info.corpcode"}|getName}} </span>
-          </mt-cell>
+        <mt-cell title="企业规模" style="text-align:left;">
+          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.scale.name' } | getName }} </span>
+        </mt-cell>
 
-          <mt-cell title="企业规模" style="text-align:left;">
-                <span style="color:black;"> {{{data:corpInfo,searchItem:"info.scale.name"}|getName}} </span>
-          </mt-cell>
-
-          <mt-cell title="企业行业" style="text-align:left;">
-                <span style="color:black;"> {{{data:corpInfo,searchItem:"info.industry.name"}|getName}} </span>
-          </mt-cell>
-          <mt-cell title="企业性质" style="text-align:left;">
-                <span style="color:black;"> {{{data:corpInfo,searchItem:"info.nature.name"}|getName}} </span>
-          </mt-cell>
-          <mt-cell title="企业地址" style="text-align:left;">
-                <span style="color:black;"> {{{data:corpInfo,searchItem:"contact.address"}|getName}} </span>
-          </mt-cell>
-          <mt-cell title="企业邮箱" style="text-align:left;">
-                <span style="color:black;"> {{{data:corpInfo,searchItem:"contact.email"}|getName}} </span>
-          </mt-cell>
-          <mt-cell title="联系电话" style="text-align:left;">
-                <span style="color:black;"> {{{data:corpInfo,searchItem:"contact.mobile"}|getName}} </span>
-          </mt-cell>
-          <mt-cell title="固定电话" style="text-align:left;">
-                <span style="color:black;"> {{{data:corpInfo,searchItem:"contact.phone"}|getName}} </span>
-          </mt-cell>
-          <mt-cell title="网址" style="text-align:left;">
-                <span style="color:black;"> {{{data:corpInfo,searchItem:"contact.url"}|getName}} </span>
-          </mt-cell>
-          <mt-cell title="固定电话" style="text-align:left;">
-                <span style="color:black;"> {{{data:corpInfo,searchItem:"contact.phone"}|getName}} </span>
-          </mt-cell>
-          <mt-cell title="注册资金" style="text-align:left;">
-                <span style="color:black;"> {{{data:corpInfo,searchItem:"info.registerMoney"}|getName}} </span>
-          </mt-cell>
-          <mt-cell title="注册时间" style="text-align:left;">
-                <span style="color:black;"> {{{data:corpInfo,searchItem:"info.registerTime"}|getName}} </span>
-          </mt-cell>
-          <mt-cell title="企业详情" style="text-align:left; margin-bottom:15px !important;">
-                <pre style="text-align:left;">{{corpInfo.description}} </pre>
-          </mt-cell>
-        </span>
-        <!--企业招聘会招聘职位-->
-        <span v-if="uri.includes('jobfairDetail')">
-          <showJobsListCard :list="jobInfoList.jobs" :needBtn="false" ></showJobsListCard>
-        </span>
-        <!--企业招聘的所有职位-->
-        <span v-if="uri.includes('jobinfoDetail')">
-          <span v-for="(item,index) in corpJobInfoList" :key="index" >
-          <el-card class="box-card"><!--v-if="item.status == 1"实际使用需要判断-->
-              <ul style="text-align:left; float:left; width:70%; padding-bottom: 10px; margin-right:10%;" @click="detail(item._id)">
-                  <li slot="header" class="clearfix">
-                      招聘职位:
-                      {{item.title}}
-                  </li>
-                  <li class="text item" >
-                      需求人数:
-                      {{item.count}}
-                  </li>
-              </ul>
+        <mt-cell title="企业行业" style="text-align:left;">
+          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.industry.name' } | getName }} </span>
+        </mt-cell>
+        <mt-cell title="企业性质" style="text-align:left;">
+          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.nature.name' } | getName }} </span>
+        </mt-cell>
+        <mt-cell title="企业地址" style="text-align:left;">
+          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.address' } | getName }} </span>
+        </mt-cell>
+        <mt-cell title="企业邮箱" style="text-align:left;">
+          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.email' } | getName }} </span>
+        </mt-cell>
+        <mt-cell title="联系电话" style="text-align:left;">
+          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.mobile' } | getName }} </span>
+        </mt-cell>
+        <mt-cell title="固定电话" style="text-align:left;">
+          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.phone' } | getName }} </span>
+        </mt-cell>
+        <mt-cell title="网址" style="text-align:left;">
+          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.url' } | getName }} </span>
+        </mt-cell>
+        <mt-cell title="固定电话" style="text-align:left;">
+          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.phone' } | getName }} </span>
+        </mt-cell>
+        <mt-cell title="注册资金" style="text-align:left;">
+          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.registerMoney' } | getName }} </span>
+        </mt-cell>
+        <mt-cell title="注册时间" style="text-align:left;">
+          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.registerTime' } | getName }} </span>
+        </mt-cell>
+        <mt-cell title="企业详情" style="text-align:left; margin-bottom:15px !important;">
+          <pre style="text-align:left;">{{ corpInfo.description }} </pre>
+        </mt-cell>
+      </span>
+      <!--企业招聘会招聘职位-->
+      <span v-if="uri.includes('jobfairDetail')">
+        <showJobsListCard :list="jobInfoList.jobs" :needBtn="false"></showJobsListCard>
+      </span>
+      <!--企业招聘的所有职位-->
+      <span v-if="uri.includes('jobinfoDetail')">
+        <span v-for="(item, index) in corpJobInfoList" :key="index">
+          <el-card class="box-card"
+            ><!--v-if="item.status == 1"实际使用需要判断-->
+            <ul style="text-align:left; float:left; width:70%; padding-bottom: 10px; margin-right:10%;" @click="detail(item._id)">
+              <li slot="header" class="clearfix">
+                招聘职位:
+                {{ item.title }}
+              </li>
+              <li class="text item">
+                需求人数:
+                {{ item.count }}
+              </li>
+            </ul>
           </el-card>
-          </span>
         </span>
+      </span>
     </mt-popup>
   </div>
 </template>
@@ -183,12 +189,11 @@ export default {
 @import '../style/common.css';
 @import '../style/jobFair.less';
 </style>
-<style lang='css' scoped>
+<style lang="css" scoped>
 .mint-header {
   background-color: #2577e3;
   height: 40px;
   line-height: 40px;
   font-size: 16px;
 }
-
 </style>

@@ -1,8 +1,8 @@
-<template lang='html'>
+<template lang="html">
   <div id="newNavbar">
-      <mt-navbar id="tabTab" v-model="active" >
-        <mt-tab-item v-for="(item,index) in titles" :key="index" :id="'tab'+(index+1)" >{{item}}</mt-tab-item>
-      </mt-navbar>
+    <mt-navbar id="tabTab" v-model="active">
+      <mt-tab-item v-for="(item, index) in titles" :key="index" :id="'tab' + (index + 1)">{{ item }}</mt-tab-item>
+    </mt-navbar>
   </div>
 </template>
 
@@ -27,6 +27,6 @@ export default {
 };
 </script>
 
-<style lang='css' scoped>
+<style lang="css" scoped>
 @import '../style/jobFair.less';
 </style>

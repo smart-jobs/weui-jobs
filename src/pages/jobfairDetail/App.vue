@@ -1,8 +1,8 @@
-<template lang='html'>
-  <div id='App'>
+<template lang="html">
+  <div id="App">
     <!-- <el-container> -->
-      <router-view style='width:100%;margin-bottom:50px'/>
-      <footerbar></footerbar>
+    <router-view style="width:100%;margin-bottom:50px" />
+    <footerbar></footerbar>
     <!-- </el-container> -->
   </div>
 </template>
@@ -33,6 +33,6 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 @import '../../style/common.css';
 </style>
