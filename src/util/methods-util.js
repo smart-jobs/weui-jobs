@@ -5,7 +5,6 @@ const { isNullOrUndefined } = Util;
 export default {
   //判断信息是否过期
   isDateOff(dataDate) {
-    console.log(dataDate);
     const now = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
     dataDate = new Date(dataDate);
     return now.getTime() <= dataDate.getTime();

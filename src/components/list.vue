@@ -190,7 +190,7 @@ export default {
           let text = result === '0' ? '招聘会' : '招聘信息';
           return `类型:${text}`;
         } else if (routerPath === 'ticketList') {
-          let text = result === '1' ? '受限票' : '普通票';
+          let text = result === '0' ? '普通票' : '受限票';
           return `${text}`;
         }
       } else if (optionTitle.prop === 'status') {

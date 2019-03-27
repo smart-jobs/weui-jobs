@@ -4,7 +4,7 @@
       <mt-button class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
     </mt-header>
     <span v-if="user.role === 'user'">
-      <li class="txtQr" style="padding-top:7vh;">学生姓名：{{ user.name || '' }}</li>
+      <li class="txtQr" style="padding-top:7vh;">学生姓名：{{ userInfo.xm || '' }}</li>
       <li class="txtQr">门票类型：{{ ticketType }}</li>
     </span>
     <div id="qrcode" style="display:flex;justify-content:center;align-items:center;" :style="newHeight" ref="qrcode">
@@ -28,6 +28,7 @@ export default {
   computed: {
     ...mapState({
       user: state => state.publics.user,
+      userInfo: state => state.self.userInfo,
     }),
     newHeight: {
       get() {
@@ -53,7 +54,7 @@ export default {
         await QRCode.toCanvas(document.getElementById('canvas'), this.id, {
           width: 300,
           margin: 0,
-          color: { dark: this.$route.query.type === '0' ? '#00ff14' : '#ffff00' },
+          color: { dark: this.$route.query.type === '0' ? '#00ff14' : '#FF9900' },
         });
       }
     },
