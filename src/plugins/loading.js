@@ -10,8 +10,11 @@ const Plugin = {
     vue.mixin({
       created() {
         // eslint-disable-next-line no-underscore-dangle
-        const rootVue_uid = this.$root._uid;
-        const isRoot = this._uid === rootVue_uid;
+        const isRoot = this.constructor === Vue;
+        // console.log(`rootId:${rootVue_uid}; thisId:${this._uid}`);
+        // if (rootVue_uid !== 3) {
+        //   console.log(this);
+        // }
         if (isRoot) {
           const el = document.getElementById('loading');
           if (el) el.style.display = 'none';

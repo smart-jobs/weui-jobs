@@ -115,6 +115,11 @@ export default {
     },
     //投递简历
     async toDeliver() {
+      if (this.corpid === null) {
+        this.$message.error(`参数错误`);
+        console.error(`corpid:${this.corpid}`);
+        return;
+      }
       const data = { corpid: this.corpid, resumeid: this.selectedId, type: this.type, origin: this.origin };
       let result = await this.deliver({ data: data, _tenant: this._tenant });
       this.$checkRes(result, () => {
