@@ -8,6 +8,7 @@ import '@/plugins/axios';
 import '@/plugins/check-res';
 import '@/plugins/meta';
 import '@/plugins/filters';
+import '@/plugins/loading';
 
 Vue.config.productionTip = false;
 

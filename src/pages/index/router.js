@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import qrCorp from './views/QrcodeCorpInfo.vue';
 
 Vue.use(Router);
 
@@ -10,6 +11,10 @@ const router = new Router({
     {
       path: '/',
       component: Home,
+    },
+    {
+      path: '/qrCorp',
+      component: qrCorp,
     },
   ],
 });
