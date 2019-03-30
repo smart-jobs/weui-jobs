@@ -1,5 +1,5 @@
 <template lang="html">
-  <div id="deliverResume">
+  <div id="deliverResume" v-if="corpid !== null">
     <!--@click="deliver(scope.row._id,scope.row.corpid,'jobinfo',scope.row._tenant)"-->
     <mt-button v-if="titleBtn" class="bgnone" style="text-align:right !important;" @click="display()">投简历</mt-button>
     <mt-button v-if="uri.includes('index')" type="primary" class="btnClass" size="small" @click="display()">
