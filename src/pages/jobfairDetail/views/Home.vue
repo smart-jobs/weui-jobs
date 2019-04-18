@@ -27,11 +27,11 @@
       <mt-button
         style="position: absolute !important; left: 42% !important;"
         type="primary"
-        v-if="isDateOff(detail.date) && checkDisplay('user')"
+        v-if="isDateOff(detail.date) && checkDisplay('user') && detail.external !== 1"
         @click="apply('user')"
         >我要报名</mt-button
       >
-      <addJobsPage btnTitle="申请加入" :fair_id="detail._id" v-if="isDateOff(detail.date) && checkDisplay('corp') && pageCheckCorp(detail.unit)"></addJobsPage>
+      <addJobsPage btnTitle="申请加入" :fair_id="detail._id" v-if="isDateOff(detail.date) && checkDisplay('corp') && pageCheckCorp(detail.unit) && detail.external !== 1"></addJobsPage>
     </mt-cell>
     <newNavbar v-model="active" :titles="navbar"></newNavbar>
     <mt-tab-container v-model="active">
@@ -50,6 +50,8 @@
             :origin="detail._id"
             :type="'1'"
             :expired="detail.date"
+            :id= "item.id"
+            :jobs="item.jobs"
           ></corpInfo>
         </span>
       </mt-tab-container-item>

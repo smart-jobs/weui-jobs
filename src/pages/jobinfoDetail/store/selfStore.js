@@ -47,7 +47,7 @@ export const actions = {
   //查询该企业的招聘信息
   async getCorpJobInfoList({ commit }, payload) {
     const { corpid, _tenant } = payload;
-    let result = await this.$axios.$get(api.corpJobinfoLists, { corpid: corpid, skip: 0, limit: 10 });
+    let result = await this.$axios.$get(api.corpJobinfoLists, { corpid: corpid, skip: 0, limit: 1000 });
     commit(types.CORPJOBINFOLIST, result.data);
   },
 };

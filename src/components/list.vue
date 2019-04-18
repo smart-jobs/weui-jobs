@@ -24,14 +24,14 @@
                 ><!--判断是否需要按钮-->
                 <!--招聘会-->
                 <span v-if="selectBtn() === 'jobfairList'">
-                  <mt-button type="primary" size="small" class="btnClass" v-if="checkDisplay('user')" @click="apply(scope.row._id)">
+                  <mt-button type="primary" size="small" class="btnClass" v-if="checkDisplay('user') && scope.row.external !==1" @click="apply(scope.row._id)">
                     我要报名
                   </mt-button>
-                  <!-- <addJobsPage v-if='checkDisplay("corp")&&pageCheckCorp(scope.row.unit)' btnTitle="申请加入" :fair_id="scope.row._id"></addJobsPage> -->
+                  <addJobsPage v-if='checkDisplay("corp")&&pageCheckCorp(scope.row.unit) && scope.row.external !==1' btnTitle="申请加入" :fair_id="scope.row._id"></addJobsPage>
                 </span>
                 <!--招聘信息-->
                 <deliverResume
-                  v-if="selectBtn() === 'jobinfoList' && isDateOff(scope.row.expired) && checkDisplay('user')"
+                  v-if="selectBtn() === 'jobinfoList' && isDateOff(scope.row.expired) && checkDisplay('user') && scope.row.external !==1 && scope.row.online === 0"
                   :corpid="scope.row.corpid"
                   :origin="scope.row._id"
                   :_tenant="scope.row._tenant"

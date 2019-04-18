@@ -14,7 +14,7 @@
       <mt-header title="企业详情">
         <mt-button class="bgnone" slot="left" @click="popupVisible = false">返回</mt-button>
         <deliverResume
-          v-if="checkDisplay('user') && isDateOff(expired)"
+          v-if="checkDisplay('user') && isDateOff(expired) && corpid !== null && corpInfo.online === 0"
           slot="right"
           :titleBtn="titleBtn"
           :userid="user.userid"
@@ -25,70 +25,77 @@
         ></deliverResume>
       </mt-header>
       <!--企业详情部分-->
-      <span id="corpInfo">
+      <span id="corpInfo" v-if="corpid !== null">
         <mt-cell title="企业名称" style="text-align:left;">
           <span style="color:black;font-size: 14px; padding: 10px 0; line-height: 20px;"> {{ corpInfo.corpname }} </span>
         </mt-cell>
+          <mt-cell title="法人" style="text-align:left;">
+            <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.legalPerson' } | getName }} </span>
+          </mt-cell>
 
-        <mt-cell title="法人" style="text-align:left;">
-          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.legalPerson' } | getName }} </span>
-        </mt-cell>
+          <mt-cell title="组织机构代码类型" style="text-align:left;">
+            <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.corptype' } | getName }} </span>
+          </mt-cell>
 
-        <mt-cell title="组织机构代码类型" style="text-align:left;">
-          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.corptype' } | getName }} </span>
-        </mt-cell>
+          <mt-cell title="组织机构代码" style="text-align:left;">
+            <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.corpcode' } | getName }} </span>
+          </mt-cell>
 
-        <mt-cell title="组织机构代码" style="text-align:left;">
-          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.corpcode' } | getName }} </span>
-        </mt-cell>
+          <mt-cell title="企业规模" style="text-align:left;">
+            <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.scale.name' } | getName }} </span>
+          </mt-cell>
 
-        <mt-cell title="企业规模" style="text-align:left;">
-          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.scale.name' } | getName }} </span>
-        </mt-cell>
-
-        <mt-cell title="企业行业" style="text-align:left;">
-          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.industry.name' } | getName }} </span>
-        </mt-cell>
-        <mt-cell title="企业性质" style="text-align:left;">
-          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.nature.name' } | getName }} </span>
-        </mt-cell>
-        <mt-cell title="企业地址" style="text-align:left;">
-          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.address' } | getName }} </span>
-        </mt-cell>
-        <mt-cell title="企业邮箱" style="text-align:left;">
-          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.email' } | getName }} </span>
-        </mt-cell>
-        <mt-cell title="联系电话" style="text-align:left;">
-          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.mobile' } | getName }} </span>
-        </mt-cell>
-        <mt-cell title="固定电话" style="text-align:left;">
-          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.phone' } | getName }} </span>
-        </mt-cell>
-        <mt-cell title="网址" style="text-align:left;">
-          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.url' } | getName }} </span>
-        </mt-cell>
-        <mt-cell title="固定电话" style="text-align:left;">
-          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.phone' } | getName }} </span>
-        </mt-cell>
-        <mt-cell title="注册资金" style="text-align:left;">
-          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.registerMoney' } | getName }} </span>
-        </mt-cell>
-        <mt-cell title="注册时间" style="text-align:left;">
-          <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.registerTime' } | getName }} </span>
-        </mt-cell>
+          <mt-cell title="企业行业" style="text-align:left;">
+            <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.industry.name' } | getName }} </span>
+          </mt-cell>
+          <mt-cell title="企业性质" style="text-align:left;">
+            <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.nature.name' } | getName }} </span>
+          </mt-cell>
+          <mt-cell title="企业地址" style="text-align:left;">
+            <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.address' } | getName }} </span>
+          </mt-cell>
+          <mt-cell title="企业邮箱" style="text-align:left;">
+            <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.email' } | getName }} </span>
+          </mt-cell>
+          <mt-cell title="联系电话" style="text-align:left;">
+            <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.mobile' } | getName }} </span>
+          </mt-cell>
+          <mt-cell title="固定电话" style="text-align:left;">
+            <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.phone' } | getName }} </span>
+          </mt-cell>
+          <mt-cell title="网址" style="text-align:left;">
+            <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.url' } | getName }} </span>
+          </mt-cell>
+          <mt-cell title="固定电话" style="text-align:left;">
+            <span style="color:black;"> {{ { data: corpInfo, searchItem: 'contact.phone' } | getName }} </span>
+          </mt-cell>
+          <mt-cell title="注册资金" style="text-align:left;">
+            <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.registerMoney' } | getName }} </span>
+          </mt-cell>
+          <mt-cell title="注册时间" style="text-align:left;">
+            <span style="color:black;"> {{ { data: corpInfo, searchItem: 'info.registerTime' } | getName }} </span>
+          </mt-cell>
         <mt-cell title="企业详情" style="text-align:left; margin-bottom:15px !important;">
           <pre style="text-align:left;">{{ corpInfo.description }} </pre>
         </mt-cell>
       </span>
+      <span id="corpInfo" v-else>
+        <mt-cell title="企业名称" style="text-align:left;">
+          <span style="color:black;font-size: 14px; padding: 10px 0; line-height: 20px;"> {{ pageCorpInfo.corpname }} </span>
+        </mt-cell>
+        <mt-cell title="企业详情" style="text-align:left; margin-bottom:15px !important;">
+          <pre style="text-align:left;">{{ pageCorpInfo.description }} </pre>
+        </mt-cell>
+      </span>
       <!--企业招聘会招聘职位-->
       <span v-if="uri.includes('jobfairDetail')">
-        <showJobsListCard :list="jobInfoList.jobs" :needBtn="false"></showJobsListCard>
+        <showJobsListCard :list="jobsList" :needBtn="false"></showJobsListCard>
       </span>
       <!--企业招聘的所有职位-->
       <span v-if="uri.includes('jobinfoDetail')">
         <span v-for="(item, index) in corpJobInfoList" :key="index">
-          <el-card class="box-card"
-            ><!--v-if="item.status == 1"实际使用需要判断-->
+          <el-card class="box-card">
+            <!--v-if="item.status == 1"实际使用需要判断-->
             <ul style="text-align:left; float:left; width:70%; padding-bottom: 10px; margin-right:10%;" @click="detail(item._id)">
               <li slot="header" class="clearfix">
                 招聘职位:
@@ -127,6 +134,8 @@ export default {
     titleBtn: { type: Boolean, defalut: true }, //企业详情页在标题框左侧显示投简历
     fair_id: { type: String, default: null }, //招聘会id
     expired: { type: String }, //过期日期
+    id: { type: String, default: null }, //未注册企业查询信息用这个
+    jobs: { defalut: null }, //未注册企业招聘的职位列表
   },
   computed: {
     ...mapState({
@@ -140,16 +149,34 @@ export default {
     return {
       uri: window.location.pathname,
       popupVisible: false,
+      jobsList: [],
+      pageCorpInfo: {},
     };
   },
   methods: {
-    ...mapActions(['corpInfos', 'jobInfoLists', 'getCorpJobInfoList']),
+    ...mapActions(['corpInfos', 'jobInfoLists', 'getCorpJobInfoList', 'getNotRegistCorpInfo']),
     async display() {
-      this.popupVisible = true;
-      await this.corpInfos({ corpid: this.corpid, _tenant: this._tenant });
+      //控制显示,判断是宣讲会和招聘信息=>判断有没有corpid,没有corpid不打开,返回去
+      if (this.uri.includes('jobinfoDetail') || this.uri.includes('campusDetail')) {
+        if (this.corpid === null) return false;
+        else this.popupVisible = true;
+      } else this.popupVisible = true;
+      //查询详情:如果不是宣讲会和招聘信息,而是招聘会,判断corpid是不是null,是的话说明是外来企业,用外来企业接口
+      if (this.corpid === null) {
+        let result = await this.getNotRegistCorpInfo({ id: this.id });
+        console.log(result);
+        this.$set(this, 'pageCorpInfo', result);
+        this.$set(this, 'jobsList', this.jobs);
+        return;
+      } else {
+        await this.corpInfos({ corpid: this.corpid, _tenant: this._tenant });
+      }
+      //查询下面的两种招聘列表,如果是招聘会到此处,说明一定是注册的企业,查询这个企业在这场招聘会招聘什么职位=>赋值=>显示
       if (this.fair_id != null && this.uri.includes('jobfairDetail')) {
         await this.jobInfoLists({ corpid: this.corpid, fair_id: this.origin });
+        this.$set(this, 'jobsList', this.jobInfoList.jobs);
       } else if (this.uri.includes('jobinfoDetail')) {
+        //如果是招聘信息,说明这个企业是注册的企业,那就查这个企业招聘了什么职位即可
         await this.getCorpJobInfoList({ corpid: this.corpid, _tenant: this._tenant });
       }
     },
@@ -164,7 +191,6 @@ export default {
     //详情
     detail(id) {
       let url = `jobinfoDetail.html?id=${id}&corpid=${this.corpid}`;
-      console.log(url);
       window.location.href = url;
     },
     //判断信息是否过期

@@ -16,6 +16,7 @@ const api = {
   corpApplyJobFair: '/weixin/api/jobs/jobfair/corp/apply',
   resumeList: '/weixin/api/jobs/resume/list',
   deliver: '/weixin/api/jobs/letter/deliver',
+  notRegistCorpInfo: '/weixin/api/jobs/jobfair/corp/fetch2',
 };
 
 export const state = () => ({
@@ -115,6 +116,11 @@ export const actions = {
     let userid = _.get(state, 'user.userid');
     const { data, _tenant } = payload; //data:corpid,resumeid,type,origin
     let result = await this.$axios.$post(api.deliver, data, { userid: userid, _tenant: _tenant });
+    return result;
+  },
+  //查询未注册企业的信息
+  async getNotRegistCorpInfo({ state }, { id }) {
+    let result = await this.$axios.$get(api.notRegistCorpInfo, { id: id });
     return result;
   },
 };

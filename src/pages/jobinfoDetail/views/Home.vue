@@ -4,7 +4,7 @@
       <mt-button class="bgnone" slot="left" @click="$router.go(-1)">返回</mt-button>
     </mt-header>
     <mt-cell :title="detail.title" class="width" id="title"></mt-cell>
-    <corpInfo :titleBtn="true" :corpName="detail.corpname" :corpid="detail.corpid" :_tenant="detail._tenant" :origin="detail._id" :type="'0'"></corpInfo>
+    <corpInfo :titleBtn="true" :corpName="detail.corpname" :corpid="detail.corpid" :_tenant="detail._tenant" :origin="detail._id" :type="'0'" :id="detail.id"></corpInfo>
     <mt-cell class="width" title="工作位置" style="text-align:left;">
       <span style="color:black;font-size: 14px;"> {{ { data: detail, searchItem: 'city.name' } | getName }} </span>
     </mt-cell>
@@ -34,7 +34,7 @@
     </mt-cell>
     <mt-cell>
       <deliverResume
-        v-if="isDateOff(detail.expired) && checkDisplay('user')"
+        v-if="isDateOff(detail.expired) && checkDisplay('user') && detail.external !== 1 && detail.online === 0"
         :userid="user.userid"
         :corpid="detail.corpid"
         :origin="detail._id"

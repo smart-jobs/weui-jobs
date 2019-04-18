@@ -23,10 +23,10 @@
                 <li class="txt">分站信息：{{ findUnit(scope.row.unit) }}</li>
               </ul>
               <!--style删掉就能看见按钮了,报名的判断少:isDateOff(scope.row.date)&&,先调样式不加-->
-              <mt-button type="primary" size="small" class="btnClass" v-if="isDateOff(scope.row.date) && checkDisplay('user')" @click="apply(scope.row._id)">
+              <mt-button type="primary" size="small" class="btnClass" v-if="isDateOff(scope.row.date) && checkDisplay('user')&&scope.row.external !==1" @click="apply(scope.row._id)">
                 我要报名
               </mt-button>
-              <div v-else-if="isDateOff(scope.row.date) && checkDisplay('corp')">
+              <div v-else-if="isDateOff(scope.row.date) && checkDisplay('corp')&&scope.row.external !==1">
                 <div v-if="pageCheckCorp(scope.row.unit)">
                   <addJobsPage btnTitle="申请加入" :fair_id="scope.row._id"></addJobsPage>
                 </div>
@@ -76,7 +76,7 @@
                   <li class="txtOne">状态：{{ isDateOff(scope.row.expired) ? '招聘中' : '已过期' }}</li>
                   <li style="font-size:12px; color:#888;"></li>
                 </ul>
-                <span v-if="isDateOff(scope.row.expired) && checkDisplay('user')">
+                <span v-if="isDateOff(scope.row.expired) && checkDisplay('user')&&scope.row.external !==1">
                   <deliverResume :corpid="scope.row.corpid" :origin="scope.row._id" :_tenant="scope.row._tenant" :type="'0'"></deliverResume>
                 </span>
               </span>

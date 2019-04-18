@@ -86,7 +86,6 @@ export default {
     ...mapActions(['getResumeList', 'deliver']),
     //获取简历列表
     async getData() {
-      console.log(this.titleBtn);
       await this.getResumeList({ skip: this.skip, limit: this.limit });
     },
     //(手指)向下拉,重载列表
@@ -117,7 +116,6 @@ export default {
     async toDeliver() {
       if (this.corpid === null) {
         this.$message.error(`参数错误`);
-        console.error(`corpid:${this.corpid}`);
         return;
       }
       const data = { corpid: this.corpid, resumeid: this.selectedId, type: this.type, origin: this.origin };
