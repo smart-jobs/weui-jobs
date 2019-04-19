@@ -77,7 +77,7 @@
                   <li style="font-size:12px; color:#888;"></li>
                 </ul>
                 <span v-if="isDateOff(scope.row.expired) && checkDisplay('user')&&scope.row.external !==1">
-                  <deliverResume :corpid="scope.row.corpid" :origin="scope.row._id" :_tenant="scope.row._tenant" :type="'0'"></deliverResume>
+                  <deliverResume v-if="scope.row.online === 0" :corpid="scope.row.corpid" :origin="scope.row._id" :_tenant="scope.row._tenant" :type="'0'"></deliverResume>
                 </span>
               </span>
             </template>
