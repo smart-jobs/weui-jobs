@@ -29,7 +29,7 @@ module.exports = {
     //api地址前缀
     proxy: {
       '/weixin': {
-        target: 'http://smart.jilinjobswx.cn',
+        target: 'http://smart.chinahuian.cn',
         changeOrigin: true,
         ws: true,
       },
