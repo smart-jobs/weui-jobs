@@ -52,6 +52,7 @@
             :expired="detail.date"
             :id= "item.id"
             :jobs="item.jobs"
+            :online="item.online"
           ></corpInfo>
         </span>
       </mt-tab-container-item>

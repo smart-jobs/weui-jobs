@@ -14,7 +14,7 @@
       <mt-header title="企业详情">
         <mt-button class="bgnone" slot="left" @click="popupVisible = false">返回</mt-button>
         <deliverResume
-          v-if="checkDisplay('user') && isDateOff(expired) && corpid !== null && corpInfo.online === 0"
+          v-if="checkDisplay('user') && isDateOff(expired) && corpid !== null && online === 0"
           slot="right"
           :titleBtn="titleBtn"
           :userid="user.userid"
@@ -136,6 +136,7 @@ export default {
     expired: { type: String }, //过期日期
     id: { type: String, default: null }, //未注册企业查询信息用这个
     jobs: { defalut: null }, //未注册企业招聘的职位列表
+    online: { defalut: null }, //是否允许投简历
   },
   computed: {
     ...mapState({
