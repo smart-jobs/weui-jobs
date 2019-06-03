@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  publicPath: './',
+  baseUrl: './',
   pages: {
     index: 'src/pages/index/main.js',
     jobfairDetail: 'src/pages/jobfairDetail/main.js',
@@ -29,7 +29,7 @@ module.exports = {
     //api地址前缀
     proxy: {
       '/weixin': {
-        target: 'http://smart.jilinjobswx.cn',
+        target: 'http://smart.chinahuian.cn', //http://smart.jilinjobswx.cn
         changeOrigin: true,
         ws: true,
       },
